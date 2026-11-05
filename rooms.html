@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Rooms & Luxury Suites | Royal Orchid & Regenta Hotels</title>
+  <meta name="description" content="Explore our master catalog of deluxe rooms, executive suites, plunge pool villas, and presidential suites across India." />
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400;1,600&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+
+  <!-- Tailwind Polyfill -->
+  <script>
+    try {
+      var createHashStub = function () {
+        var buf = '';
+        return {
+          update: function (s) { buf += s; return this; },
+          digest: function () {
+            var h = 0;
+            for (var i = 0; i < buf.length; i++) {
+              h = ((h << 5) - h) + buf.charCodeAt(i);
+              h |= 0;
+            }
+            return (h >>> 0).toString(16);
+          }
+        };
+      };
+      if (typeof window !== 'undefined') {
+        if (window.crypto && !window.crypto.createHash) try { window.crypto.createHash = createHashStub; } catch (_) {}
+        if (typeof Crypto !== 'undefined' && Crypto.prototype && !Crypto.prototype.createHash) try { Crypto.prototype.createHash = createHashStub; } catch (_) {}
+      }
+    } catch (_) {}
+  </script>
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            'brand-gold': '#C5A880',
+            'brand-gold-rich': '#B89758',
+            'brand-gold-light': '#DFCDAA',
+            'brand-charcoal': '#141414',
+            'brand-dark': '#1B1B1B',
+            'brand-slate': '#1B2631',
+            'brand-emerald': '#1E3A34',
+            'brand-cream': '#FAF8F5',
+            'brand-sand': '#EFECE6',
+            'brand-stone': '#D8D2C9',
+            'bg': '#FAF8F5',
+            'surface': '#FFFFFF',
+            'surface-subtle': '#F6F3EE',
+            'text-primary': '#171717',
+            'text-secondary': '#5A5550',
+            'text-muted': '#8A847C',
+            'text-inverse': '#FFFFFF',
+            'border': '#E5E0D8',
+            'border-subtle': '#EFECE6',
+          },
+          fontFamily: {
+            serif: ['"Cormorant Garamond"', 'Georgia', 'serif'],
+            sans: ['"Plus Jakarta Sans"', 'system-ui', 'sans-serif'],
+          },
+          letterSpacing: {
+            luxury: '0.22em',
+            'widest-plus': '0.3em',
+          }
+        }
+      }
+    }
+  </script>
+
+  <!-- Custom CSS -->
+  <link rel="stylesheet" href="css/styles.css?v=2.2" />
+
+  <!-- Lenis CDN -->
+  <script src="https://unpkg.com/lenis@1.1.18/dist/lenis.min.js"></script>
+
+  <!-- Lucide Icons CDN -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+
+<body class="bg-bg text-text-primary antialiased selection:bg-brand-gold/20 relative">
+  <div class="grain-overlay"></div>
+
+  <!-- Announcement Bar -->
+  <div class="bg-brand-charcoal text-white/90 text-xs py-2 px-4 border-b border-brand-gold/20 relative z-40">
+    <div class="max-w-7xl mx-auto flex items-center justify-between text-[11px] sm:text-xs">
+      <div class="flex items-center space-x-2">
+        <span class="px-2 py-0.5 rounded text-[10px] font-bold uppercase tracking-wider bg-brand-gold text-brand-charcoal">Best Rate Guarantee</span>
+        <span class="text-white/80">Direct booking privilege: Up to 20% off with <strong class="text-brand-gold font-semibold">Regenta Rewards</strong></span>
+      </div>
+      <a href="tel:+918041783000" class="hover:text-brand-gold transition-colors hidden sm:flex items-center gap-1.5 text-white/70">
+        <i data-lucide="phone" class="w-3.5 h-3.5 text-brand-gold"></i>
+        <span>24/7 Reservations: +91 80 4178 3000</span>
+      </a>
+    </div>
+  </div>
+
+  <!-- Global Header (Light Header for Subpages) -->
+  <header id="main-header" class="fixed top-8 left-0 right-0 z-40 transition-all duration-300 px-4 sm:px-8 py-3.5 light-header text-text-primary shadow-sm">
+    <div class="max-w-7xl mx-auto flex items-center justify-between">
+      <a href="index.html" class="flex items-center space-x-3 group shrink-0 mr-4 lg:mr-6">
+        <img src="images/brands/logo-2.webp" alt="Royal Orchid Hotels" class="h-8 sm:h-9 w-auto max-w-[190px] sm:max-w-[220px] object-contain" />
+      </a>
+
+      <nav class="hidden lg:flex items-center space-x-4 xl:space-x-6 text-[11px] xl:text-xs uppercase tracking-luxury font-medium text-text-secondary">
+        <a href="stays.html" class="hover:text-brand-gold transition-colors py-1 whitespace-nowrap">Stays</a>
+        <a href="rooms.html" class="text-brand-gold-rich font-semibold py-1 whitespace-nowrap">Rooms</a>
+        <a href="dining.html" class="hover:text-brand-gold transition-colors py-1 whitespace-nowrap">Dining</a>
+        <a href="events.html" class="hover:text-brand-gold transition-colors py-1 whitespace-nowrap">Shaadi & MICE</a>
+        <a href="offers.html" class="hover:text-brand-gold transition-colors py-1 whitespace-nowrap">Offers</a>
+        <a href="loyalty.html" class="hover:text-brand-gold transition-colors py-1 text-brand-gold-rich whitespace-nowrap">Regenta Rewards</a>
+        <a href="partner.html" class="hover:text-brand-gold transition-colors py-1 whitespace-nowrap">Partner</a>
+      </nav>
+
+      <div class="flex items-center space-x-2 sm:space-x-3 shrink-0">
+        <a href="index.html#booking-section" class="btn-gold px-4 sm:px-5 py-2 sm:py-2.5 text-[11px] sm:text-xs uppercase tracking-luxury font-semibold rounded-sm inline-flex items-center gap-1.5 whitespace-nowrap">
+          <span>Book Direct</span>
+          <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i>
+        </a>
+        <button id="menu-toggle-btn" type="button" class="lg:hidden p-2 text-text-primary hover:text-brand-gold">
+          <i data-lucide="menu" class="w-6 h-6"></i>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Mobile Drawer Menu -->
+  <div id="mobile-drawer" class="hidden fixed inset-0 z-50 flex-col bg-brand-charcoal/98 backdrop-blur-2xl text-white overflow-y-auto">
+    <div class="flex items-center justify-between px-6 py-6 border-b border-white/10">
+      <img src="images/brands/logo-2.webp" alt="Royal Orchid Hotels" class="h-10 w-auto brightness-0 invert" />
+      <button id="menu-close-btn" type="button" class="p-2 text-white/80 hover:text-brand-gold"><i data-lucide="x" class="w-6 h-6"></i></button>
+    </div>
+    <div class="flex flex-col px-6 py-8 space-y-4 text-sm uppercase tracking-luxury font-medium border-b border-white/10">
+      <a href="index.html" class="hover:text-brand-gold transition-colors py-2">Home</a>
+      <a href="stays.html" class="hover:text-brand-gold transition-colors py-2">Stays & Resorts</a>
+      <a href="rooms.html" class="text-brand-gold py-2">Rooms & Suites</a>
+      <a href="dining.html" class="hover:text-brand-gold transition-colors py-2">Dining & Bars</a>
+      <a href="events.html" class="hover:text-brand-gold transition-colors py-2">Shaadi & MICE</a>
+      <a href="offers.html" class="hover:text-brand-gold transition-colors py-2">Exclusive Offers</a>
+      <a href="loyalty.html" class="hover:text-brand-gold transition-colors py-2 text-brand-gold">Regenta Rewards</a>
+      <a href="partner.html" class="hover:text-brand-gold transition-colors py-2">Partner With Us</a>
+    </div>
+  </div>
+
+  <!-- Hero Banner -->
+  <section class="pt-32 pb-16 bg-brand-charcoal text-white relative overflow-hidden">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 relative z-10 text-center space-y-4">
+      <span class="text-xs uppercase tracking-widest-plus text-brand-gold font-semibold">MASTER ACCOMMODATIONS</span>
+      <h1 class="text-4xl sm:text-5xl md:text-6xl font-serif font-normal">
+        Rooms, Suites & Private Villas
+      </h1>
+      <p class="text-white/80 font-light text-sm sm:text-base max-w-2xl mx-auto leading-relaxed">
+        Engineered for deep rejuvenation. Featuring custom posturepedic mattresses, Italian marble bathrooms, golf and ocean views, and intuitive in-room technology.
+      </p>
+
+      <!-- Category Filter Tabs -->
+      <div class="flex flex-wrap items-center justify-center gap-2 pt-6">
+        <button type="button" class="room-tab-btn px-4 py-2 text-xs uppercase tracking-wider font-semibold rounded bg-brand-gold text-brand-charcoal transition-all" data-category="all">
+          All Accommodations
+        </button>
+        <button type="button" class="room-tab-btn px-4 py-2 text-xs uppercase tracking-wider font-semibold rounded bg-white/10 text-white hover:bg-white/20 transition-all" data-category="suites">
+          Presidential & Royal Suites
+        </button>
+        <button type="button" class="room-tab-btn px-4 py-2 text-xs uppercase tracking-wider font-semibold rounded bg-white/10 text-white hover:bg-white/20 transition-all" data-category="villas">
+          Plunge Pool Villas
+        </button>
+        <button type="button" class="room-tab-btn px-4 py-2 text-xs uppercase tracking-wider font-semibold rounded bg-white/10 text-white hover:bg-white/20 transition-all" data-category="club">
+          Executive Club Rooms
+        </button>
+        <button type="button" class="room-tab-btn px-4 py-2 text-xs uppercase tracking-wider font-semibold rounded bg-white/10 text-white hover:bg-white/20 transition-all" data-category="deluxe">
+          Deluxe Rooms
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Catalog Grid -->
+  <main class="py-16 px-4 sm:px-6 max-w-7xl mx-auto">
+    <div id="rooms-grid" class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+      
+      <!-- Room 1: Presidential Golf Suite -->
+      <article class="room-card bg-white border border-border rounded overflow-hidden shadow-sm interactive-card flex flex-col md:flex-row" data-category="suites">
+        <div class="md:w-1/2 relative h-64 md:h-auto overflow-hidden">
+          <img src="images/hotels/bangalore_08_09_2020_06_09_461.jpg" alt="Presidential Golf Suite" class="w-full h-full object-cover luxury-image-zoom" loading="lazy" />
+          <div class="absolute top-3 left-3 bg-brand-charcoal text-brand-gold px-2.5 py-1 text-[10px] uppercase font-bold rounded">Flagship Suite</div>
+        </div>
+        <div class="md:w-1/2 p-6 flex flex-col justify-between space-y-4">
+          <div>
+            <span class="text-[10px] uppercase tracking-widest text-brand-gold-rich font-semibold">Hotel Royal Orchid Bengaluru</span>
+            <h3 class="font-serif text-2xl font-normal text-text-primary mt-1">Presidential Golf Suite</h3>
+            <p class="text-xs text-text-secondary mt-2">1,100 sq ft grand residence overlooking the 18-hole KGA Golf Course. Includes separate drawing room, 8-seater dining room, private bar, and dedicated 24-hr butler.</p>
+            <div class="grid grid-cols-2 gap-2 mt-4 text-[11px] text-text-muted">
+              <div>📐 1,100 Sq. Ft.</div>
+              <div>👑 King Bed</div>
+              <div>⛳ Panoramic Golf View</div>
+              <div>🍸 Butler & Bar</div>
+            </div>
+          </div>
+          <div class="pt-4 border-t border-border flex items-center justify-between">
+            <div>
+              <span class="text-[10px] text-text-muted line-through block">₹22,000</span>
+              <span class="font-serif text-2xl font-bold text-text-primary">₹17,600</span>
+              <span class="text-[10px] text-emerald-700 font-semibold block">Regenta Rewards (Save 20%)</span>
+            </div>
+            <a href="index.html#booking-section" class="btn-gold px-4 py-2 text-xs uppercase tracking-wider font-bold rounded">
+              Book Suite
+            </a>
+          </div>
+        </div>
+      </article>
+
+      <!-- Room 2: Royal Oceanfront Plunge Pool Villa -->
+      <article class="room-card bg-white border border-border rounded overflow-hidden shadow-sm interactive-card flex flex-col md:flex-row" data-category="villas">
+        <div class="md:w-1/2 relative h-64 md:h-auto overflow-hidden">
+          <img src="images/hotels/bangalore_19_05_2024_04_05_44pool-banner.jpg" alt="Oceanfront Plunge Pool Villa" class="w-full h-full object-cover luxury-image-zoom" loading="lazy" />
+          <div class="absolute top-3 left-3 bg-brand-charcoal text-brand-gold px-2.5 py-1 text-[10px] uppercase font-bold rounded">Private Villa</div>
+        </div>
+        <div class="md:w-1/2 p-6 flex flex-col justify-between space-y-4">
+          <div>
+            <span class="text-[10px] uppercase tracking-widest text-brand-gold-rich font-semibold">Royal Orchid Beach Resort Goa</span>
+            <h3 class="font-serif text-2xl font-normal text-text-primary mt-1">Oceanfront Plunge Pool Villa</h3>
+            <p class="text-xs text-text-secondary mt-2">Private temperature-controlled plunge pool surrounded by tropical bougainvillea, open-to-sky outdoor soaking tub, sun loungers, and direct beach trail.</p>
+            <div class="grid grid-cols-2 gap-2 mt-4 text-[11px] text-text-muted">
+              <div>🏊 Private Plunge Pool</div>
+              <div>🌊 Beach Access</div>
+              <div>📐 850 Sq. Ft.</div>
+              <div>🛁 Outdoor Jacuzzi</div>
+            </div>
+          </div>
+          <div class="pt-4 border-t border-border flex items-center justify-between">
+            <div>
+              <span class="text-[10px] text-text-muted line-through block">₹18,500</span>
+              <span class="font-serif text-2xl font-bold text-text-primary">₹14,800</span>
+              <span class="text-[10px] text-emerald-700 font-semibold block">Regenta Rewards (Save 20%)</span>
+            </div>
+            <a href="index.html#booking-section" class="btn-gold px-4 py-2 text-xs uppercase tracking-wider font-bold rounded">
+              Book Villa
+            </a>
+          </div>
+        </div>
+      </article>
+
+      <!-- Room 3: Executive Club Room -->
+      <article class="room-card bg-white border border-border rounded overflow-hidden shadow-sm interactive-card flex flex-col md:flex-row" data-category="club">
+        <div class="md:w-1/2 relative h-64 md:h-auto overflow-hidden">
+          <img src="images/hotels/bangalore_08_08_2020_06_08_183.jpg" alt="Executive Club Room" class="w-full h-full object-cover luxury-image-zoom" loading="lazy" />
+          <div class="absolute top-3 left-3 bg-brand-charcoal text-brand-gold px-2.5 py-1 text-[10px] uppercase font-bold rounded">Business Executive</div>
+        </div>
+        <div class="md:w-1/2 p-6 flex flex-col justify-between space-y-4">
+          <div>
+            <span class="text-[10px] uppercase tracking-widest text-brand-gold-rich font-semibold">Regenta Central Hotels</span>
+            <h3 class="font-serif text-2xl font-normal text-text-primary mt-1">Executive Club Room</h3>
+            <p class="text-xs text-text-secondary mt-2">Ergonomically engineered for the discerning business traveler with high-speed 100 Mbps Wi-Fi, executive workspace, Club Lounge access, and complimentary breakfast.</p>
+            <div class="grid grid-cols-2 gap-2 mt-4 text-[11px] text-text-muted">
+              <div>📐 420 Sq. Ft.</div>
+              <div>☕ Nespresso Machine</div>
+              <div>💼 Executive Desk</div>
+              <div>🍳 Free Buffet Breakfast</div>
+            </div>
+          </div>
+          <div class="pt-4 border-t border-border flex items-center justify-between">
+            <div>
+              <span class="text-[10px] text-text-muted line-through block">₹6,500</span>
+              <span class="font-serif text-2xl font-bold text-text-primary">₹5,200</span>
+              <span class="text-[10px] text-emerald-700 font-semibold block">Regenta Rewards (Save 20%)</span>
+            </div>
+            <a href="index.html#booking-section" class="btn-gold px-4 py-2 text-xs uppercase tracking-wider font-bold rounded">
+              Book Room
+            </a>
+          </div>
+        </div>
+      </article>
+
+      <!-- Room 4: Deluxe Heritage Room -->
+      <article class="room-card bg-white border border-border rounded overflow-hidden shadow-sm interactive-card flex flex-col md:flex-row" data-category="deluxe">
+        <div class="md:w-1/2 relative h-64 md:h-auto overflow-hidden">
+          <img src="images/hotels/bangalore_17_20_2020_12_20_252.jpg" alt="Deluxe Heritage Room" class="w-full h-full object-cover luxury-image-zoom" loading="lazy" />
+          <div class="absolute top-3 left-3 bg-brand-charcoal text-brand-gold px-2.5 py-1 text-[10px] uppercase font-bold rounded">Heritage Deluxe</div>
+        </div>
+        <div class="md:w-1/2 p-6 flex flex-col justify-between space-y-4">
+          <div>
+            <span class="text-[10px] uppercase tracking-widest text-brand-gold-rich font-semibold">Regenta Resort & Spa Udaipur</span>
+            <h3 class="font-serif text-2xl font-normal text-text-primary mt-1">Deluxe Heritage Room</h3>
+            <p class="text-xs text-text-secondary mt-2">Adorned with hand-painted Rajasthani jharokha arches, plush king-size bed, private balcony overlooking the Aravalli hills, and rain shower.</p>
+            <div class="grid grid-cols-2 gap-2 mt-4 text-[11px] text-text-muted">
+              <div>📐 380 Sq. Ft.</div>
+              <div>🏔️ Mountain Balcony</div>
+              <div>🚿 Rainforest Shower</div>
+              <div>✨ Premium Toiletries</div>
+            </div>
+          </div>
+          <div class="pt-4 border-t border-border flex items-center justify-between">
+            <div>
+              <span class="text-[10px] text-text-muted line-through block">₹7,200</span>
+              <span class="font-serif text-2xl font-bold text-text-primary">₹5,760</span>
+              <span class="text-[10px] text-emerald-700 font-semibold block">Regenta Rewards (Save 20%)</span>
+            </div>
+            <a href="index.html#booking-section" class="btn-gold px-4 py-2 text-xs uppercase tracking-wider font-bold rounded">
+              Book Room
+            </a>
+          </div>
+        </div>
+      </article>
+
+      <!-- Room 5: Royal Club Suite -->
+      <article class="room-card bg-white border border-border rounded overflow-hidden shadow-sm interactive-card flex flex-col md:flex-row" data-category="suites">
+        <div class="md:w-1/2 relative h-64 md:h-auto overflow-hidden">
+          <img src="images/hotels/bangalore_19_Mar_2024_04_03_05room-over.jpg" alt="Royal Club Suite" class="w-full h-full object-cover luxury-image-zoom" loading="lazy" />
+          <div class="absolute top-3 left-3 bg-brand-charcoal text-brand-gold px-2.5 py-1 text-[10px] uppercase font-bold rounded">Executive Suite</div>
+        </div>
+        <div class="md:w-1/2 p-6 flex flex-col justify-between space-y-4">
+          <div>
+            <span class="text-[10px] uppercase tracking-widest text-brand-gold-rich font-semibold">Hotel Royal Orchid Bengaluru</span>
+            <h3 class="font-serif text-2xl font-normal text-text-primary mt-1">Royal Club Suite</h3>
+            <p class="text-xs text-text-secondary mt-2">Spacious living and master bedroom suite with walk-in wardrobe, Italian marble bathroom, high-speed business desk, and complimentary evening cocktail hours.</p>
+            <div class="grid grid-cols-2 gap-2 mt-4 text-[11px] text-text-muted">
+              <div>📐 650 Sq. Ft.</div>
+              <div>🍸 Club Lounge Access</div>
+              <div>🚿 Marble Rain Shower</div>
+              <div>👔 Express Ironing</div>
+            </div>
+          </div>
+          <div class="pt-4 border-t border-border flex items-center justify-between">
+            <div>
+              <span class="text-[10px] text-text-muted line-through block">₹12,000</span>
+              <span class="font-serif text-2xl font-bold text-text-primary">₹9,600</span>
+              <span class="text-[10px] text-emerald-700 font-semibold block">Regenta Rewards (Save 20%)</span>
+            </div>
+            <a href="index.html#booking-section" class="btn-gold px-4 py-2 text-xs uppercase tracking-wider font-bold rounded">
+              Book Suite
+            </a>
+          </div>
+        </div>
+      </article>
+
+      <!-- Room 6: Grand Palace Chamber -->
+      <article class="room-card bg-white border border-border rounded overflow-hidden shadow-sm interactive-card flex flex-col md:flex-row" data-category="deluxe">
+        <div class="md:w-1/2 relative h-64 md:h-auto overflow-hidden">
+          <img src="images/Regenta_Place_kota.jpg" alt="Grand Palace Chamber" class="w-full h-full object-cover luxury-image-zoom" loading="lazy" />
+          <div class="absolute top-3 left-3 bg-brand-charcoal text-brand-gold px-2.5 py-1 text-[10px] uppercase font-bold rounded">Palace Wing</div>
+        </div>
+        <div class="md:w-1/2 p-6 flex flex-col justify-between space-y-4">
+          <div>
+            <span class="text-[10px] uppercase tracking-widest text-brand-gold-rich font-semibold">Regenta Resort Kota</span>
+            <h3 class="font-serif text-2xl font-normal text-text-primary mt-1">Grand Palace Chamber</h3>
+            <p class="text-xs text-text-secondary mt-2">Historic Rajputana architecture with modern luxury amenities, handcrafted teakwood furnishings, royal courtyard views, and 24-hour room dining.</p>
+            <div class="grid grid-cols-2 gap-2 mt-4 text-[11px] text-text-muted">
+              <div>📐 500 Sq. Ft.</div>
+              <div>🏰 Courtyard View</div>
+              <div>🛏️ Royal Four-Poster Bed</div>
+              <div>🫖 Heritage Tea Service</div>
+            </div>
+          </div>
+          <div class="pt-4 border-t border-border flex items-center justify-between">
+            <div>
+              <span class="text-[10px] text-text-muted line-through block">₹8,800</span>
+              <span class="font-serif text-2xl font-bold text-text-primary">₹7,040</span>
+              <span class="text-[10px] text-emerald-700 font-semibold block">Regenta Rewards (Save 20%)</span>
+            </div>
+            <a href="index.html#booking-section" class="btn-gold px-4 py-2 text-xs uppercase tracking-wider font-bold rounded">
+              Book Chamber
+            </a>
+          </div>
+        </div>
+      </article>
+
+    </div>
+  </main>
+
+  <!-- Global Footer -->
+  <footer class="bg-brand-charcoal text-white pt-12 pb-8 border-t border-brand-gold/30">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 flex flex-col md:flex-row items-center justify-between text-xs text-white/60">
+      <div>© 2026 Royal Orchid Hotels Limited (ROHL). BSE & NSE Listed.</div>
+      <div class="flex items-center space-x-6 mt-4 md:mt-0">
+        <a href="index.html" class="hover:text-brand-gold">Home</a>
+        <a href="stays.html" class="hover:text-brand-gold">Stays</a>
+        <a href="dining.html" class="hover:text-brand-gold">Dining</a>
+        <a href="events.html" class="hover:text-brand-gold">Events</a>
+        <a href="loyalty.html" class="hover:text-brand-gold">Regenta Rewards</a>
+        <a href="partner.html" class="hover:text-brand-gold">Partner</a>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/main.js?v=2.2"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const tabBtns = document.querySelectorAll('.room-tab-btn');
+      const cards = document.querySelectorAll('.room-card');
+
+      tabBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+          tabBtns.forEach(b => {
+            b.classList.remove('bg-brand-gold', 'text-brand-charcoal');
+            b.classList.add('bg-white/10', 'text-white');
+          });
+          btn.classList.add('bg-brand-gold', 'text-brand-charcoal');
+          btn.classList.remove('bg-white/10', 'text-white');
+
+          const cat = btn.getAttribute('data-category');
+          cards.forEach(card => {
+            const cardCat = card.getAttribute('data-category');
+            if (cat === 'all' || cardCat === cat) {
+              card.style.display = 'flex';
+            } else {
+              card.style.display = 'none';
+            }
+          });
+        });
+      });
+    });
+  </script>
+</body>
+</html>

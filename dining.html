@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Signature Dining & Bars | Tiger Trail & Limelight | Royal Orchid</title>
+  <meta name="description" content="Discover iconic gastronomy at Royal Orchid Hotels. Book tables at Tiger Trail for authentic North-West Frontier grills and Limelight for 24/7 all-day global dining." />
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400;1,600&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+
+  <!-- Tailwind Polyfill -->
+  <script>
+    try {
+      var createHashStub = function () {
+        var buf = '';
+        return {
+          update: function (s) { buf += s; return this; },
+          digest: function () {
+            var h = 0;
+            for (var i = 0; i < buf.length; i++) {
+              h = ((h << 5) - h) + buf.charCodeAt(i);
+              h |= 0;
+            }
+            return (h >>> 0).toString(16);
+          }
+        };
+      };
+      if (typeof window !== 'undefined') {
+        if (window.crypto && !window.crypto.createHash) try { window.crypto.createHash = createHashStub; } catch (_) {}
+        if (typeof Crypto !== 'undefined' && Crypto.prototype && !Crypto.prototype.createHash) try { Crypto.prototype.createHash = createHashStub; } catch (_) {}
+      }
+    } catch (_) {}
+  </script>
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            'brand-gold': '#C5A880',
+            'brand-gold-rich': '#B89758',
+            'brand-gold-light': '#DFCDAA',
+            'brand-charcoal': '#141414',
+            'brand-dark': '#1B1B1B',
+            'brand-slate': '#1B2631',
+            'brand-emerald': '#1E3A34',
+            'brand-cream': '#FAF8F5',
+            'brand-sand': '#EFECE6',
+            'brand-stone': '#D8D2C9',
+            'bg': '#FAF8F5',
+            'surface': '#FFFFFF',
+            'surface-subtle': '#F6F3EE',
+            'text-primary': '#171717',
+            'text-secondary': '#5A5550',
+            'text-muted': '#8A847C',
+            'text-inverse': '#FFFFFF',
+            'border': '#E5E0D8',
+            'border-subtle': '#EFECE6',
+          },
+          fontFamily: {
+            serif: ['"Cormorant Garamond"', 'Georgia', 'serif'],
+            sans: ['"Plus Jakarta Sans"', 'system-ui', 'sans-serif'],
+          },
+          letterSpacing: {
+            luxury: '0.22em',
+            'widest-plus': '0.3em',
+          }
+        }
+      }
+    }
+  </script>
+
+  <!-- Custom CSS -->
+  <link rel="stylesheet" href="css/styles.css?v=2.2" />
+
+  <!-- Lenis CDN -->
+  <script src="https://unpkg.com/lenis@1.1.18/dist/lenis.min.js"></script>
+
+  <!-- Lucide Icons CDN -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+
+<body class="bg-bg text-text-primary antialiased selection:bg-brand-gold/20 relative">
+  <div class="grain-overlay"></div>
+
+  <!-- Announcement Bar -->
+  <div class="bg-brand-charcoal text-white/90 text-xs py-2 px-4 border-b border-brand-gold/20 relative z-40">
+    <div class="max-w-7xl mx-auto flex items-center justify-between text-[11px] sm:text-xs">
+      <div class="flex items-center space-x-2">
+        <span class="px-2 py-0.5 rounded text-[10px] font-bold uppercase tracking-wider bg-brand-gold text-brand-charcoal">Regenta Rewards Dining</span>
+        <span class="text-white/80">Members enjoy 15% off food & beverage across Tiger Trail & Limelight</span>
+      </div>
+      <a href="tel:+918041783000" class="hover:text-brand-gold transition-colors hidden sm:flex items-center gap-1.5 text-white/70">
+        <i data-lucide="phone" class="w-3.5 h-3.5 text-brand-gold"></i>
+        <span>Table Reservations: +91 80 4178 3000</span>
+      </a>
+    </div>
+  </div>
+
+  <!-- Global Header -->
+  <header id="main-header" class="fixed top-8 left-0 right-0 z-40 transition-all duration-300 px-4 sm:px-8 py-3.5 light-header text-text-primary shadow-sm">
+    <div class="max-w-7xl mx-auto flex items-center justify-between">
+      <a href="index.html" class="flex items-center space-x-3 group shrink-0 mr-4 lg:mr-6">
+        <img src="images/brands/logo-2.webp" alt="Royal Orchid Hotels" class="h-8 sm:h-9 w-auto max-w-[190px] sm:max-w-[220px] object-contain" />
+      </a>
+
+      <nav class="hidden lg:flex items-center space-x-4 xl:space-x-6 text-[11px] xl:text-xs uppercase tracking-luxury font-medium text-text-secondary">
+        <a href="stays.html" class="hover:text-brand-gold transition-colors py-1 whitespace-nowrap">Stays</a>
+        <a href="rooms.html" class="hover:text-brand-gold transition-colors py-1 whitespace-nowrap">Rooms</a>
+        <a href="dining.html" class="text-brand-gold-rich font-semibold py-1 whitespace-nowrap">Dining</a>
+        <a href="events.html" class="hover:text-brand-gold transition-colors py-1 whitespace-nowrap">Shaadi & MICE</a>
+        <a href="offers.html" class="hover:text-brand-gold transition-colors py-1 whitespace-nowrap">Offers</a>
+        <a href="loyalty.html" class="hover:text-brand-gold transition-colors py-1 text-brand-gold-rich whitespace-nowrap">Regenta Rewards</a>
+        <a href="partner.html" class="hover:text-brand-gold transition-colors py-1 whitespace-nowrap">Partner</a>
+      </nav>
+
+      <div class="flex items-center space-x-2 sm:space-x-3 shrink-0">
+        <button type="button" class="open-dining-modal-btn btn-gold px-4 sm:px-5 py-2 sm:py-2.5 text-[11px] sm:text-xs uppercase tracking-luxury font-semibold rounded-sm inline-flex items-center gap-1.5 whitespace-nowrap" data-restaurant="Tiger Trail" data-hotel="Hotel Royal Orchid Bengaluru">
+          <span>Book Table</span>
+          <i data-lucide="utensils" class="w-3.5 h-3.5"></i>
+        </button>
+        <button id="menu-toggle-btn" type="button" class="lg:hidden p-2 text-text-primary hover:text-brand-gold">
+          <i data-lucide="menu" class="w-6 h-6"></i>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Mobile Drawer Menu -->
+  <div id="mobile-drawer" class="hidden fixed inset-0 z-50 flex-col bg-brand-charcoal/98 backdrop-blur-2xl text-white overflow-y-auto">
+    <div class="flex items-center justify-between px-6 py-6 border-b border-white/10">
+      <img src="images/brands/logo-2.webp" alt="Royal Orchid Hotels" class="h-10 w-auto brightness-0 invert" />
+      <button id="menu-close-btn" type="button" class="p-2 text-white/80 hover:text-brand-gold"><i data-lucide="x" class="w-6 h-6"></i></button>
+    </div>
+    <div class="flex flex-col px-6 py-8 space-y-4 text-sm uppercase tracking-luxury font-medium border-b border-white/10">
+      <a href="index.html" class="hover:text-brand-gold transition-colors py-2">Home</a>
+      <a href="stays.html" class="hover:text-brand-gold transition-colors py-2">Stays & Resorts</a>
+      <a href="rooms.html" class="hover:text-brand-gold transition-colors py-2">Rooms & Suites</a>
+      <a href="dining.html" class="text-brand-gold py-2">Dining & Bars</a>
+      <a href="events.html" class="hover:text-brand-gold transition-colors py-2">Shaadi & MICE</a>
+      <a href="offers.html" class="hover:text-brand-gold transition-colors py-2">Exclusive Offers</a>
+      <a href="loyalty.html" class="hover:text-brand-gold transition-colors py-2 text-brand-gold">Regenta Rewards</a>
+      <a href="partner.html" class="hover:text-brand-gold transition-colors py-2">Partner With Us</a>
+    </div>
+  </div>
+
+  <!-- Hero Banner -->
+  <section class="pt-32 pb-16 bg-brand-charcoal text-white relative overflow-hidden">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 relative z-10 text-center space-y-4">
+      <span class="text-xs uppercase tracking-widest-plus text-brand-gold font-semibold">FOUR DECADES OF CULINARY MASTERY</span>
+      <h1 class="text-4xl sm:text-5xl md:text-6xl font-serif font-normal">
+        Signature Dining & Gastronomy
+      </h1>
+      <p class="text-white/80 font-light text-sm sm:text-base max-w-2xl mx-auto leading-relaxed">
+        From authentic North-West Frontier clay-oven tandoors to 24/7 global artisanal buffet spreads and rooftop mixology lounges.
+      </p>
+    </div>
+  </section>
+
+  <!-- Section 1: Tiger Trail In-Depth Showcase -->
+  <section id="tiger-trail" class="py-20 px-4 sm:px-6 max-w-7xl mx-auto">
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+      <div class="lg:col-span-6 relative rounded overflow-hidden shadow-2xl">
+        <img src="images/hotels/bangalore_27_Mar_2021_01_44_43600-by-500.jpg" alt="Tiger Trail Specialty Dining" class="w-full h-[460px] object-cover" />
+        <div class="absolute bottom-4 left-4 right-4 bg-brand-charcoal/80 backdrop-blur-md p-4 rounded border border-brand-gold/30 text-white flex items-center justify-between">
+          <div>
+            <div class="text-[10px] uppercase tracking-wider text-brand-gold font-semibold">Available at</div>
+            <div class="text-sm font-serif">Bengaluru · Jaipur · Udaipur · Kanpur</div>
+          </div>
+          <button type="button" class="open-dining-modal-btn btn-gold px-4 py-2 text-xs uppercase tracking-wider font-bold rounded" data-restaurant="Tiger Trail" data-hotel="Hotel Royal Orchid Bengaluru">
+            Reserve Gazebo
+          </button>
+        </div>
+      </div>
+
+      <div class="lg:col-span-6 space-y-6">
+        <div class="inline-flex items-center space-x-2 px-3 py-1 bg-brand-gold/10 border border-brand-gold/40 rounded-full text-brand-gold-rich text-xs uppercase tracking-luxury">
+          <i data-lucide="flame" class="w-3.5 h-3.5 text-brand-gold-rich"></i>
+          <span>FLAGSHIP SPECIALTY RESTAURANT</span>
+        </div>
+        <h2 class="text-3xl sm:text-4xl md:text-5xl font-serif font-normal text-text-primary">
+          Tiger Trail — Authentic Frontier & Mughlai Delicacies
+        </h2>
+        <p class="text-text-secondary text-sm sm:text-base font-light leading-relaxed">
+          Inspired by the ancient culinary routes of the North-West Frontier Province, Tiger Trail is celebrated for its slow-cooked delicacies, fragrant biryanis, and tender kebabs prepared in traditional live charcoal tandoors.
+        </p>
+
+        <div class="space-y-3 pt-2 text-xs text-text-secondary">
+          <div class="flex items-start gap-2.5">
+            <i data-lucide="check" class="w-4 h-4 text-brand-gold-rich flex-shrink-0 mt-0.5"></i>
+            <div><strong>Signature Kakori & Galouti Kebabs:</strong> Melt-in-mouth textures infused with 24 proprietary royal spices.</div>
+          </div>
+          <div class="flex items-start gap-2.5">
+            <i data-lucide="check" class="w-4 h-4 text-brand-gold-rich flex-shrink-0 mt-0.5"></i>
+            <div><strong>Romantic Starlit Gazebos:</strong> Private candlelit dining surrounded by lush lawns and gentle water bodies.</div>
+          </div>
+          <div class="flex items-start gap-2.5">
+            <i data-lucide="check" class="w-4 h-4 text-brand-gold-rich flex-shrink-0 mt-0.5"></i>
+            <div><strong>Sikandari Raan & Dal Tiger Trail:</strong> Slow-simmered for 18 hours for deep, velvety richness.</div>
+          </div>
+        </div>
+
+        <div class="pt-4 flex items-center space-x-4">
+          <button type="button" class="open-dining-modal-btn btn-gold px-6 py-3 text-xs uppercase tracking-luxury font-bold rounded" data-restaurant="Tiger Trail" data-hotel="Hotel Royal Orchid Bengaluru">
+            Book a Table at Tiger Trail
+          </button>
+          <a href="tel:+918041783000" class="btn-dark px-6 py-3 text-xs uppercase tracking-luxury font-semibold rounded">
+            Enquire for Private Dining
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Section 2: Limelight In-Depth Showcase -->
+  <section id="limelight" class="py-20 bg-surface-subtle border-y border-border">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6">
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+        
+        <div class="lg:col-span-6 space-y-6 order-2 lg:order-1">
+          <div class="inline-flex items-center space-x-2 px-3 py-1 bg-brand-gold/10 border border-brand-gold/40 rounded-full text-brand-gold-rich text-xs uppercase tracking-luxury">
+            <i data-lucide="clock" class="w-3.5 h-3.5 text-brand-gold-rich"></i>
+            <span>24/7 ALL-DAY DINING & COFFEE SHOP</span>
+          </div>
+          <h2 class="text-3xl sm:text-4xl md:text-5xl font-serif font-normal text-text-primary">
+            Limelight — 24/7 Global Gourmet & Alfresco Dining
+          </h2>
+          <p class="text-text-secondary text-sm sm:text-base font-light leading-relaxed">
+            Overlooking serene pool waters and manicured greens, Limelight is an all-day culinary hub offering handcrafted wood-fired pizzas, global Continental delicacies, Pan-Asian woks, and India's finest Sunday champagne brunch spreads.
+          </p>
+
+          <div class="space-y-3 pt-2 text-xs text-text-secondary">
+            <div class="flex items-start gap-2.5">
+              <i data-lucide="check" class="w-4 h-4 text-brand-gold-rich flex-shrink-0 mt-0.5"></i>
+              <div><strong>Artisanal Wood-Fired Neapolitan Pizza:</strong> Hand-stretched dough, San Marzano tomatoes, and fresh bocconcini.</div>
+            </div>
+            <div class="flex items-start gap-2.5">
+              <i data-lucide="check" class="w-4 h-4 text-brand-gold-rich flex-shrink-0 mt-0.5"></i>
+              <div><strong>24/7 Midnight Dining:</strong> Freshly brewed single-origin coffee and comforting midnight spreads round the clock.</div>
+            </div>
+            <div class="flex items-start gap-2.5">
+              <i data-lucide="check" class="w-4 h-4 text-brand-gold-rich flex-shrink-0 mt-0.5"></i>
+              <div><strong>Grand Sunday Champagne Brunch:</strong> Live grills, sushi bars, dim sums, and an elaborate Parisian dessert studio.</div>
+            </div>
+          </div>
+
+          <div class="pt-4 flex items-center space-x-4">
+            <button type="button" class="open-dining-modal-btn btn-gold px-6 py-3 text-xs uppercase tracking-luxury font-bold rounded" data-restaurant="Limelight" data-hotel="Hotel Royal Orchid Bengaluru">
+              Book a Table at Limelight
+            </button>
+          </div>
+        </div>
+
+        <div class="lg:col-span-6 order-1 lg:order-2 relative rounded overflow-hidden shadow-2xl">
+          <img src="images/hotels/bangalore_1homedelivery.jpg" alt="Limelight 24/7 Dining" class="w-full h-[460px] object-cover" />
+          <div class="absolute bottom-4 left-4 right-4 bg-brand-charcoal/80 backdrop-blur-md p-4 rounded border border-brand-gold/30 text-white flex items-center justify-between">
+            <div>
+              <div class="text-[10px] uppercase tracking-wider text-brand-gold font-semibold">Setting</div>
+              <div class="text-sm font-serif">Poolside Alfresco & Indoor Dining</div>
+            </div>
+            <span class="text-xs text-brand-gold font-semibold">Open 24 Hours</span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- Section 3: Pinxx & Mixology Lounge -->
+  <section id="pinxx" class="py-20 px-4 sm:px-6 max-w-7xl mx-auto">
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+      <div class="lg:col-span-6 relative rounded overflow-hidden shadow-2xl">
+        <img src="images/hotels/bangalore_23_Mar_2024_02_18_12inarond.jpg" alt="Pinxx Bar and Lounge" class="w-full h-[460px] object-cover" />
+        <div class="absolute bottom-4 left-4 right-4 bg-brand-charcoal/80 backdrop-blur-md p-4 rounded border border-brand-gold/30 text-white flex items-center justify-between">
+          <div>
+            <div class="text-[10px] uppercase tracking-wider text-brand-gold font-semibold">Lounge & Bar</div>
+            <div class="text-sm font-serif">Artisanal Spirits & Sommelier Wine Cellar</div>
+          </div>
+          <span class="text-xs text-brand-gold font-semibold">5:00 PM – 1:00 AM</span>
+        </div>
+      </div>
+
+      <div class="lg:col-span-6 space-y-6">
+        <div class="inline-flex items-center space-x-2 px-3 py-1 bg-brand-gold/10 border border-brand-gold/40 rounded-full text-brand-gold-rich text-xs uppercase tracking-luxury">
+          <i data-lucide="wine" class="w-3.5 h-3.5 text-brand-gold-rich"></i>
+          <span>CHIC CONTEMPORARY LOUNGE</span>
+        </div>
+        <h2 class="text-3xl sm:text-4xl md:text-5xl font-serif font-normal text-text-primary">
+          Pinxx — Crafted Cocktails & Intimate Conversations
+        </h2>
+        <p class="text-text-secondary text-sm sm:text-base font-light leading-relaxed">
+          Unwind in sophisticated elegance at Pinxx. Featuring handcrafted botanical cocktails by award-winning mixologists, rare single malts, and tapas plates that pair perfectly with mellow jazz and evening networking.
+        </p>
+
+        <div class="space-y-3 pt-2 text-xs text-text-secondary">
+          <div class="flex items-start gap-2.5">
+            <i data-lucide="check" class="w-4 h-4 text-brand-gold-rich flex-shrink-0 mt-0.5"></i>
+            <div><strong>Master Mixologist Signature Creations:</strong> Infused bitters, smoking cinnamon, and seasonal Indian botanicals.</div>
+          </div>
+          <div class="flex items-start gap-2.5">
+            <i data-lucide="check" class="w-4 h-4 text-brand-gold-rich flex-shrink-0 mt-0.5"></i>
+            <div><strong>Curated Global Wine Library:</strong> Hand-selected vintages from Bordeaux, Tuscany, and Nashik Valley.</div>
+          </div>
+          <div class="flex items-start gap-2.5">
+            <i data-lucide="check" class="w-4 h-4 text-brand-gold-rich flex-shrink-0 mt-0.5"></i>
+            <div><strong>Gourmet Tapas & Small Plates:</strong> Truffle arancini, smoked lamb sliders, and artisanal cheese boards.</div>
+          </div>
+        </div>
+
+        <div class="pt-4 flex items-center space-x-4">
+          <button type="button" class="open-dining-modal-btn btn-gold px-6 py-3 text-xs uppercase tracking-luxury font-bold rounded" data-restaurant="Pinxx Lounge" data-hotel="Hotel Royal Orchid Bengaluru">
+            Reserve Lounge Seating
+          </button>
+        </div>
+      </div>
+    </div>
+  </section>
+    </div>
+  </section>
+
+  <!-- Section 3: Bulk Banqueting & Outdoor Catering -->
+  <section class="py-20 px-4 sm:px-6 max-w-7xl mx-auto">
+    <div class="bg-brand-charcoal text-white rounded p-8 sm:p-12 border border-brand-gold/40">
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+        <div class="lg:col-span-8 space-y-4">
+          <span class="text-xs uppercase tracking-widest-plus text-brand-gold font-semibold">OUTDOOR CATERING & BULK BANQUETS</span>
+          <h2 class="text-3xl sm:text-4xl font-serif font-normal">
+            Royal Orchid Outdoor Catering for Landmark Gatherings
+          </h2>
+          <p class="text-white/80 font-light text-sm leading-relaxed max-w-2xl">
+            Bringing five-star culinary magic to your private estate, wedding lawn, or corporate convention. Catering for 100 to 10,000+ guests with customized live stations, international dessert bars, and bespoke royal table silver service.
+          </p>
+        </div>
+        <div class="lg:col-span-4 flex flex-col gap-3">
+          <a href="events.html" class="btn-gold py-3 px-6 text-xs uppercase tracking-luxury font-bold rounded text-center">
+            Enquire for Outdoor Catering
+          </a>
+          <a href="tel:+918041783000" class="btn-outline-gold py-3 px-6 text-xs uppercase tracking-luxury font-semibold rounded text-center">
+            Call Catering Director: +91 80 4178 3000
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Global Footer -->
+  <footer class="bg-brand-charcoal text-white pt-12 pb-8 border-t border-brand-gold/30">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 flex flex-col md:flex-row items-center justify-between text-xs text-white/60">
+      <div>© 2026 Royal Orchid Hotels Limited (ROHL). BSE & NSE Listed.</div>
+      <div class="flex items-center space-x-6 mt-4 md:mt-0">
+        <a href="index.html" class="hover:text-brand-gold">Home</a>
+        <a href="stays.html" class="hover:text-brand-gold">Stays</a>
+        <a href="rooms.html" class="hover:text-brand-gold">Rooms</a>
+        <a href="events.html" class="hover:text-brand-gold">Events</a>
+        <a href="loyalty.html" class="hover:text-brand-gold">Regenta Rewards</a>
+        <a href="partner.html" class="hover:text-brand-gold">Partner</a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Table Reservation Modal -->
+  <div id="dining-modal" class="modal-backdrop fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/75 backdrop-blur-md">
+    <div class="modal-content w-full max-w-lg bg-white text-text-primary rounded shadow-2xl overflow-hidden">
+      <div class="p-5 bg-brand-charcoal text-white flex items-center justify-between">
+        <div>
+          <span class="text-[10px] uppercase tracking-widest text-brand-gold font-bold">Gastronomy Reservation</span>
+          <h3 id="dining-modal-title" class="font-serif text-2xl font-normal text-white">Reserve a Table</h3>
+          <p id="dining-modal-hotel" class="text-xs text-white/70 mt-0.5">Hotel Royal Orchid, Bengaluru</p>
+        </div>
+        <button type="button" class="modal-close-trigger p-1 text-white/70 hover:text-brand-gold"><i data-lucide="x" class="w-6 h-6"></i></button>
+      </div>
+
+      <form id="dining-reservation-form" class="p-6 space-y-4 text-xs">
+        <div>
+          <label class="block font-medium text-text-secondary mb-1">Your Name *</label>
+          <input type="text" required placeholder="Guest Name" class="w-full p-2.5 border border-border rounded focus:outline-none focus:border-brand-gold" />
+        </div>
+        <div class="grid grid-cols-2 gap-3">
+          <div>
+            <label class="block font-medium text-text-secondary mb-1">Mobile (WhatsApp) *</label>
+            <input type="tel" required placeholder="+91 98765 43210" class="w-full p-2.5 border border-border rounded focus:outline-none focus:border-brand-gold" />
+          </div>
+          <div>
+            <label class="block font-medium text-text-secondary mb-1">Number of Guests *</label>
+            <select class="w-full p-2.5 border border-border rounded focus:outline-none focus:border-brand-gold">
+              <option>2 Guests</option>
+              <option>4 Guests</option>
+              <option>6 Guests</option>
+              <option>8+ Guests</option>
+            </select>
+          </div>
+        </div>
+        <div class="grid grid-cols-2 gap-3">
+          <div>
+            <label class="block font-medium text-text-secondary mb-1">Date *</label>
+            <input type="date" required class="w-full p-2.5 border border-border rounded focus:outline-none focus:border-brand-gold" />
+          </div>
+          <div>
+            <label class="block font-medium text-text-secondary mb-1">Seating Time *</label>
+            <select class="w-full p-2.5 border border-border rounded focus:outline-none focus:border-brand-gold">
+              <option>Lunch: 12:30 PM - 03:00 PM</option>
+              <option>Dinner (Early): 07:00 PM - 09:00 PM</option>
+              <option>Dinner (Late): 09:00 PM - 11:30 PM</option>
+            </select>
+          </div>
+        </div>
+        <button type="submit" class="w-full btn-gold py-3 text-xs uppercase tracking-luxury font-bold rounded">
+          Confirm Table Booking
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <div id="toast-container"></div>
+  <script src="js/main.js?v=2.2"></script>
+</body>
+</html>

@@ -1,0 +1,18 @@
+# Operating System files
+.DS_Store
+Thumbs.db
+desktop.ini
+*.tmp
+
+# Editor directories
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Scratch scripts and temporary verification files
+scratch/
+test_*.py
+take_screenshots.py
+capture_verification.py
+check_tags.py

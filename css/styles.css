@@ -1,0 +1,490 @@
+/* ==========================================================================
+   Royal Orchid Hotels & Regenta - Luxury Vanilla CSS Architecture
+   Adapted from Hemisphere Design System: Warm Gold, Royal Charcoal,
+   Midnight Slate, Champagne Sand & Ivory.
+   ========================================================================== */
+
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400;1,600&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap');
+
+:root {
+  --color-brand-gold:       #C5A880;
+  --color-brand-gold-rich:  #B89758;
+  --color-brand-gold-light: #DFCDAA;
+  --color-brand-charcoal:   #141414;
+  --color-brand-dark:       #1B1B1B;
+  --color-brand-slate:      #1B2631;
+  --color-brand-emerald:    #1E3A34;
+  --color-brand-cream:      #FAF8F5;
+  --color-brand-sand:       #EFECE6;
+  --color-brand-stone:      #D8D2C9;
+  --color-surface:          #FFFFFF;
+  --color-surface-subtle:   #F6F3EE;
+  --color-text-primary:     #171717;
+  --color-text-secondary:   #5A5550;
+  --color-text-muted:       #8A847C;
+  --color-text-inverse:     #FFFFFF;
+  --color-border:           #E5E0D8;
+  --color-border-subtle:    #EFECE6;
+  --color-accent-amber:     #D97706;
+  --color-vip-ruby:         #8B1E3F;
+
+  --ease-luxury: cubic-bezier(0.16, 1, 0.3, 1);
+  --duration-smooth: 450ms;
+}
+
+/* Base Resets & Typography */
+html {
+  font-family: 'Plus Jakarta Sans', system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+  background-color: var(--color-brand-cream);
+  color: var(--color-text-primary);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+html, body {
+  scroll-behavior: auto !important;
+}
+
+html.lenis, html.lenis body {
+  height: auto;
+}
+
+body {
+  overflow-x: hidden;
+  margin: 0;
+  padding: 0;
+  background-color: var(--color-brand-cream);
+}
+
+section[id], article[id], div[id] {
+  scroll-margin-top: clamp(80px, 8vw, 110px);
+}
+
+.font-serif {
+  font-family: 'Cormorant Garamond', Georgia, serif;
+}
+
+.font-sans {
+  font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
+}
+
+.tracking-luxury {
+  letter-spacing: 0.22em;
+}
+
+.tracking-widest-plus {
+  letter-spacing: 0.3em;
+}
+
+/* Tactile Film Grain Overlay (Subtle Luxury Aesthetic) */
+.grain-overlay {
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+  pointer-events: none;
+  z-index: 9999;
+  opacity: 0.038;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+}
+
+/* Scrollbar Styles */
+::-webkit-scrollbar {
+  width: 7px;
+  height: 7px;
+}
+::-webkit-scrollbar-track {
+  background: #F1ECE4;
+}
+::-webkit-scrollbar-thumb {
+  background: #C5A880;
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #B89758;
+}
+
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+/* Circular Aperture Transitions (Always Visible Luxury Banner) */
+.circular-portal {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+}
+
+/* Scroll Entrance Animations */
+.reveal-on-scroll,
+.reveal-left,
+.reveal-right,
+.reveal-scale {
+  opacity: 0;
+  will-change: opacity, transform;
+}
+
+.reveal-on-scroll {
+  transform: translateY(20px);
+}
+
+.reveal-left {
+  transform: translateX(-24px);
+}
+
+.reveal-right {
+  transform: translateX(24px);
+}
+
+.reveal-scale {
+  transform: scale(0.98) translateY(14px);
+}
+
+.reveal-on-scroll.in-view,
+.reveal-left.in-view,
+.reveal-right.in-view,
+.reveal-scale.in-view,
+.in-view {
+  opacity: 1 !important;
+  transform: translate(0, 0) scale(1) !important;
+  transition: opacity 0.65s cubic-bezier(0.16, 1, 0.3, 1), transform 0.65s cubic-bezier(0.16, 1, 0.3, 1) !important;
+}
+
+.in-view.delay-50  { transition-delay: 50ms !important; }
+.in-view.delay-100 { transition-delay: 100ms !important; }
+.in-view.delay-150 { transition-delay: 150ms !important; }
+.in-view.delay-200 { transition-delay: 200ms !important; }
+.in-view.delay-250 { transition-delay: 250ms !important; }
+.in-view.delay-300 { transition-delay: 300ms !important; }
+.in-view.delay-400 { transition-delay: 400ms !important; }
+
+@media (prefers-reduced-motion: reduce) {
+  .reveal-on-scroll,
+  .reveal-left,
+  .reveal-right,
+  .reveal-scale,
+  .in-view {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+  }
+}
+
+/* ==========================================================================
+   Luxury Card Viewport Entrance & Kinetic Elevation (Hemisphere Architecture)
+   ========================================================================== */
+.card-animate-viewport {
+  opacity: 0;
+  transform: translateY(32px) scale(0.98);
+  will-change: opacity, transform;
+  transition: opacity 0.75s cubic-bezier(0.16, 1, 0.3, 1),
+              transform 0.75s cubic-bezier(0.16, 1, 0.3, 1),
+              box-shadow 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+              border-color 0.35s ease;
+}
+
+.card-animate-viewport.in-view {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+}
+
+/* Staggered Waterfall Delays for Grid Cards */
+.card-delay-0   { transition-delay: 0ms !important; }
+.card-delay-100 { transition-delay: 100ms !important; }
+.card-delay-150 { transition-delay: 150ms !important; }
+.card-delay-200 { transition-delay: 200ms !important; }
+.card-delay-250 { transition-delay: 250ms !important; }
+.card-delay-300 { transition-delay: 300ms !important; }
+.card-delay-350 { transition-delay: 350ms !important; }
+.card-delay-400 { transition-delay: 400ms !important; }
+
+/* Interactive Luxury Cards & Viewport Hover Elevation */
+.interactive-card,
+.hotel-card,
+.dining-card,
+.room-card,
+.offer-card,
+.experience-card,
+.privilege-card {
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+              box-shadow 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+              border-color 0.35s ease,
+              opacity 0.75s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.interactive-card:hover,
+.hotel-card:hover,
+.dining-card:hover,
+.room-card:hover,
+.offer-card:hover,
+.experience-card:hover,
+.privilege-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 24px 44px -10px rgba(20, 20, 20, 0.14), 0 8px 18px -6px rgba(197, 168, 128, 0.22);
+  border-color: rgba(197, 168, 128, 0.65);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .card-animate-viewport {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+  }
+}
+
+/* Image Zoom on Hover */
+.luxury-image-zoom {
+  transition: transform 1.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.group:hover .luxury-image-zoom {
+  transform: scale(1.06);
+}
+
+/* Cinematic Hero Video Background */
+.hero-video-container {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  z-index: 0;
+  background-color: #141414;
+}
+
+.hero-video-container video,
+.hero-video-wrapper video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.hero-video-wrapper {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 100vw;
+  height: 56.25vw;
+  min-height: 100%;
+  min-width: 177.77vh;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+}
+
+.hero-video-wrapper iframe {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+/* Hero Carousel Wipe Animation */
+.slide-item {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  pointer-events: none;
+  transition: transform 0.8s cubic-bezier(0.65, 0, 0.2, 1), opacity 0.4s ease;
+  z-index: 1;
+}
+
+.slide-item.active {
+  opacity: 1;
+  pointer-events: auto;
+  z-index: 2;
+  transform: translateX(0);
+}
+
+.slide-item.slide-prev {
+  transform: translateX(-100%);
+}
+
+.slide-item.slide-next {
+  transform: translateX(100%);
+}
+
+/* Fullscreen Preloader */
+#preloader {
+  transition: transform 0.65s cubic-bezier(0.76, 0, 0.24, 1), opacity 0.4s ease;
+}
+#preloader.preloader-hidden {
+  transform: translateY(-100%);
+  pointer-events: none;
+  opacity: 0;
+}
+
+/* Glassmorphism Header */
+header#main-header {
+  transition: background-color 0.4s cubic-bezier(0.16, 1, 0.3, 1), backdrop-filter 0.4s ease, border-color 0.4s ease, padding 0.3s ease;
+}
+
+header#main-header.scrolled {
+  background: rgba(20, 20, 20, 0.96) !important;
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border-bottom: 1px solid rgba(197, 168, 128, 0.25);
+  padding-top: 0.65rem;
+  padding-bottom: 0.65rem;
+}
+
+/* Light Header variant (for internal pages) */
+header#main-header.light-header {
+  background-color: rgba(255, 255, 255, 0.96);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border-bottom: 1px solid #E5E0D8;
+}
+
+/* RateGain Style Universal Booking Widget */
+.booking-widget-wrapper {
+  background: rgba(255, 255, 255, 0.98);
+  backdrop-filter: blur(16px);
+  border: 1px solid rgba(197, 168, 128, 0.35);
+  box-shadow: 0 30px 60px -15px rgba(17, 17, 17, 0.2), 0 10px 24px -8px rgba(17, 17, 17, 0.08);
+  border-radius: 4px;
+}
+
+.booking-input-cell {
+  position: relative;
+  transition: background-color 0.25s ease, border-color 0.25s ease;
+}
+
+.booking-input-cell:hover,
+.booking-input-cell:focus-within {
+  background-color: #FAF8F5;
+}
+
+/* Rate Comparison Badge */
+.member-rate-badge {
+  background: linear-gradient(135deg, #C5A880 0%, #B89758 100%);
+  color: #141414;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+}
+
+/* Modals & Popovers */
+.modal-backdrop {
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.35s ease, visibility 0.35s ease;
+}
+
+.modal-backdrop.active {
+  opacity: 1;
+  visibility: visible;
+}
+
+.modal-content {
+  transform: scale(0.94) translateY(18px);
+  transition: transform 0.38s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.35s ease;
+  opacity: 0;
+}
+
+.modal-backdrop.active .modal-content {
+  transform: scale(1) translateY(0);
+  opacity: 1;
+}
+
+/* Toast Notifications */
+#toast-container {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  z-index: 10000;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  pointer-events: none;
+}
+
+.toast {
+  pointer-events: auto;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 20px;
+  background: #141414;
+  color: #FFFFFF;
+  border-left: 3px solid #C5A880;
+  box-shadow: 0 16px 32px rgba(0, 0, 0, 0.25);
+  border-radius: 2px;
+  font-size: 0.875rem;
+  transform: translateX(100%);
+  opacity: 0;
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.3s ease;
+}
+
+.toast.show {
+  transform: translateX(0);
+  opacity: 1;
+}
+
+/* Button & Link Hover Lines */
+.hover-gold-line {
+  position: relative;
+}
+.hover-gold-line::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  width: 0;
+  height: 1.5px;
+  background-color: var(--color-brand-gold);
+  transition: width 0.3s ease;
+}
+.hover-gold-line:hover::after {
+  width: 100%;
+}
+
+/* Gold Gradient Button */
+.btn-gold {
+  background: linear-gradient(135deg, #C5A880 0%, #B89758 100%);
+  color: #141414;
+  font-weight: 600;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow: 0 4px 14px rgba(197, 168, 128, 0.3);
+}
+
+.btn-gold:hover {
+  background: linear-gradient(135deg, #DFCDAA 0%, #C5A880 100%);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(197, 168, 128, 0.45);
+}
+
+.btn-dark {
+  background: #141414;
+  color: #FFFFFF;
+  border: 1px solid #141414;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.btn-dark:hover {
+  background: #242424;
+  border-color: #C5A880;
+  color: #DFCDAA;
+  transform: translateY(-2px);
+}
+
+.btn-outline-gold {
+  border: 1px solid #C5A880;
+  color: #C5A880;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.btn-outline-gold:hover {
+  background-color: #C5A880;
+  color: #141414;
+  transform: translateY(-2px);
+}

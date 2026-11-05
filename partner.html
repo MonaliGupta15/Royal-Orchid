@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Partner With Us & Corporate Hub | Royal Orchid & Regenta Hotels</title>
+  <meta name="description" content="Hotel owner management contracts, vendor & supplier registrations, career opportunities, and investor relations for Royal Orchid Hotels Limited." />
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400;1,600&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+
+  <!-- Tailwind Polyfill -->
+  <script>
+    try {
+      var createHashStub = function () {
+        var buf = '';
+        return {
+          update: function (s) { buf += s; return this; },
+          digest: function () {
+            var h = 0;
+            for (var i = 0; i < buf.length; i++) {
+              h = ((h << 5) - h) + buf.charCodeAt(i);
+              h |= 0;
+            }
+            return (h >>> 0).toString(16);
+          }
+        };
+      };
+      if (typeof window !== 'undefined') {
+        if (window.crypto && !window.crypto.createHash) try { window.crypto.createHash = createHashStub; } catch (_) {}
+        if (typeof Crypto !== 'undefined' && Crypto.prototype && !Crypto.prototype.createHash) try { Crypto.prototype.createHash = createHashStub; } catch (_) {}
+      }
+    } catch (_) {}
+  </script>
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            'brand-gold': '#C5A880',
+            'brand-gold-rich': '#B89758',
+            'brand-gold-light': '#DFCDAA',
+            'brand-charcoal': '#141414',
+            'brand-dark': '#1B1B1B',
+            'brand-slate': '#1B2631',
+            'brand-emerald': '#1E3A34',
+            'brand-cream': '#FAF8F5',
+            'brand-sand': '#EFECE6',
+            'brand-stone': '#D8D2C9',
+            'bg': '#FAF8F5',
+            'surface': '#FFFFFF',
+            'surface-subtle': '#F6F3EE',
+            'text-primary': '#171717',
+            'text-secondary': '#5A5550',
+            'text-muted': '#8A847C',
+            'text-inverse': '#FFFFFF',
+            'border': '#E5E0D8',
+            'border-subtle': '#EFECE6',
+          },
+          fontFamily: {
+            serif: ['"Cormorant Garamond"', 'Georgia', 'serif'],
+            sans: ['"Plus Jakarta Sans"', 'system-ui', 'sans-serif'],
+          },
+          letterSpacing: {
+            luxury: '0.22em',
+            'widest-plus': '0.3em',
+          }
+        }
+      }
+    }
+  </script>
+
+  <!-- Custom CSS -->
+  <link rel="stylesheet" href="css/styles.css?v=2.2" />
+
+  <!-- Lenis CDN -->
+  <script src="https://unpkg.com/lenis@1.1.18/dist/lenis.min.js"></script>
+
+  <!-- Lucide Icons CDN -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+
+<body class="bg-bg text-text-primary antialiased selection:bg-brand-gold/20 relative">
+  <div class="grain-overlay"></div>
+
+  <!-- Announcement Bar -->
+  <div class="bg-brand-charcoal text-white/90 text-xs py-2 px-4 border-b border-brand-gold/20 relative z-40">
+    <div class="max-w-7xl mx-auto flex items-center justify-between text-[11px] sm:text-xs">
+      <div class="flex items-center space-x-2">
+        <span class="px-2 py-0.5 rounded text-[10px] font-bold uppercase tracking-wider bg-brand-gold text-brand-charcoal">Business Development</span>
+        <span class="text-white/80">Targeting 350 hotels by 2030 · Hotel Management, Vendor Registration & Corporate Desk</span>
+      </div>
+      <a href="tel:+918041783000" class="hover:text-brand-gold transition-colors hidden sm:flex items-center gap-1.5 text-white/70">
+        <i data-lucide="phone" class="w-3.5 h-3.5 text-brand-gold"></i>
+        <span>Corporate Desk: +91 80 4178 3000</span>
+      </a>
+    </div>
+  </div>
+
+  <!-- Global Header -->
+  <header id="main-header" class="fixed top-8 left-0 right-0 z-40 transition-all duration-300 px-4 sm:px-8 py-3.5 light-header text-text-primary shadow-sm">
+    <div class="max-w-7xl mx-auto flex items-center justify-between">
+      <a href="index.html" class="flex items-center space-x-3 group shrink-0 mr-4 lg:mr-6">
+        <img src="images/brands/logo-2.webp" alt="Royal Orchid Hotels" class="h-8 sm:h-9 w-auto max-w-[190px] sm:max-w-[220px] object-contain" />
+      </a>
+
+      <nav class="hidden lg:flex items-center space-x-4 xl:space-x-6 text-[11px] xl:text-xs uppercase tracking-luxury font-medium text-text-secondary">
+        <a href="stays.html" class="hover:text-brand-gold transition-colors py-1 whitespace-nowrap">Stays</a>
+        <a href="rooms.html" class="hover:text-brand-gold transition-colors py-1 whitespace-nowrap">Rooms</a>
+        <a href="dining.html" class="hover:text-brand-gold transition-colors py-1 whitespace-nowrap">Dining</a>
+        <a href="events.html" class="hover:text-brand-gold transition-colors py-1 whitespace-nowrap">Shaadi & MICE</a>
+        <a href="offers.html" class="hover:text-brand-gold transition-colors py-1 whitespace-nowrap">Offers</a>
+        <a href="loyalty.html" class="hover:text-brand-gold transition-colors py-1 text-brand-gold-rich whitespace-nowrap">Regenta Rewards</a>
+        <a href="partner.html" class="text-brand-gold-rich font-semibold py-1 whitespace-nowrap">Partner</a>
+      </nav>
+
+      <div class="flex items-center space-x-2 sm:space-x-3 shrink-0">
+        <a href="index.html#booking-section" class="btn-gold px-4 sm:px-5 py-2 sm:py-2.5 text-[11px] sm:text-xs uppercase tracking-luxury font-semibold rounded-sm inline-flex items-center gap-1.5 whitespace-nowrap">
+          <span>Book Direct</span>
+          <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i>
+        </a>
+        <button id="menu-toggle-btn" type="button" class="lg:hidden p-2 text-text-primary hover:text-brand-gold">
+          <i data-lucide="menu" class="w-6 h-6"></i>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Mobile Drawer Menu -->
+  <div id="mobile-drawer" class="hidden fixed inset-0 z-50 flex-col bg-brand-charcoal/98 backdrop-blur-2xl text-white overflow-y-auto">
+    <div class="flex items-center justify-between px-6 py-6 border-b border-white/10">
+      <img src="images/brands/logo-2.webp" alt="Royal Orchid Hotels" class="h-10 w-auto brightness-0 invert" />
+      <button id="menu-close-btn" type="button" class="p-2 text-white/80 hover:text-brand-gold"><i data-lucide="x" class="w-6 h-6"></i></button>
+    </div>
+    <div class="flex flex-col px-6 py-8 space-y-4 text-sm uppercase tracking-luxury font-medium border-b border-white/10">
+      <a href="index.html" class="hover:text-brand-gold transition-colors py-2">Home</a>
+      <a href="stays.html" class="hover:text-brand-gold transition-colors py-2">Stays & Resorts</a>
+      <a href="rooms.html" class="hover:text-brand-gold transition-colors py-2">Rooms & Suites</a>
+      <a href="dining.html" class="hover:text-brand-gold transition-colors py-2">Dining & Bars</a>
+      <a href="events.html" class="hover:text-brand-gold transition-colors py-2">Shaadi & MICE</a>
+      <a href="offers.html" class="hover:text-brand-gold transition-colors py-2">Exclusive Offers</a>
+      <a href="loyalty.html" class="hover:text-brand-gold transition-colors py-2 text-brand-gold">Regenta Rewards</a>
+      <a href="partner.html" class="text-brand-gold py-2">Partner With Us</a>
+    </div>
+  </div>
+
+  <!-- Hero Banner -->
+  <section class="pt-32 pb-16 bg-brand-charcoal text-white relative overflow-hidden">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 relative z-10 text-center space-y-4">
+      <span class="text-xs uppercase tracking-widest-plus text-brand-gold font-semibold">GROW WITH INDIA’S PREMIER HOSPITALITY CHAIN</span>
+      <h1 class="text-4xl sm:text-5xl md:text-6xl font-serif font-normal">
+        Partner With Royal Orchid & Regenta
+      </h1>
+      <p class="text-white/80 font-light text-sm sm:text-base max-w-2xl mx-auto leading-relaxed">
+        Collaborate with a BSE & NSE listed hospitality powerhouse. Explore hotel management tie-ups, vendor supply chains, corporate partnerships, and institutional investor relations.
+      </p>
+
+      <div class="flex flex-wrap items-center justify-center gap-3 pt-4 text-xs font-semibold">
+        <a href="#owners" class="px-4 py-2 rounded bg-brand-gold text-brand-charcoal uppercase tracking-wider">Hotel Owners</a>
+        <a href="#corporate" class="px-4 py-2 rounded bg-white/10 hover:bg-white/20 text-white uppercase tracking-wider">Corporate Biz</a>
+        <a href="#suppliers" class="px-4 py-2 rounded bg-white/10 hover:bg-white/20 text-white uppercase tracking-wider">Suppliers & Vendors</a>
+        <a href="#careers" class="px-4 py-2 rounded bg-white/10 hover:bg-white/20 text-white uppercase tracking-wider">Careers</a>
+        <a href="#investors" class="px-4 py-2 rounded bg-white/10 hover:bg-white/20 text-white uppercase tracking-wider">Investor Relations</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Section 1: Hotel Owners & Asset Development (#owners) -->
+  <section id="owners" class="py-20 px-4 sm:px-6 max-w-7xl mx-auto">
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+      <div class="lg:col-span-6 space-y-5">
+        <div class="inline-flex items-center space-x-2 px-3 py-1 bg-brand-gold/10 border border-brand-gold/40 rounded-full text-brand-gold-rich text-xs uppercase tracking-luxury">
+          <i data-lucide="building-2" class="w-3.5 h-3.5"></i>
+          <span>HOTEL MANAGEMENT & FRANCHISE</span>
+        </div>
+        <h2 class="text-3xl sm:text-4xl font-serif text-text-primary">
+          Partner Your Property with Royal Orchid & Regenta
+        </h2>
+        <p class="text-text-secondary text-sm font-light leading-relaxed">
+          With over 120 operational properties and 55 signed projects across India, ROHL delivers market-leading RevPAR, industry-best distribution via RateGain, and operational efficiencies backed by five decades of proven owner satisfaction.
+        </p>
+
+        <div class="grid grid-cols-3 gap-4 pt-4 border-t border-border text-center">
+          <div>
+            <div class="font-serif text-3xl font-bold text-brand-gold-rich">120+</div>
+            <div class="text-[10px] uppercase text-text-muted mt-1">Live Hotels</div>
+          </div>
+          <div>
+            <div class="font-serif text-3xl font-bold text-brand-gold-rich">55+</div>
+            <div class="text-[10px] uppercase text-text-muted mt-1">Under Development</div>
+          </div>
+          <div>
+            <div class="font-serif text-3xl font-bold text-brand-gold-rich">350</div>
+            <div class="text-[10px] uppercase text-text-muted mt-1">Goal by 2030</div>
+          </div>
+        </div>
+
+        <div class="space-y-2 text-xs text-text-secondary pt-2">
+          <div>✓ Full management contract or brand franchise models available.</div>
+          <div>✓ Seamless integration into our direct distribution, Regenta Rewards, and OTAs.</div>
+          <div>✓ Superior operational yield and transparent monthly owner reporting.</div>
+        </div>
+      </div>
+
+      <!-- Owner Form -->
+      <div class="lg:col-span-6 bg-white border border-border rounded p-6 sm:p-8 shadow-lg">
+        <h3 class="font-serif text-2xl font-normal text-text-primary mb-1">Hotel Management Proposal</h3>
+        <p class="text-xs text-text-muted mb-5">Submit your property details to our Business Development team.</p>
+        
+        <form id="owner-proposal-form" class="space-y-3.5 text-xs">
+          <div class="grid grid-cols-2 gap-3">
+            <div>
+              <label class="block font-medium text-text-secondary mb-1">Owner / Promoter Name *</label>
+              <input type="text" required placeholder="Full Name" class="w-full p-2.5 border border-border rounded focus:outline-none focus:border-brand-gold bg-surface-subtle" />
+            </div>
+            <div>
+              <label class="block font-medium text-text-secondary mb-1">Mobile Number *</label>
+              <input type="tel" required placeholder="+91 98765 43210" class="w-full p-2.5 border border-border rounded focus:outline-none focus:border-brand-gold bg-surface-subtle" />
+            </div>
+          </div>
+          <div class="grid grid-cols-2 gap-3">
+            <div>
+              <label class="block font-medium text-text-secondary mb-1">City / Location of Hotel *</label>
+              <input type="text" required placeholder="e.g. Pune, Jaipur, Dehradun" class="w-full p-2.5 border border-border rounded focus:outline-none focus:border-brand-gold bg-surface-subtle" />
+            </div>
+            <div>
+              <label class="block font-medium text-text-secondary mb-1">Total Room Keys *</label>
+              <input type="number" required placeholder="e.g. 75 Rooms" class="w-full p-2.5 border border-border rounded focus:outline-none focus:border-brand-gold bg-surface-subtle" />
+            </div>
+          </div>
+          <div>
+            <label class="block font-medium text-text-secondary mb-1">Property Status *</label>
+            <select class="w-full p-2.5 border border-border rounded focus:outline-none focus:border-brand-gold bg-surface-subtle">
+              <option>Operational Hotel (Looking to Rebrand)</option>
+              <option>Under Construction (Ready in 6-12 Months)</option>
+              <option>Greenfield Project (Planning Phase)</option>
+            </select>
+          </div>
+          <button type="submit" class="w-full btn-gold py-3 text-xs uppercase tracking-luxury font-bold rounded shadow">
+            Submit Property for Evaluation
+          </button>
+        </form>
+      </div>
+    </div>
+
+    <!-- Sub-Brand Tiers for Owners -->
+    <div class="mt-16 pt-12 border-t border-border">
+      <div class="text-center max-w-2xl mx-auto mb-8">
+        <span class="text-xs uppercase tracking-widest-plus text-brand-gold-rich font-semibold">BRAND ARCHITECTURE</span>
+        <h3 class="font-serif text-2xl sm:text-3xl font-normal text-text-primary mt-1">Multi-Tier Brand Franchising Opportunities</h3>
+        <p class="text-xs text-text-secondary mt-1">Select the optimal brand tier matching your asset's location, target ADR, and architectural profile.</p>
+      </div>
+
+      <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4 items-center">
+        <div class="bg-surface-subtle border border-border rounded p-4 flex flex-col items-center justify-center text-center h-28 hover:border-brand-gold transition-colors">
+          <img src="images/brands/1.webp" alt="Regenta Hotels" class="h-10 w-auto object-contain filter grayscale hover:grayscale-0 transition-all" />
+          <span class="text-[10px] text-text-muted mt-2 font-medium">Upper Upscale</span>
+        </div>
+        <div class="bg-surface-subtle border border-border rounded p-4 flex flex-col items-center justify-center text-center h-28 hover:border-brand-gold transition-colors">
+          <img src="images/brands/2.webp" alt="Regenta Central" class="h-10 w-auto object-contain filter grayscale hover:grayscale-0 transition-all" />
+          <span class="text-[10px] text-text-muted mt-2 font-medium">City Business</span>
+        </div>
+        <div class="bg-surface-subtle border border-border rounded p-4 flex flex-col items-center justify-center text-center h-28 hover:border-brand-gold transition-colors">
+          <img src="images/brands/3.webp" alt="Regenta Resort" class="h-10 w-auto object-contain filter grayscale hover:grayscale-0 transition-all" />
+          <span class="text-[10px] text-text-muted mt-2 font-medium">Leisure & Spa</span>
+        </div>
+        <div class="bg-surface-subtle border border-border rounded p-4 flex flex-col items-center justify-center text-center h-28 hover:border-brand-gold transition-colors">
+          <img src="images/brands/4.webp" alt="Regenta Place" class="h-10 w-auto object-contain filter grayscale hover:grayscale-0 transition-all" />
+          <span class="text-[10px] text-text-muted mt-2 font-medium">Midscale Urban</span>
+        </div>
+        <div class="bg-surface-subtle border border-border rounded p-4 flex flex-col items-center justify-center text-center h-28 hover:border-brand-gold transition-colors">
+          <img src="images/brands/5.png" alt="Regenta Inn" class="h-10 w-auto object-contain filter grayscale hover:grayscale-0 transition-all" />
+          <span class="text-[10px] text-text-muted mt-2 font-medium">Smart Transit</span>
+        </div>
+        <div class="bg-surface-subtle border border-border rounded p-4 flex flex-col items-center justify-center text-center h-28 hover:border-brand-gold transition-colors">
+          <img src="images/brands/6.png" alt="Regenta Suites" class="h-10 w-auto object-contain filter grayscale hover:grayscale-0 transition-all" />
+          <span class="text-[10px] text-text-muted mt-2 font-medium">Extended Stay</span>
+        </div>
+        <div class="bg-surface-subtle border border-border rounded p-4 flex flex-col items-center justify-center text-center h-28 hover:border-brand-gold transition-colors">
+          <img src="images/brands/7.png" alt="Royal Orchid Resort" class="h-10 w-auto object-contain filter grayscale hover:grayscale-0 transition-all" />
+          <span class="text-[10px] text-text-muted mt-2 font-medium">Convention Destination</span>
+        </div>
+        <div class="bg-surface-subtle border border-border rounded p-4 flex flex-col items-center justify-center text-center h-28 hover:border-brand-gold transition-colors">
+          <img src="images/brands/8.png" alt="Royal Orchid Suites" class="h-10 w-auto object-contain filter grayscale hover:grayscale-0 transition-all" />
+          <span class="text-[10px] text-text-muted mt-2 font-medium">Apart-Hotel</span>
+        </div>
+        <div class="bg-surface-subtle border border-border rounded p-4 flex flex-col items-center justify-center text-center h-28 hover:border-brand-gold transition-colors">
+          <img src="images/brands/9.png" alt="Royal Orchid Central" class="h-10 w-auto object-contain filter grayscale hover:grayscale-0 transition-all" />
+          <span class="text-[10px] text-text-muted mt-2 font-medium">Flagship Downtown</span>
+        </div>
+        <div class="bg-surface-subtle border border-border rounded p-4 flex flex-col items-center justify-center text-center h-28 hover:border-brand-gold transition-colors">
+          <img src="images/brands/10.png" alt="Hotel Royal Orchid" class="h-10 w-auto object-contain filter grayscale hover:grayscale-0 transition-all" />
+          <span class="text-[10px] text-text-muted mt-2 font-medium">5-Star Luxury</span>
+        </div>
+        <div class="bg-surface-subtle border border-border rounded p-4 flex flex-col items-center justify-center text-center h-28 hover:border-brand-gold transition-colors">
+          <img src="images/brands/crestoria-logo.webp" alt="Crestoria Collection" class="h-8 w-auto object-contain filter grayscale hover:grayscale-0 transition-all" />
+          <span class="text-[10px] text-text-muted mt-2 font-medium">Boutique Luxury</span>
+        </div>
+        <div class="bg-surface-subtle border border-border rounded p-4 flex flex-col items-center justify-center text-center h-28 hover:border-brand-gold transition-colors">
+          <img src="images/brands/Iconiqa-Logo-updatedV1.webp" alt="Iconiqa" class="h-8 w-auto object-contain filter grayscale hover:grayscale-0 transition-all" />
+          <span class="text-[10px] text-text-muted mt-2 font-medium">Lifestyle & Iconic</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Section 2: Vendors & Suppliers Portal (#suppliers) -->
+  <section id="suppliers" class="py-16 bg-surface-subtle border-y border-border">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6">
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+        <div class="lg:col-span-6 space-y-4">
+          <span class="text-xs uppercase tracking-widest-plus text-brand-gold-rich font-semibold">SUPPLY CHAIN & PROCUREMENT</span>
+          <h2 class="text-3xl font-serif text-text-primary">
+            Vendor & Supplier Registration
+          </h2>
+          <p class="text-xs sm:text-sm text-text-secondary font-light leading-relaxed">
+            We partner with leading national and regional suppliers for guest room amenities, eco-friendly toiletries, aroma oils, premium linens, F&B ingredients, kitchen equipment, and smart hotel technology.
+          </p>
+          <div class="p-4 bg-white border border-border rounded text-xs space-y-1">
+            <div class="font-semibold text-text-primary">Procurement Department:</div>
+            <div>procurement@royalorchidhotels.com · +91 80 4178 3000</div>
+          </div>
+        </div>
+
+        <div class="lg:col-span-6 bg-white border border-border rounded p-6 shadow-sm">
+          <h3 class="font-serif text-xl font-normal text-text-primary mb-3">Register as an Approved Vendor</h3>
+          <form id="vendor-reg-form" class="space-y-3 text-xs">
+            <div>
+              <label class="block font-medium text-text-secondary mb-1">Company / Firm Name *</label>
+              <input type="text" required placeholder="Vendor Company Name" class="w-full p-2 border border-border rounded focus:outline-none focus:border-brand-gold" />
+            </div>
+            <div class="grid grid-cols-2 gap-3">
+              <div>
+                <label class="block font-medium text-text-secondary mb-1">Category *</label>
+                <select class="w-full p-2 border border-border rounded focus:outline-none focus:border-brand-gold">
+                  <option>Toiletries & Aroma Oils</option>
+                  <option>Linen & Bedding</option>
+                  <option>Food & Beverage Supplies</option>
+                  <option>Kitchen Equipment</option>
+                  <option>Hotel IT & Smart Locks</option>
+                  <option>Paper & Eco Products</option>
+                </select>
+              </div>
+              <div>
+                <label class="block font-medium text-text-secondary mb-1">GST Number *</label>
+                <input type="text" required placeholder="29AAAAA0000A1Z5" class="w-full p-2 border border-border rounded focus:outline-none focus:border-brand-gold" />
+              </div>
+            </div>
+            <div class="grid grid-cols-2 gap-3">
+              <div>
+                <label class="block font-medium text-text-secondary mb-1">Contact Person *</label>
+                <input type="text" required placeholder="Name" class="w-full p-2 border border-border rounded focus:outline-none focus:border-brand-gold" />
+              </div>
+              <div>
+                <label class="block font-medium text-text-secondary mb-1">Mobile / Email *</label>
+                <input type="text" required placeholder="Contact info" class="w-full p-2 border border-border rounded focus:outline-none focus:border-brand-gold" />
+              </div>
+            </div>
+            <button type="submit" class="w-full btn-dark py-2.5 text-xs uppercase tracking-wider font-semibold rounded">
+              Register Vendor Details
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Section 3: Careers & Talent Portal (#careers) -->
+  <section id="careers" class="py-16 px-4 sm:px-6 max-w-7xl mx-auto">
+    <div class="text-center max-w-2xl mx-auto mb-10">
+      <span class="text-xs uppercase tracking-widest-plus text-brand-gold-rich font-semibold">JOIN OUR ROYAL FAMILY</span>
+      <h2 class="text-3xl font-serif text-text-primary mt-1">Careers in Hospitality</h2>
+      <p class="text-xs text-text-secondary mt-2">Discover fulfilling career pathways across our corporate offices and 120+ hotels.</p>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+      <div class="p-6 bg-white border border-border rounded space-y-3">
+        <h4 class="font-serif text-xl font-normal text-text-primary">Hotel Operations & GMs</h4>
+        <p class="text-xs text-text-secondary">General Managers, Operations Managers, Executive Housekeepers across North & South India.</p>
+        <a href="mailto:careers@royalorchidhotels.com" class="text-xs text-brand-gold-rich font-semibold hover:underline block pt-2">Apply: careers@royalorchidhotels.com →</a>
+      </div>
+      <div class="p-6 bg-white border border-border rounded space-y-3">
+        <h4 class="font-serif text-xl font-normal text-text-primary">Culinary Masters & Chefs</h4>
+        <p class="text-xs text-text-secondary">Executive Chefs, Master Tandoor Chefs for Tiger Trail, Pastry Chefs, and F&B Service Captains.</p>
+        <a href="mailto:careers@royalorchidhotels.com" class="text-xs text-brand-gold-rich font-semibold hover:underline block pt-2">Apply: careers@royalorchidhotels.com →</a>
+      </div>
+      <div class="p-6 bg-white border border-border rounded space-y-3">
+        <h4 class="font-serif text-xl font-normal text-text-primary">Sales, Revenue & Tech</h4>
+        <p class="text-xs text-text-secondary">Banquet Sales Managers, Digital Marketers, Revenue Managers, and CRS Reservation Agents.</p>
+        <a href="mailto:careers@royalorchidhotels.com" class="text-xs text-brand-gold-rich font-semibold hover:underline block pt-2">Apply: careers@royalorchidhotels.com →</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Section 4: Investor Relations (#investors) -->
+  <section id="investors" class="py-16 bg-brand-charcoal text-white border-t border-brand-gold/30">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6">
+      <div class="flex flex-col md:flex-row md:items-end justify-between mb-8">
+        <div>
+          <span class="text-xs uppercase tracking-widest-plus text-brand-gold font-semibold">LISTED ENTITY DISCLOSURES</span>
+          <h2 class="text-3xl font-serif font-normal mt-1">Investor Relations & Corporate Governance</h2>
+          <p class="text-xs text-white/70 mt-1">National Stock Exchange of India (ROHLTD) · BSE Limited (532699)</p>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 text-xs">
+        <div class="p-5 bg-white/5 border border-white/10 rounded space-y-2">
+          <div class="text-brand-gold font-bold">Annual Reports</div>
+          <div class="text-white/80">FY 2025-26 Annual Report & Audited Financial Statements</div>
+          <a href="#" class="text-brand-gold text-[11px] underline block">Download PDF →</a>
+        </div>
+        <div class="p-5 bg-white/5 border border-white/10 rounded space-y-2">
+          <div class="text-brand-gold font-bold">Quarterly Earnings</div>
+          <div class="text-white/80">Investor Presentations, Earnings Transcript & Press Release</div>
+          <a href="#" class="text-brand-gold text-[11px] underline block">View Filings →</a>
+        </div>
+        <div class="p-5 bg-white/5 border border-white/10 rounded space-y-2">
+          <div class="text-brand-gold font-bold">Shareholding Pattern</div>
+          <div class="text-white/80">Quarterly Shareholding Patterns & Promoter Holding Statements</div>
+          <a href="#" class="text-brand-gold text-[11px] underline block">View Patterns →</a>
+        </div>
+        <div class="p-5 bg-white/5 border border-white/10 rounded space-y-2">
+          <div class="text-brand-gold font-bold">SEBI & Secretarial</div>
+          <div class="text-white/80">Materiality disclosures, Postal Ballot results, Board composition</div>
+          <a href="#" class="text-brand-gold text-[11px] underline block">SEBI Portal →</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Global Footer -->
+  <footer class="bg-brand-charcoal text-white pt-12 pb-8 border-t border-brand-gold/30">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 flex flex-col md:flex-row items-center justify-between text-xs text-white/60">
+      <div>© 2026 Royal Orchid Hotels Limited (ROHL). BSE & NSE Listed.</div>
+      <div class="flex items-center space-x-6 mt-4 md:mt-0">
+        <a href="index.html" class="hover:text-brand-gold">Home</a>
+        <a href="stays.html" class="hover:text-brand-gold">Stays</a>
+        <a href="rooms.html" class="hover:text-brand-gold">Rooms</a>
+        <a href="dining.html" class="hover:text-brand-gold">Dining</a>
+        <a href="events.html" class="hover:text-brand-gold">Events</a>
+        <a href="loyalty.html" class="hover:text-brand-gold">Regenta Rewards</a>
+      </div>
+    </div>
+  </footer>
+
+  <div id="toast-container"></div>
+  <script src="js/main.js?v=2.2"></script>
+</body>
+</html>

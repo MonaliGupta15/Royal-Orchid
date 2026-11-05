@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Shaadi by Royal Orchid | Weddings & MICE Conventions</title>
+  <meta name="description" content="Plan royal weddings and landmark corporate conventions with Royal Orchid Hotels. Sprawling convention lawns up to 10,000 guests, grand ballrooms, and 5-star catering." />
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400;1,600&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+
+  <!-- Tailwind Polyfill -->
+  <script>
+    try {
+      var createHashStub = function () {
+        var buf = '';
+        return {
+          update: function (s) { buf += s; return this; },
+          digest: function () {
+            var h = 0;
+            for (var i = 0; i < buf.length; i++) {
+              h = ((h << 5) - h) + buf.charCodeAt(i);
+              h |= 0;
+            }
+            return (h >>> 0).toString(16);
+          }
+        };
+      };
+      if (typeof window !== 'undefined') {
+        if (window.crypto && !window.crypto.createHash) try { window.crypto.createHash = createHashStub; } catch (_) {}
+        if (typeof Crypto !== 'undefined' && Crypto.prototype && !Crypto.prototype.createHash) try { Crypto.prototype.createHash = createHashStub; } catch (_) {}
+      }
+    } catch (_) {}
+  </script>
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            'brand-gold': '#C5A880',
+            'brand-gold-rich': '#B89758',
+            'brand-gold-light': '#DFCDAA',
+            'brand-charcoal': '#141414',
+            'brand-dark': '#1B1B1B',
+            'brand-slate': '#1B2631',
+            'brand-emerald': '#1E3A34',
+            'brand-cream': '#FAF8F5',
+            'brand-sand': '#EFECE6',
+            'brand-stone': '#D8D2C9',
+            'bg': '#FAF8F5',
+            'surface': '#FFFFFF',
+            'surface-subtle': '#F6F3EE',
+            'text-primary': '#171717',
+            'text-secondary': '#5A5550',
+            'text-muted': '#8A847C',
+            'text-inverse': '#FFFFFF',
+            'border': '#E5E0D8',
+            'border-subtle': '#EFECE6',
+          },
+          fontFamily: {
+            serif: ['"Cormorant Garamond"', 'Georgia', 'serif'],
+            sans: ['"Plus Jakarta Sans"', 'system-ui', 'sans-serif'],
+          },
+          letterSpacing: {
+            luxury: '0.22em',
+            'widest-plus': '0.3em',
+          }
+        }
+      }
+    }
+  </script>
+
+  <!-- Custom CSS -->
+  <link rel="stylesheet" href="css/styles.css?v=2.2" />
+
+  <!-- Lenis CDN -->
+  <script src="https://unpkg.com/lenis@1.1.18/dist/lenis.min.js"></script>
+
+  <!-- Lucide Icons CDN -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+
+<body class="bg-bg text-text-primary antialiased selection:bg-brand-gold/20 relative">
+  <div class="grain-overlay"></div>
+
+  <!-- Announcement Bar -->
+  <div class="bg-brand-charcoal text-white/90 text-xs py-2 px-4 border-b border-brand-gold/20 relative z-40">
+    <div class="max-w-7xl mx-auto flex items-center justify-between text-[11px] sm:text-xs">
+      <div class="flex items-center space-x-2">
+        <span class="px-2 py-0.5 rounded text-[10px] font-bold uppercase tracking-wider bg-brand-gold text-brand-charcoal">Shaadi by Royal Orchid</span>
+        <span class="text-white/80">Get customized wedding package & complimentary honeymoon suite with every banquet booking</span>
+      </div>
+      <a href="tel:+918041783000" class="hover:text-brand-gold transition-colors hidden sm:flex items-center gap-1.5 text-white/70">
+        <i data-lucide="phone" class="w-3.5 h-3.5 text-brand-gold"></i>
+        <span>Banquet Hotline: +91 80 4178 3000</span>
+      </a>
+    </div>
+  </div>
+
+  <!-- Global Header -->
+  <header id="main-header" class="fixed top-8 left-0 right-0 z-40 transition-all duration-300 px-4 sm:px-8 py-3.5 light-header text-text-primary shadow-sm">
+    <div class="max-w-7xl mx-auto flex items-center justify-between">
+      <a href="index.html" class="flex items-center space-x-3 group shrink-0 mr-4 lg:mr-6">
+        <img src="images/brands/logo-2.webp" alt="Royal Orchid Hotels" class="h-8 sm:h-9 w-auto max-w-[190px] sm:max-w-[220px] object-contain" />
+      </a>
+
+      <nav class="hidden lg:flex items-center space-x-4 xl:space-x-6 text-[11px] xl:text-xs uppercase tracking-luxury font-medium text-text-secondary">
+        <a href="stays.html" class="hover:text-brand-gold transition-colors py-1 whitespace-nowrap">Stays</a>
+        <a href="rooms.html" class="hover:text-brand-gold transition-colors py-1 whitespace-nowrap">Rooms</a>
+        <a href="dining.html" class="hover:text-brand-gold transition-colors py-1 whitespace-nowrap">Dining</a>
+        <a href="events.html" class="text-brand-gold-rich font-semibold py-1 whitespace-nowrap">Shaadi & MICE</a>
+        <a href="offers.html" class="hover:text-brand-gold transition-colors py-1 whitespace-nowrap">Offers</a>
+        <a href="loyalty.html" class="hover:text-brand-gold transition-colors py-1 text-brand-gold-rich whitespace-nowrap">Regenta Rewards</a>
+        <a href="partner.html" class="hover:text-brand-gold transition-colors py-1 whitespace-nowrap">Partner</a>
+      </nav>
+
+      <div class="flex items-center space-x-2 sm:space-x-3 shrink-0">
+        <button type="button" class="open-rfp-modal-btn btn-gold px-4 sm:px-5 py-2 sm:py-2.5 text-[11px] sm:text-xs uppercase tracking-luxury font-semibold rounded-sm inline-flex items-center gap-1.5 whitespace-nowrap" data-event-type="Wedding">
+          <span>Request RFP</span>
+          <i data-lucide="send" class="w-3.5 h-3.5"></i>
+        </button>
+        <button id="menu-toggle-btn" type="button" class="lg:hidden p-2 text-text-primary hover:text-brand-gold">
+          <i data-lucide="menu" class="w-6 h-6"></i>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Mobile Drawer Menu -->
+  <div id="mobile-drawer" class="hidden fixed inset-0 z-50 flex-col bg-brand-charcoal/98 backdrop-blur-2xl text-white overflow-y-auto">
+    <div class="flex items-center justify-between px-6 py-6 border-b border-white/10">
+      <img src="images/brands/logo-2.webp" alt="Royal Orchid Hotels" class="h-10 w-auto brightness-0 invert" />
+      <button id="menu-close-btn" type="button" class="p-2 text-white/80 hover:text-brand-gold"><i data-lucide="x" class="w-6 h-6"></i></button>
+    </div>
+    <div class="flex flex-col px-6 py-8 space-y-4 text-sm uppercase tracking-luxury font-medium border-b border-white/10">
+      <a href="index.html" class="hover:text-brand-gold transition-colors py-2">Home</a>
+      <a href="stays.html" class="hover:text-brand-gold transition-colors py-2">Stays & Resorts</a>
+      <a href="rooms.html" class="hover:text-brand-gold transition-colors py-2">Rooms & Suites</a>
+      <a href="dining.html" class="hover:text-brand-gold transition-colors py-2">Dining & Bars</a>
+      <a href="events.html" class="text-brand-gold py-2">Shaadi & MICE</a>
+      <a href="offers.html" class="hover:text-brand-gold transition-colors py-2">Exclusive Offers</a>
+      <a href="loyalty.html" class="hover:text-brand-gold transition-colors py-2 text-brand-gold">Regenta Rewards</a>
+      <a href="partner.html" class="hover:text-brand-gold transition-colors py-2">Partner With Us</a>
+    </div>
+  </div>
+
+  <!-- Hero Banner -->
+  <section class="pt-32 pb-16 bg-brand-charcoal text-white relative overflow-hidden">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 relative z-10 text-center space-y-4">
+      <span class="text-xs uppercase tracking-widest-plus text-brand-gold font-semibold">CONVENTIONS · WEDDINGS · SUMMITS</span>
+      <h1 class="text-4xl sm:text-5xl md:text-6xl font-serif font-normal">
+        Shaadi by Royal Orchid & MICE
+      </h1>
+      <p class="text-white/80 font-light text-sm sm:text-base max-w-2xl mx-auto leading-relaxed">
+        Hosting India's grandest milestone events. Sprawling convention lawns holding 10,000+ guests, pillarless high-ceiling ballrooms, and dedicated event concierges.
+      </p>
+    </div>
+  </section>
+
+  <!-- Visual Showcase Grid (Clean Cards - Text in Card Body, Not Over Image) -->
+  <section class="py-12 px-4 sm:px-6 max-w-7xl mx-auto">
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+      
+      <!-- Card 1: Destination Weddings -->
+      <div class="bg-white border border-border rounded overflow-hidden shadow-sm interactive-card group">
+        <div class="h-60 overflow-hidden relative bg-brand-charcoal">
+          <img src="images/slide-wedding.webp" alt="Shaadi by Royal Orchid" class="w-full h-full object-cover luxury-image-zoom" />
+        </div>
+        <div class="p-6 space-y-3">
+          <span class="text-[10px] uppercase tracking-wider text-brand-gold-rich font-bold block">Flagship Service</span>
+          <h3 class="font-serif text-2xl font-normal text-text-primary">Shaadi Destination Weddings</h3>
+          <p class="text-xs text-text-secondary leading-relaxed">
+            From palace mandaps in Udaipur and Jaipur to beachfront sunset pheras in Goa. Personalized wedding managers, bespoke royal catering, and curated bridal suites.
+          </p>
+          <button type="button" class="open-rfp-modal-btn text-xs font-semibold uppercase tracking-wider text-brand-gold-rich hover:text-brand-gold inline-flex items-center gap-1.5 pt-2" data-event-type="Wedding">
+            <span>Enquire for Weddings</span>
+            <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i>
+          </button>
+        </div>
+      </div>
+
+      <!-- Card 2: Grand Ballrooms -->
+      <div class="bg-white border border-border rounded overflow-hidden shadow-sm interactive-card group">
+        <div class="h-60 overflow-hidden relative bg-brand-charcoal">
+          <img src="images/hotels/bangalore_19_Mar_2024_04_03_19event-over.jpg" alt="Grand Ballrooms & Banquets" class="w-full h-full object-cover luxury-image-zoom" />
+        </div>
+        <div class="p-6 space-y-3">
+          <span class="text-[10px] uppercase tracking-wider text-brand-gold-rich font-bold block">Mega Capacity</span>
+          <h3 class="font-serif text-2xl font-normal text-text-primary">Grand Pillarless Ballrooms</h3>
+          <p class="text-xs text-text-secondary leading-relaxed">
+            High-ceiling pillarless ballrooms equipped with intelligent LED concert lighting, cinematic acoustic tuning, and VIP green rooms for large celebrations.
+          </p>
+          <button type="button" class="open-rfp-modal-btn text-xs font-semibold uppercase tracking-wider text-brand-gold-rich hover:text-brand-gold inline-flex items-center gap-1.5 pt-2" data-event-type="Convention">
+            <span>Enquire for Banquets</span>
+            <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i>
+          </button>
+        </div>
+      </div>
+
+      <!-- Card 3: Corporate Summits -->
+      <div class="bg-white border border-border rounded overflow-hidden shadow-sm interactive-card group">
+        <div class="h-60 overflow-hidden relative bg-brand-charcoal">
+          <img src="images/slide-business.webp" alt="Corporate Summits & MICE" class="w-full h-full object-cover luxury-image-zoom" />
+        </div>
+        <div class="p-6 space-y-3">
+          <span class="text-[10px] uppercase tracking-wider text-brand-gold-rich font-bold block">Regenta MICE</span>
+          <h3 class="font-serif text-2xl font-normal text-text-primary">Corporate Summits & Offsites</h3>
+          <p class="text-xs text-text-secondary leading-relaxed">
+            State-of-the-art hybrid conferencing, break-out boardrooms, and curated corporate team-building retreats across commercial hubs and resort getaways.
+          </p>
+          <button type="button" class="open-rfp-modal-btn text-xs font-semibold uppercase tracking-wider text-brand-gold-rich hover:text-brand-gold inline-flex items-center gap-1.5 pt-2" data-event-type="Conference">
+            <span>Enquire for MICE</span>
+            <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i>
+          </button>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Section: Venue Capacity Matrix -->
+  <main class="py-12 px-4 sm:px-6 max-w-7xl mx-auto">
+    <div class="mb-10 text-center max-w-2xl mx-auto">
+      <span class="text-xs uppercase tracking-widest-plus text-brand-gold-rich font-semibold">VENUE SPECIFICATIONS</span>
+      <h2 class="text-3xl font-serif text-text-primary mt-1">Key Convention & Banquet Venues</h2>
+      <p class="text-xs text-text-secondary mt-2">Comprehensive capacity metrics across our premier wedding and corporate event properties.</p>
+    </div>
+
+    <div class="bg-white border border-border rounded shadow-sm overflow-x-auto">
+      <table class="w-full text-left text-xs border-collapse">
+        <thead>
+          <tr class="bg-brand-charcoal text-white uppercase text-[10px] tracking-wider">
+            <th class="p-4 font-semibold">Property & Venue Name</th>
+            <th class="p-4 font-semibold">Location</th>
+            <th class="p-4 font-semibold">Total Area</th>
+            <th class="p-4 font-semibold">Floating (Cocktail)</th>
+            <th class="p-4 font-semibold">Theater Style</th>
+            <th class="p-4 font-semibold">Round Table Banquet</th>
+            <th class="p-4 font-semibold">Action</th>
+          </tr>
+        </thead>
+        <tbody class="divide-y divide-border">
+          <tr class="hover:bg-surface-subtle transition-colors">
+            <td class="p-4 font-semibold text-text-primary">
+              Grand Convention Lawns & Dome
+              <div class="text-[10px] text-text-muted font-normal">Royal Orchid Resort & Convention</div>
+            </td>
+            <td class="p-4 text-text-secondary">Yelahanka, Bengaluru</td>
+            <td class="p-4 font-mono font-semibold text-brand-gold-rich">300,000 Sq. Ft.</td>
+            <td class="p-4 font-mono font-bold">10,000 Guests</td>
+            <td class="p-4 font-mono">6,500 Guests</td>
+            <td class="p-4 font-mono">4,500 Guests</td>
+            <td class="p-4">
+              <button type="button" class="open-rfp-modal-btn btn-gold px-3 py-1.5 text-[10px] uppercase font-bold rounded" data-event-type="Convention">
+                Request RFP
+              </button>
+            </td>
+          </tr>
+
+          <tr class="hover:bg-surface-subtle transition-colors">
+            <td class="p-4 font-semibold text-text-primary">
+              Seaside Wedding Lawns & Deck
+              <div class="text-[10px] text-text-muted font-normal">Royal Orchid Beach Resort & Spa</div>
+            </td>
+            <td class="p-4 text-text-secondary">Utorda Beach, Goa</td>
+            <td class="p-4 font-mono font-semibold text-brand-gold-rich">85,000 Sq. Ft.</td>
+            <td class="p-4 font-mono font-bold">2,500 Guests</td>
+            <td class="p-4 font-mono">1,800 Guests</td>
+            <td class="p-4 font-mono">1,200 Guests</td>
+            <td class="p-4">
+              <button type="button" class="open-rfp-modal-btn btn-gold px-3 py-1.5 text-[10px] uppercase font-bold rounded" data-event-type="Wedding">
+                Request RFP
+              </button>
+            </td>
+          </tr>
+
+          <tr class="hover:bg-surface-subtle transition-colors">
+            <td class="p-4 font-semibold text-text-primary">
+              Seasons Grand Ballroom & Lawn
+              <div class="text-[10px] text-text-muted font-normal">Hotel Royal Orchid Bengaluru</div>
+            </td>
+            <td class="p-4 text-text-secondary">Old Airport Road, Bengaluru</td>
+            <td class="p-4 font-mono font-semibold text-brand-gold-rich">18,500 Sq. Ft.</td>
+            <td class="p-4 font-mono font-bold">1,200 Guests</td>
+            <td class="p-4 font-mono">800 Guests</td>
+            <td class="p-4 font-mono">550 Guests</td>
+            <td class="p-4">
+              <button type="button" class="open-rfp-modal-btn btn-gold px-3 py-1.5 text-[10px] uppercase font-bold rounded" data-event-type="Conference">
+                Request RFP
+              </button>
+            </td>
+          </tr>
+
+          <tr class="hover:bg-surface-subtle transition-colors">
+            <td class="p-4 font-semibold text-text-primary">
+              Aravalli Royal Mandap Lawns
+              <div class="text-[10px] text-text-muted font-normal">Regenta Resort & Spa Udaipur</div>
+            </td>
+            <td class="p-4 text-text-secondary">Sajjangarh, Udaipur</td>
+            <td class="p-4 font-mono font-semibold text-brand-gold-rich">45,000 Sq. Ft.</td>
+            <td class="p-4 font-mono font-bold">1,800 Guests</td>
+            <td class="p-4 font-mono">1,200 Guests</td>
+            <td class="p-4 font-mono">900 Guests</td>
+            <td class="p-4">
+              <button type="button" class="open-rfp-modal-btn btn-gold px-3 py-1.5 text-[10px] uppercase font-bold rounded" data-event-type="Wedding">
+                Request RFP
+              </button>
+            </td>
+          </tr>
+
+          <tr class="hover:bg-surface-subtle transition-colors">
+            <td class="p-4 font-semibold text-text-primary">
+              The Monarch Convention Centre
+              <div class="text-[10px] text-text-muted font-normal">Regenta Central Jaipur</div>
+            </td>
+            <td class="p-4 text-text-secondary">Tonk Road, Jaipur</td>
+            <td class="p-4 font-mono font-semibold text-brand-gold-rich">12,000 Sq. Ft.</td>
+            <td class="p-4 font-mono font-bold">900 Guests</td>
+            <td class="p-4 font-mono">600 Guests</td>
+            <td class="p-4 font-mono">400 Guests</td>
+            <td class="p-4">
+              <button type="button" class="open-rfp-modal-btn btn-gold px-3 py-1.5 text-[10px] uppercase font-bold rounded" data-event-type="Conference">
+                Request RFP
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Interactive Lead Magnet Section -->
+    <section class="mt-16 bg-brand-charcoal text-white rounded p-8 sm:p-12 border border-brand-gold/40">
+      <div class="max-w-3xl mx-auto text-center space-y-4">
+        <span class="text-xs uppercase tracking-widest-plus text-brand-gold font-semibold">PLAN YOUR LANDMARK EVENT</span>
+        <h2 class="text-3xl sm:text-4xl font-serif font-normal">
+          Request an Immediate Event Proposal & Wedding Lookbook
+        </h2>
+        <p class="text-white/80 font-light text-xs sm:text-sm leading-relaxed">
+          Our dedicated Banquet Sales Directors handle everything from floral mandap architecture and audio-visual staging to customized multi-course banquets.
+        </p>
+
+        <div class="pt-6">
+          <button type="button" class="open-rfp-modal-btn btn-gold px-8 py-3.5 text-xs uppercase tracking-luxury font-bold rounded shadow-xl inline-flex items-center gap-2" data-event-type="Wedding">
+            <span>Open Customized RFP Form</span>
+            <i data-lucide="send" class="w-4 h-4"></i>
+          </button>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Global Footer -->
+  <footer class="bg-brand-charcoal text-white pt-12 pb-8 border-t border-brand-gold/30">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 flex flex-col md:flex-row items-center justify-between text-xs text-white/60">
+      <div>© 2026 Royal Orchid Hotels Limited (ROHL). BSE & NSE Listed.</div>
+      <div class="flex items-center space-x-6 mt-4 md:mt-0">
+        <a href="index.html" class="hover:text-brand-gold">Home</a>
+        <a href="stays.html" class="hover:text-brand-gold">Stays</a>
+        <a href="rooms.html" class="hover:text-brand-gold">Rooms</a>
+        <a href="dining.html" class="hover:text-brand-gold">Dining</a>
+        <a href="loyalty.html" class="hover:text-brand-gold">Regenta Rewards</a>
+        <a href="partner.html" class="hover:text-brand-gold">Partner</a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- RFP Modal -->
+  <div id="rfp-modal" class="modal-backdrop fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/75 backdrop-blur-md">
+    <div class="modal-content w-full max-w-lg bg-white text-text-primary rounded shadow-2xl overflow-hidden">
+      <div class="p-5 bg-brand-charcoal text-white flex items-center justify-between">
+        <div>
+          <span class="text-[10px] uppercase tracking-widest text-brand-gold font-bold">Banquets & Celebrations</span>
+          <h3 class="font-serif text-2xl font-normal text-white">Request Event Proposal</h3>
+          <p class="text-xs text-white/70 mt-0.5">Weddings · Conferences · Grand Exhibitions</p>
+        </div>
+        <button type="button" class="modal-close-trigger p-1 text-white/70 hover:text-brand-gold"><i data-lucide="x" class="w-6 h-6"></i></button>
+      </div>
+
+      <form id="rfp-lead-form" class="p-6 space-y-3.5 text-xs">
+        <div>
+          <label class="block font-medium text-text-secondary mb-1">Event Type *</label>
+          <select id="rfp-event-type-select" class="w-full p-2.5 border border-border rounded focus:outline-none focus:border-brand-gold">
+            <option value="Wedding">Destination Wedding (Shaadi by Royal Orchid)</option>
+            <option value="Conference">Corporate Conference / Annual Summit</option>
+            <option value="Convention">Mega Convention (1,000 – 10,000+ Guests)</option>
+            <option value="Social">Anniversary / Milestone Gala Dinner</option>
+          </select>
+        </div>
+        <div>
+          <label class="block font-medium text-text-secondary mb-1">Your Full Name *</label>
+          <input type="text" required placeholder="Name" class="w-full p-2.5 border border-border rounded focus:outline-none focus:border-brand-gold" />
+        </div>
+        <div class="grid grid-cols-2 gap-3">
+          <div>
+            <label class="block font-medium text-text-secondary mb-1">Mobile Number *</label>
+            <input type="tel" required placeholder="+91 98765 43210" class="w-full p-2.5 border border-border rounded focus:outline-none focus:border-brand-gold" />
+          </div>
+          <div>
+            <label class="block font-medium text-text-secondary mb-1">Email ID *</label>
+            <input type="email" required placeholder="email@domain.com" class="w-full p-2.5 border border-border rounded focus:outline-none focus:border-brand-gold" />
+          </div>
+        </div>
+        <div class="grid grid-cols-2 gap-3">
+          <div>
+            <label class="block font-medium text-text-secondary mb-1">Destination *</label>
+            <select class="w-full p-2.5 border border-border rounded focus:outline-none focus:border-brand-gold">
+              <option>Bengaluru (Conventions & Lawns)</option>
+              <option>Goa (Beachfront Lawns)</option>
+              <option>Jaipur (Royal Mandap)</option>
+              <option>Udaipur (Lakeside Resort)</option>
+            </select>
+          </div>
+          <div>
+            <label class="block font-medium text-text-secondary mb-1">Expected Guests *</label>
+            <select class="w-full p-2.5 border border-border rounded focus:outline-none focus:border-brand-gold">
+              <option>100 – 300 Guests</option>
+              <option>300 – 800 Guests</option>
+              <option>800 – 2,500 Guests</option>
+              <option>2,500 – 10,000+ Guests</option>
+            </select>
+          </div>
+        </div>
+        <button type="submit" class="w-full btn-gold py-3 text-xs uppercase tracking-luxury font-bold rounded">
+          Submit & Download Wedding Brochure
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <div id="toast-container"></div>
+  <script src="js/main.js?v=2.2"></script>
+</body>
+</html>
