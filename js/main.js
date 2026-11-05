@@ -92,10 +92,16 @@ function initPreloader() {
 }
 
 /* ==========================================================================
-   2. Lenis Kinetic Smooth Scroll
+   2. Lenis Kinetic Smooth Scroll (Desktop Only - Native Touch on Mobile)
    ========================================================================== */
 function initLenisSmoothScroll() {
   if (typeof Lenis !== 'undefined') {
+    // On mobile touch devices, prioritize native 120Hz momentum scrolling
+    const isTouch = 'ontouchstart' in window || (navigator.maxTouchPoints && navigator.maxTouchPoints > 0);
+    if (isTouch || window.innerWidth < 1024) {
+      return;
+    }
+
     const lenis = new Lenis({
       duration: 1.2,
       easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),

@@ -88,7 +88,7 @@
   </script>
 
   <!-- Custom CSS (Hemisphere Architecture) -->
-  <link rel="stylesheet" href="css/styles.css?v=2.3" />
+  <link rel="stylesheet" href="css/styles.css?v=2.4" />
 
   <!-- Lenis Smooth Scroll CDN -->
   <script src="https://unpkg.com/lenis@1.1.18/dist/lenis.min.js"></script>
@@ -115,38 +115,36 @@
   </div>
 
   <!-- Top Announcement Bar (Best Rate Guarantee + Regenta Rewards) -->
-  <div class="bg-brand-charcoal text-white/90 text-xs py-2 px-4 border-b border-brand-gold/20 relative z-40">
-    <div class="max-w-7xl mx-auto flex flex-wrap items-center justify-between gap-2">
-      <div class="flex items-center space-x-3 text-[11px] sm:text-xs">
-        <span class="inline-flex items-center px-2 py-0.5 rounded text-[10px] font-bold uppercase tracking-wider bg-brand-gold text-brand-charcoal">
-          Best Rate Guarantee
+  <aside id="top-announcement-bar" class="bg-brand-charcoal text-white/90 text-xs py-1.5 sm:py-2 px-3 sm:px-4 border-b border-brand-gold/20 relative z-40">
+    <div class="max-w-7xl mx-auto flex items-center justify-between gap-2">
+      <div class="flex items-center space-x-2 sm:space-x-3 text-[10px] sm:text-xs truncate">
+        <span class="inline-flex items-center px-1.5 sm:px-2 py-0.5 rounded text-[9px] sm:text-[10px] font-bold uppercase tracking-wider bg-brand-gold text-brand-charcoal shrink-0">
+          Best Rate
         </span>
-        <span class="text-white/80">Book Direct for lowest rates + 20% off with <strong class="text-brand-gold font-semibold">Regenta Rewards</strong> & 100% Service Guarantee</span>
+        <span class="text-white/85 truncate">
+          Save 20% with <strong class="text-brand-gold font-semibold">Regenta Rewards</strong> &amp; 100% Service Assurance
+        </span>
       </div>
-      <div class="flex items-center space-x-5 text-[11px] sm:text-xs text-white/70">
+      <div class="hidden sm:flex items-center space-x-4 text-[11px] sm:text-xs text-white/70 shrink-0">
         <a href="tel:+918041783000" class="hover:text-brand-gold transition-colors flex items-center gap-1.5">
           <i data-lucide="phone-call" class="w-3.5 h-3.5 text-brand-gold"></i>
-          <span>24/7 Central Reservations: +91 80 4178 3000</span>
-        </a>
-        <a href="partner.html" class="hover:text-brand-gold transition-colors hidden md:inline-flex items-center gap-1">
-          <i data-lucide="briefcase" class="w-3.5 h-3.5"></i>
-          <span>Corporate & Partner</span>
+          <span>+91 80 4178 3000</span>
         </a>
         <a href="loyalty.html" class="hover:text-brand-gold text-brand-gold transition-colors flex items-center gap-1">
           <i data-lucide="crown" class="w-3.5 h-3.5"></i>
-          <span>Regenta Rewards VIP</span>
+          <span>VIP Club</span>
         </a>
       </div>
     </div>
-  </div>
+  </aside>
 
   <!-- Global Luxury Header -->
-  <header id="main-header" class="fixed top-8 sm:top-8 left-0 right-0 z-40 transition-all duration-300 px-4 sm:px-8 py-3.5 text-white bg-gradient-to-b from-black/85 via-black/40 to-transparent">
-    <div class="max-w-7xl mx-auto flex items-center justify-between">
+  <header id="main-header" class="fixed top-7 sm:top-8 left-0 right-0 z-40 transition-all duration-300 px-3 sm:px-8 py-2.5 sm:py-3.5 text-white bg-gradient-to-b from-black/90 via-black/50 to-transparent">
+    <div class="max-w-7xl mx-auto flex items-center justify-between gap-2">
       
       <!-- Brand Logo (Extracted Official Logo) -->
-      <a href="index.html" class="flex items-center space-x-3 group shrink-0 mr-4 lg:mr-6">
-        <img src="images/brands/logo-2.webp" alt="Royal Orchid Hotels" class="h-8 sm:h-9 w-auto max-w-[190px] sm:max-w-[220px] object-contain brightness-0 invert drop-shadow group-hover:scale-105 transition-transform" />
+      <a href="index.html" class="flex items-center space-x-2 group shrink min-w-0 mr-2 sm:mr-6">
+        <img src="images/brands/logo-2.webp" alt="Royal Orchid Hotels" class="h-6 sm:h-9 w-auto max-w-[125px] sm:max-w-[210px] object-contain brightness-0 invert drop-shadow group-hover:scale-105 transition-transform" />
       </a>
 
       <!-- Desktop Navigation -->
@@ -154,26 +152,26 @@
         <a href="stays.html" class="hover:text-brand-gold hover-gold-line transition-colors py-1 whitespace-nowrap">Stays</a>
         <a href="rooms.html" class="hover:text-brand-gold hover-gold-line transition-colors py-1 whitespace-nowrap">Rooms</a>
         <a href="dining.html" class="hover:text-brand-gold hover-gold-line transition-colors py-1 whitespace-nowrap">Dining</a>
-        <a href="events.html" class="hover:text-brand-gold hover-gold-line transition-colors py-1 whitespace-nowrap">Shaadi & MICE</a>
+        <a href="events.html" class="hover:text-brand-gold hover-gold-line transition-colors py-1 whitespace-nowrap">Shaadi &amp; MICE</a>
         <a href="offers.html" class="hover:text-brand-gold hover-gold-line transition-colors py-1 whitespace-nowrap">Offers</a>
         <a href="loyalty.html" class="hover:text-brand-gold hover-gold-line transition-colors py-1 text-brand-gold whitespace-nowrap">Regenta Rewards</a>
         <a href="partner.html" class="hover:text-brand-gold hover-gold-line transition-colors py-1 whitespace-nowrap">Partner</a>
       </nav>
 
       <!-- Right Actions: Member Sign In + Book Now CTA + Mobile Toggle -->
-      <div class="flex items-center space-x-2 sm:space-x-3 shrink-0">
+      <div class="flex items-center space-x-1.5 sm:space-x-3 shrink-0">
         <button type="button" class="open-rewards-modal-btn hidden md:flex items-center space-x-1.5 px-3 py-2 text-[11px] uppercase tracking-wider font-medium text-white/90 border border-white/30 rounded-sm hover:border-brand-gold hover:text-brand-gold transition-colors whitespace-nowrap">
           <i data-lucide="crown" class="w-3.5 h-3.5 text-brand-gold"></i>
           <span>VIP Sign In</span>
         </button>
 
-        <a href="#booking-section" class="btn-gold px-4 sm:px-5 py-2 sm:py-2.5 text-[11px] sm:text-xs uppercase tracking-luxury font-semibold rounded-sm inline-flex items-center gap-1.5 whitespace-nowrap">
+        <a href="#booking-section" class="btn-gold px-3 sm:px-5 py-1.5 sm:py-2.5 text-[10px] sm:text-xs uppercase tracking-luxury font-semibold rounded-sm inline-flex items-center gap-1 sm:gap-1.5 whitespace-nowrap shadow-md">
           <span>Book Direct</span>
           <i data-lucide="arrow-right" class="w-3 h-3"></i>
         </a>
 
-        <button id="menu-toggle-btn" type="button" class="lg:hidden p-2 text-white hover:text-brand-gold transition-colors focus:outline-none" aria-label="Open navigation menu">
-          <i data-lucide="menu" class="w-6 h-6"></i>
+        <button id="menu-toggle-btn" type="button" class="lg:hidden p-1.5 sm:p-2 text-white hover:text-brand-gold transition-colors focus:outline-none shrink-0 rounded flex items-center justify-center bg-black/40 backdrop-blur-sm border border-white/20" aria-label="Open navigation menu">
+          <i data-lucide="menu" class="w-5 h-5 sm:w-6 sm:h-6"></i>
         </button>
       </div>
     </div>
@@ -233,7 +231,7 @@
   <!-- ==========================================================================
        Cinematic Hero Video Section: Royal Orchid Resort & Convention Centre (30s Loop)
        ========================================================================== -->
-  <section id="hero-section" class="relative w-full h-screen min-h-[700px] flex items-center justify-center overflow-hidden bg-brand-charcoal text-white select-none">
+  <section id="hero-section" class="relative w-full h-[100svh] min-h-[580px] sm:min-h-[700px] flex items-center justify-center overflow-hidden bg-brand-charcoal text-white select-none">
     
     <!-- Video Background Container (Video completely in place of all images) -->
     <div class="hero-video-container">
@@ -257,38 +255,38 @@
     </div>
 
     <!-- Centered Luxury Hemisphere Typography -->
-    <div class="mx-auto w-full px-6 sm:px-8 max-w-7xl relative z-10 pt-20 sm:pt-24 pb-16 sm:pb-20 text-center flex flex-col items-center">
+    <div class="mx-auto w-full px-4 sm:px-8 max-w-7xl relative z-10 pt-20 sm:pt-24 pb-14 sm:pb-20 text-center flex flex-col items-center">
       
       <!-- Flagship Pill Badge -->
-      <div class="mb-5 sm:mb-6">
-        <div class="inline-flex items-center gap-2 px-4 py-1.5 bg-black/50 backdrop-blur-md border border-brand-gold/50 rounded-full shadow-2xl">
+      <div class="mb-4 sm:mb-6">
+        <div class="inline-flex items-center gap-2 px-3.5 sm:px-4 py-1 sm:py-1.5 bg-black/50 backdrop-blur-md border border-brand-gold/50 rounded-full shadow-2xl">
           <span class="w-2 h-2 rounded-full bg-brand-gold animate-ping"></span>
-          <span class="text-[10px] sm:text-xs tracking-[0.28em] uppercase font-sans text-brand-gold font-medium">
+          <span class="text-[9px] sm:text-xs tracking-[0.24em] sm:tracking-[0.28em] uppercase font-sans text-brand-gold font-medium">
             Flagship Resort &amp; Conventions · Bengaluru
           </span>
         </div>
       </div>
 
       <!-- Main Display Headline -->
-      <h1 class="text-4xl sm:text-6xl md:text-7xl font-serif font-light text-white leading-[1.12] tracking-tight max-w-4xl mx-auto drop-shadow-[0_4px_24px_rgba(0,0,0,0.9)] mb-6">
+      <h1 class="text-3xl sm:text-6xl md:text-7xl font-serif font-light text-white leading-[1.14] tracking-tight max-w-4xl mx-auto drop-shadow-[0_4px_24px_rgba(0,0,0,0.9)] mb-4 sm:mb-6">
         Timeless Indian Hospitality,
-        <span class="block italic font-normal text-brand-gold-light mt-1.5">
+        <span class="block italic font-normal text-brand-gold-light mt-1 sm:mt-1.5">
           Reimagined.
         </span>
       </h1>
 
       <!-- Elegant Subtitle -->
-      <p class="text-sm sm:text-base md:text-lg font-light text-white/90 max-w-2xl mx-auto mb-8 sm:mb-10 leading-relaxed font-sans drop-shadow-[0_2px_12px_rgba(0,0,0,0.9)]">
+      <p class="text-xs sm:text-base md:text-lg font-light text-white/90 max-w-2xl mx-auto mb-6 sm:mb-10 leading-relaxed font-sans drop-shadow-[0_2px_12px_rgba(0,0,0,0.9)] px-2">
         Sprawling across 8+ acres of tranquil greens and royal palms in Bengaluru. Experience five decades of quintessential warmth, palatial celebrations, and serene retreat living.
       </p>
 
       <!-- Action Buttons -->
-      <div class="flex flex-col sm:flex-row items-center justify-center gap-3.5 sm:gap-4 w-full sm:w-auto">
-        <a href="#booking-section" class="w-full sm:w-auto px-7 py-3.5 btn-gold text-xs uppercase tracking-luxury font-semibold rounded-sm shadow-2xl flex items-center justify-center gap-2">
+      <div class="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4 w-full sm:w-auto px-4 max-w-sm sm:max-w-none">
+        <a href="#booking-section" class="w-full sm:w-auto px-6 sm:px-7 py-3 sm:py-3.5 btn-gold text-xs uppercase tracking-luxury font-semibold rounded-sm shadow-2xl flex items-center justify-center gap-2">
           <span>Book Direct (Save 20%)</span>
           <i data-lucide="arrow-right" class="w-4 h-4"></i>
         </a>
-        <button id="open-video-tour-btn" type="button" class="w-full sm:w-auto px-6 py-3.5 border border-white/75 bg-black/35 backdrop-blur-md text-white hover:border-brand-gold hover:text-brand-gold hover:bg-black/60 text-xs uppercase tracking-luxury font-medium rounded-sm shadow-xl transition-all duration-300 flex items-center justify-center gap-2">
+        <button id="open-video-tour-btn" type="button" class="w-full sm:w-auto px-5 sm:px-6 py-2.5 sm:py-3.5 border border-white/75 bg-black/35 backdrop-blur-md text-white hover:border-brand-gold hover:text-brand-gold hover:bg-black/60 text-xs uppercase tracking-luxury font-medium rounded-sm shadow-xl transition-all duration-300 flex items-center justify-center gap-2">
           <i data-lucide="play-circle" class="w-4 h-4 text-brand-gold"></i>
           <span>Watch Full Tour</span>
         </button>
@@ -297,7 +295,7 @@
     </div>
 
     <!-- Bottom Information & Video Toggles -->
-    <div class="absolute bottom-6 sm:bottom-8 left-4 sm:left-8 right-4 sm:right-8 z-20 flex items-center justify-between pointer-events-none">
+    <div class="absolute bottom-4 sm:bottom-8 left-3 sm:left-8 right-3 sm:right-8 z-20 flex items-center justify-between pointer-events-none">
       
       <!-- Location Pill -->
       <div class="pointer-events-auto hidden md:flex items-center gap-3 bg-black/60 backdrop-blur-md px-4 py-2 border border-white/20 rounded shadow-xl">
@@ -308,21 +306,21 @@
         </div>
       </div>
 
-      <!-- Center Scroll Prompt -->
-      <a href="#booking-section" class="pointer-events-auto hidden sm:flex flex-col items-center gap-1 text-white/80 hover:text-brand-gold transition-colors focus:outline-none">
-        <span class="text-[9px] uppercase tracking-luxury font-sans font-medium">Check Rates &amp; Availability</span>
-        <i data-lucide="chevron-down" class="w-4 h-4 text-brand-gold animate-bounce"></i>
+      <!-- Center Scroll Prompt (Always Visible on Mobile & Desktop) -->
+      <a href="#booking-section" class="pointer-events-auto flex flex-col items-center gap-1 text-white/90 hover:text-brand-gold transition-colors focus:outline-none mx-auto md:mx-0">
+        <span class="text-[9px] sm:text-[10px] uppercase tracking-luxury font-sans font-medium text-brand-gold-light">Explore Stays &amp; Book</span>
+        <i data-lucide="chevron-down" class="w-3.5 h-3.5 sm:w-4 sm:h-4 text-brand-gold animate-bounce"></i>
       </a>
 
       <!-- Video Control Buttons -->
-      <div class="pointer-events-auto flex items-center gap-2 ml-auto">
-        <button id="toggle-video-playback-btn" type="button" class="flex items-center gap-1.5 px-3 py-1.5 bg-black/60 backdrop-blur-md border border-white/20 hover:border-brand-gold text-white/90 hover:text-white rounded text-[10px] uppercase tracking-wider transition-colors" aria-label="Toggle ambient video">
-          <i data-lucide="pause" class="w-3.5 h-3.5 text-brand-gold"></i>
-          <span id="video-playback-label">Pause Video</span>
+      <div class="pointer-events-auto flex items-center gap-1.5 sm:gap-2 shrink-0">
+        <button id="toggle-video-playback-btn" type="button" class="flex items-center gap-1 px-2.5 sm:px-3 py-1 sm:py-1.5 bg-black/60 backdrop-blur-md border border-white/20 hover:border-brand-gold text-white/90 hover:text-white rounded text-[9px] sm:text-[10px] uppercase tracking-wider transition-colors" aria-label="Toggle ambient video">
+          <i data-lucide="pause" class="w-3 h-3 text-brand-gold"></i>
+          <span id="video-playback-label" class="hidden xs:inline">Pause</span>
         </button>
-        <button id="hero-sound-toggle-btn" type="button" class="flex items-center gap-1.5 px-3 py-1.5 bg-black/60 backdrop-blur-md border border-white/20 hover:border-brand-gold text-white/90 hover:text-white rounded text-[10px] uppercase tracking-wider transition-colors" aria-label="Play full tour with audio">
-          <i data-lucide="volume-2" class="w-3.5 h-3.5 text-brand-gold"></i>
-          <span>Sound</span>
+        <button id="hero-sound-toggle-btn" type="button" class="flex items-center gap-1 px-2.5 sm:px-3 py-1 sm:py-1.5 bg-black/60 backdrop-blur-md border border-white/20 hover:border-brand-gold text-white/90 hover:text-white rounded text-[9px] sm:text-[10px] uppercase tracking-wider transition-colors" aria-label="Play full tour with audio">
+          <i data-lucide="volume-2" class="w-3 h-3 text-brand-gold"></i>
+          <span class="hidden xs:inline">Sound</span>
         </button>
       </div>
 
@@ -1596,6 +1594,6 @@
   </div>
 
   <div id="toast-container"></div>
-  <script src="js/main.js?v=2.3"></script>
+  <script src="js/main.js?v=2.4"></script>
 </body>
 </html>
