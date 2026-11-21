@@ -504,3 +504,23 @@ header#main-header.light-header {
   color: #141414;
   transform: translateY(-2px);
 }
+
+/* Custom Scrollbar for Mega Destinations Panel */
+.custom-scrollbar::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: #F8F6F2;
+}
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background: #D8D2C9;
+  border-radius: 3px;
+}
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: #C27D38;
+}
+
+.dest-city-accordion {
+  transition: all 0.25s ease-in-out;
+}

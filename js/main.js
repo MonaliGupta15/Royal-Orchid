@@ -32,6 +32,7 @@ document.addEventListener('DOMContentLoaded', () => {
   initCardViewportAnimations();
   initCircularTransitions();
   initDateDefaults();
+  initDestinationsModal();
 
   // Smooth scroll for booking section triggers so page never jumps abruptly
   document.querySelectorAll('a[href="#booking-section"]').forEach((link) => {
@@ -1000,4 +1001,212 @@ function initDateDefaults() {
       checkoutInput.value = formatDate(cin);
     }
   });
+}
+
+function closeMobileDrawer() {
+  const drawer = document.getElementById('mobile-drawer');
+  const panel = document.getElementById('mobile-drawer-panel');
+  if (drawer && panel) {
+    drawer.classList.remove('opacity-100');
+    drawer.classList.add('opacity-0', 'pointer-events-none');
+    panel.classList.remove('translate-x-0');
+    panel.classList.add('translate-x-full');
+    document.body.style.overflow = '';
+  }
+}
+
+/* ==========================================================================
+   13. Mega Destinations & Hotel Directory (Matching royalorchidhotels.com)
+   ========================================================================== */
+function openDestinationsModal() {
+  const modal = document.getElementById('destinations-modal');
+  openModal(modal);
+  setTimeout(() => {
+    const searchInput = document.getElementById('mega-dest-search-input');
+    if (searchInput) searchInput.focus();
+  }, 150);
+}
+
+function initDestinationsModal() {
+  const modal = document.getElementById('destinations-modal');
+  if (!modal) return;
+
+  const tabBtns = modal.querySelectorAll('.dest-tab-btn');
+  const panes = modal.querySelectorAll('.dest-tab-pane');
+  const searchResultsPane = document.getElementById('pane-search-results');
+  const searchInput = document.getElementById('mega-dest-search-input');
+  const clearBtn = document.getElementById('mega-dest-search-clear');
+
+  // Tab switching
+  tabBtns.forEach((btn) => {
+    btn.addEventListener('click', () => {
+      const targetTab = btn.getAttribute('data-tab');
+      tabBtns.forEach((b) => {
+        b.classList.remove('active', 'border-brand-terracotta', 'text-brand-slate', 'bg-brand-terracotta/10');
+        b.classList.add('border-transparent', 'text-text-muted');
+      });
+      btn.classList.add('active', 'border-brand-terracotta', 'text-brand-slate', 'bg-brand-terracotta/10');
+      btn.classList.remove('border-transparent', 'text-text-muted');
+
+      if (searchInput && searchInput.value.trim() !== '') {
+        searchInput.value = '';
+        if (clearBtn) clearBtn.classList.add('hidden');
+        if (searchResultsPane) searchResultsPane.classList.add('hidden');
+      }
+
+      panes.forEach((p) => p.classList.add('hidden'));
+      const activePane = document.getElementById(`pane-${targetTab}`);
+      if (activePane) activePane.classList.remove('hidden');
+    });
+  });
+
+  // Accordion toggle on '+' buttons
+  modal.querySelectorAll('.dest-expand-btn').forEach((btn) => {
+    btn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const parentGroup = btn.closest('.dest-city-group');
+      if (!parentGroup) return;
+      const accordion = parentGroup.querySelector('.dest-city-accordion');
+      if (accordion) {
+        const isClosed = accordion.classList.contains('hidden');
+        if (isClosed) {
+          accordion.classList.remove('hidden');
+          btn.textContent = '−';
+          btn.classList.add('text-brand-slate');
+        } else {
+          accordion.classList.add('hidden');
+          btn.textContent = '+';
+          btn.classList.remove('text-brand-slate');
+        }
+      }
+    });
+  });
+
+  // 1-Click Selection of City or Hotel
+  modal.addEventListener('click', (e) => {
+    const selBtn = e.target.closest('.dest-select-btn');
+    if (!selBtn) return;
+    e.preventDefault();
+    const selection = selBtn.getAttribute('data-selection');
+    if (!selection) return;
+
+    const bookingDest = document.getElementById('booking-destination');
+    if (bookingDest) {
+      bookingDest.value = selection;
+    }
+
+    closeModal(modal);
+    showToast(`Selected destination: "${selection}". Direct rate unlocked!`, 'success');
+
+    const bookingSec = document.getElementById('booking-section');
+    if (bookingSec) {
+      const rect = bookingSec.getBoundingClientRect();
+      if (rect.top < 0 || rect.bottom > window.innerHeight) {
+        bookingSec.scrollIntoView({ behavior: 'smooth' });
+      }
+    }
+  });
+
+  // Live Instant Search across 72 cities + hotel names
+  if (searchInput) {
+    searchInput.addEventListener('input', () => {
+      const query = searchInput.value.trim().toLowerCase();
+      if (clearBtn) {
+        if (query.length > 0) clearBtn.classList.remove('hidden');
+        else clearBtn.classList.add('hidden');
+      }
+
+      if (query.length === 0) {
+        if (searchResultsPane) searchResultsPane.classList.add('hidden');
+        const activeTab = modal.querySelector('.dest-tab-btn.active')?.getAttribute('data-tab') || 'our-hotels';
+        const activePane = document.getElementById(`pane-${activeTab}`);
+        if (activePane) activePane.classList.remove('hidden');
+        return;
+      }
+
+      panes.forEach((p) => p.classList.add('hidden'));
+      if (searchResultsPane) searchResultsPane.classList.remove('hidden');
+
+      const resultsGrid = document.getElementById('search-results-grid');
+      const countEl = document.getElementById('search-result-count');
+      if (!resultsGrid) return;
+
+      const matches = [];
+      modal.querySelectorAll('#pane-our-hotels .dest-city-group, #pane-intl-hotels .dest-city-group').forEach((group) => {
+        const city = group.getAttribute('data-city') || '';
+        const cityName = group.querySelector('.dest-select-btn[data-type="city"]')?.textContent.trim() || city;
+        
+        let cityMatched = city.includes(query);
+        const matchedHotels = [];
+
+        group.querySelectorAll('.dest-select-btn[data-type="hotel"]').forEach((hBtn) => {
+          const hName = hBtn.getAttribute('data-selection') || hBtn.textContent.trim();
+          if (hName.toLowerCase().includes(query)) {
+            matchedHotels.push(hName);
+          }
+        });
+
+        if (cityMatched || matchedHotels.length > 0) {
+          matches.push({
+            city: cityName,
+            cityMatched,
+            hotels: matchedHotels
+          });
+        }
+      });
+
+      if (countEl) countEl.textContent = `${matches.length} matching destinations found`;
+      resultsGrid.innerHTML = '';
+
+      if (matches.length === 0) {
+        resultsGrid.innerHTML = `
+          <div class="col-span-full py-8 text-center text-text-muted">
+            <p class="font-medium text-sm">No properties found matching "${query}"</p>
+            <p class="text-xs mt-1">Try searching by city (e.g. Bangalore, Goa, Jaipur) or hotel name.</p>
+          </div>
+        `;
+        return;
+      }
+
+      matches.forEach((m) => {
+        const card = document.createElement('div');
+        card.className = 'p-3 rounded-lg border border-border bg-surface-subtle hover:border-brand-terracotta hover:bg-white transition-all text-xs';
+        let hotelsHtml = '';
+        if (m.hotels.length > 0) {
+          hotelsHtml = `
+            <div class="mt-2 pt-2 border-t border-border-subtle space-y-1">
+              ${m.hotels.map(h => `
+                <button type="button" class="dest-select-btn block w-full text-left text-[11px] font-medium text-brand-slate hover:text-brand-terracotta py-0.5 truncate" data-selection="${h}">
+                  • ${h}
+                </button>
+              `).join('')}
+            </div>
+          `;
+        }
+
+        card.innerHTML = `
+          <div class="flex items-center justify-between">
+            <button type="button" class="dest-select-btn text-xs font-bold text-text-primary hover:text-brand-terracotta text-left" data-selection="${m.city} (All Properties)">
+              📍 ${m.city}
+            </button>
+            <span class="text-[10px] px-1.5 py-0.5 rounded bg-brand-slate/10 text-brand-slate font-semibold">City</span>
+          </div>
+          ${hotelsHtml}
+        `;
+        resultsGrid.appendChild(card);
+      });
+    });
+
+    if (clearBtn) {
+      clearBtn.addEventListener('click', () => {
+        searchInput.value = '';
+        clearBtn.classList.add('hidden');
+        if (searchResultsPane) searchResultsPane.classList.add('hidden');
+        const activeTab = modal.querySelector('.dest-tab-btn.active')?.getAttribute('data-tab') || 'our-hotels';
+        const activePane = document.getElementById(`pane-${activeTab}`);
+        if (activePane) activePane.classList.remove('hidden');
+        searchInput.focus();
+      });
+    }
+  }
 }
