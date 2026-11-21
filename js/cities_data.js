@@ -1,4 +1,4 @@
-// Royal Orchid & Regenta Hotels - Complete 72 Destinations & Properties Database
+// Royal Orchid & Regenta Hotels - Complete 74 Destinations & Properties Database
 const ROYAL_CITIES_DB = {
   "ahmedabad": {
     "cityName": "Ahmedabad",
@@ -1941,6 +1941,77 @@ const ROYAL_CITIES_DB = {
           "Fitness Center",
           "Meeting Facilities",
           "24/7 Room Service"
+        ]
+      }
+    ]
+  },
+  "nepal": {
+    "cityName": "Nepal",
+    "state": "International",
+    "country": "Nepal",
+    "hotels": [
+      {
+        "id": "regenta-resort-spa-chitwan-nepal",
+        "name": "Regenta Resort & Spa By Riverside, Chitwan, Nepal",
+        "address": "Bharatpur 29, Bhateri, Chitwan, Nepal - 44200",
+        "transit": "\u2708 Bharatpur Airport - 11 KM | \ud83d\ude8c Pokhara Bus Park - 8 KM",
+        "description": "Regenta Resort and Spa Chitwan, nestled on the serene banks of the sacred Narayani River, spans 4.6 acres and is surrounded by breathtaking nature. Features an Ayurvedic wellness spa, riverside multi-cuisine dining, and curated nature safaris into Chitwan National Park.",
+        "image": "https://www.royalorchidhotels.com/images/hotels/09_Sep_2024_03_53_00chitwan.jpg",
+        "rating": "4.7",
+        "reviews": "380",
+        "price": "5,500",
+        "memberPrice": "4,400",
+        "amenities": [
+          "Riverside Dining",
+          "Ayurvedic Wellness Spa",
+          "Infinity Pool",
+          "Chitwan Nature Safaris",
+          "Free High-Speed Wi-Fi"
+        ]
+      },
+      {
+        "id": "regenta-place-sabrina-nepal",
+        "name": "Regenta Place, Sabrina, Nepal",
+        "address": "Ganesh Chowk, Budhanilkantha, Kathmandu, Nepal - 44600",
+        "transit": "\u2708 Tribhuvan Int. Airport - 8 KM | \ud83d\ude8c Gongabu New Bus Station - 6 KM",
+        "description": "Regenta Place, Sabrina, is situated under the scenic Shivapuri Hills in Kathmandu. The hotel offers 6 Deluxe Rooms, 26 Premium Rooms, 15 Business Suites, fine dining, and panoramic Himalayan foothills views.",
+        "image": "https://www.royalorchidhotels.com/images/hotels/14_Mar_2024_01_53_55Regenta-Place-Sabrina,-Nepal.jpg",
+        "rating": "4.5",
+        "reviews": "260",
+        "price": "4,200",
+        "memberPrice": "3,360",
+        "amenities": [
+          "Himalayan Foothills View",
+          "Fine Dining Restaurant",
+          "Conference & Banquet Lounge",
+          "Free Wi-Fi",
+          "Airport Shuttle"
+        ]
+      }
+    ]
+  },
+  "sri-lanka": {
+    "cityName": "Sri Lanka",
+    "state": "International",
+    "country": "Sri Lanka",
+    "hotels": [
+      {
+        "id": "regenta-arie-lagoon-negombo-sri-lanka",
+        "name": "Regenta, Arie Lagoon, Negombo, Sri Lanka",
+        "address": "587 Pamunugama Road, Thalahena, Negombo, Sri Lanka",
+        "transit": "\u2708 Bandaranaike Int. Airport - 15 KM | \ud83d\ude86 Negombo Railway Station - 7 KM",
+        "description": "Experience luxury at Regenta Arie Lagoon, situated in the beautiful fishing village of Thalahena, Negombo. Our resort is nestled between a peaceful lagoon and the Indian Ocean, offering twin infinity pools, an Ayurvedic spa, and specialty seafood dining.",
+        "image": "https://www.royalorchidhotels.com/images/hotels/14_Mar_2024_11_30_09Regenta-Arie-Lagoon,-Negombo,-Sri-Lanka.png",
+        "rating": "4.8",
+        "reviews": "510",
+        "price": "6,800",
+        "memberPrice": "5,440",
+        "amenities": [
+          "Lagoon & Ocean Front",
+          "Twin Infinity Pools",
+          "Ayurvedic Luxury Spa",
+          "Fresh Seafood Specialty",
+          "Airport Transfers"
         ]
       }
     ]

@@ -198,8 +198,13 @@
     <div class="max-w-md mx-auto mb-6">
       <label for="city-page-selector" class="sr-only">Select City or Destination</label>
       <div class="relative">
-        <select id="city-page-selector" class="w-full py-3 pl-4 pr-10 text-xs sm:text-sm font-semibold text-brand-slate border border-border rounded-lg bg-white shadow-sm focus:outline-none focus:border-brand-terracotta cursor-pointer transition-all hover:border-brand-terracotta">
-          <option value="all">All Destinations (72 Cities · 100+ Hotels)</option>
+        <select id="city-page-selector" class="w-full py-3 pl-4 pr-10 text-xs sm:text-sm font-semibold text-brand-slate border border-border rounded-lg bg-white shadow-sm focus:outline-none focus:border-brand-terracotta cursor-pointer transition-all hover:border-brand-terracotta appearance-none">
+          <option value="all">All Destinations (74 Destinations · 100+ Hotels)</option>
+          <optgroup label="International Destinations">
+            <option value="nepal">Nepal (Chitwan & Kathmandu)</option>
+            <option value="sri-lanka">Sri Lanka (Negombo)</option>
+          </optgroup>
+          <optgroup label="Domestic Destinations (72 Cities across India)">
             <option value="ahmedabad">Ahmedabad</option>
             <option value="ajmer">Ajmer</option>
             <option value="ambala">Ambala</option>
@@ -272,6 +277,7 @@
             <option value="surat">Surat</option>
             <option value="tirupati">Tirupati</option>
             <option value="udaipur">Udaipur</option>
+          </optgroup>
         </select>
         <i data-lucide="chevron-down" class="w-4 h-4 text-text-muted absolute right-3.5 top-1/2 -translate-y-1/2 pointer-events-none"></i>
       </div>
@@ -425,56 +431,75 @@
       const subtitleEl = document.getElementById('city-page-subtitle');
       const listContainer = document.getElementById('city-hotels-list');
 
+      function normalizeSlug(slug) {
+        if (!slug) return 'ahmedabad';
+        let s = slug.toLowerCase().trim().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+        if (s === 'bengaluru') return 'bangalore';
+        if (s === 'srilanka' || s === 'sri lanka') return 'sri-lanka';
+        return s;
+      }
+
       function getCitySlugFromUrl() {
         const params = new URLSearchParams(window.location.search);
         const cityParam = params.get('city');
-        if (cityParam) return cityParam.toLowerCase().trim();
+        if (cityParam) return normalizeSlug(cityParam);
         return 'ahmedabad'; // Default to ahmedabad as requested!
       }
 
       function renderCityView(citySlug) {
         if (!listContainer || typeof ROYAL_CITIES_DB === 'undefined') return;
 
-        if (citySlug === 'all') {
-          titleEl.textContent = 'Our Stays, Resorts & Palaces Across India';
-          subtitleEl.textContent = 'Explore 100+ handpicked properties across 72 business, heritage, and leisure destinations.';
+        const cleanSlug = normalizeSlug(citySlug);
+
+        if (cleanSlug === 'all') {
+          if (titleEl) titleEl.textContent = 'Our Stays, Resorts & Palaces Across India & International';
+          if (subtitleEl) subtitleEl.textContent = 'Explore 100+ handpicked properties across 74 business, heritage, and leisure destinations.';
           
           let allCards = [];
           Object.keys(ROYAL_CITIES_DB).forEach(key => {
-            ROYAL_CITIES_DB[key].hotels.forEach(h => {
+            (ROYAL_CITIES_DB[key].hotels || []).forEach(h => {
               allCards.push({ ...h, cityName: ROYAL_CITIES_DB[key].cityName });
             });
           });
 
           listContainer.innerHTML = allCards.map(h => createHotelCardHtml(h)).join('');
+          if (selector) selector.value = 'all';
           if (window.lucide) window.lucide.createIcons();
           return;
         }
 
-        const cityObj = ROYAL_CITIES_DB[citySlug] || ROYAL_CITIES_DB['ahmedabad'];
+        const cityObj = ROYAL_CITIES_DB[cleanSlug] || ROYAL_CITIES_DB['ahmedabad'];
         const cityName = cityObj ? cityObj.cityName : 'Ahmedabad';
-        const hotels = cityObj ? cityObj.hotels : [];
+        const hotels = cityObj ? (cityObj.hotels || []) : [];
 
-        // Update Title & Dropdown
-        titleEl.textContent = `Hotels / Resorts In ${cityName}`;
-        subtitleEl.textContent = `Discover ${hotels.length} premier Royal Orchid & Regenta ${hotels.length === 1 ? 'property' : 'properties'} in ${cityName} with guaranteed lowest tariffs and instant member privileges.`;
-        if (selector) selector.value = citySlug;
+        // Update Title & Subtitle
+        if (titleEl) titleEl.textContent = `Hotels / Resorts In ${cityName}`;
+        if (subtitleEl) {
+          subtitleEl.textContent = `Discover ${hotels.length} premier Royal Orchid & Regenta ${hotels.length === 1 ? 'property' : 'properties'} in ${cityName} with guaranteed lowest tariffs and instant member privileges.`;
+        }
+        
+        // Update Selector
+        if (selector) {
+          selector.value = cleanSlug;
+        }
 
         // Render Hotel Cards Matching Screenshot
-        listContainer.innerHTML = hotels.map(h => createHotelCardHtml(h)).join('');
+        listContainer.innerHTML = hotels.map(h => createHotelCardHtml(h, cityName)).join('');
         if (window.lucide) window.lucide.createIcons();
       }
 
-      function createHotelCardHtml(hotel) {
+      function createHotelCardHtml(hotel, cityName = '') {
         const amenitiesBadges = (hotel.amenities || []).map(a => 
           `<span class="px-2 py-0.5 rounded bg-surface-subtle text-text-secondary text-[10px] font-semibold border border-border/60">• ${a}</span>`
         ).join('');
+
+        const safeImg = hotel.image || 'images/hero/19_49_2026_10_49_13banner1.jpg';
 
         return `
           <article class="bg-white rounded-xl border border-border overflow-hidden shadow-sm hover:shadow-lg transition-all p-4 sm:p-6 flex flex-col lg:flex-row gap-6 items-start">
             <!-- Left: Photo with Gallery Icon -->
             <div class="relative w-full lg:w-72 h-52 sm:h-60 lg:h-52 rounded-lg overflow-hidden shrink-0 bg-surface-subtle">
-              <img src="${hotel.image}" alt="${hotel.name}" class="w-full h-full object-cover transition-transform duration-500 hover:scale-105" loading="lazy" />
+              <img src="${safeImg}" alt="${hotel.name}" class="w-full h-full object-cover transition-transform duration-500 hover:scale-105" loading="lazy" onerror="this.src='images/hero/19_49_2026_10_49_13banner1.jpg'" />
               <button type="button" onclick="showToast('Loading high-resolution gallery for ${hotel.name}')" class="absolute bottom-2.5 left-2.5 p-1.5 rounded bg-black/60 hover:bg-black/80 text-white backdrop-blur-sm transition-colors" title="View Hotel Gallery">
                 <i data-lucide="image" class="w-4 h-4"></i>
               </button>
@@ -543,7 +568,7 @@
                     View Offers
                   </button>
                 </div>
-                <button type="button" onclick="openSearchResultsModal({ destination: '${hotel.name}', checkin: 'Nov 22', checkout: 'Nov 24', adults: 2, rooms: 1 })" class="w-full py-2.5 bg-brand-terracotta hover:bg-brand-gold-rich text-white text-xs uppercase tracking-wider font-bold rounded shadow transition-all flex items-center justify-center gap-1.5">
+                <button type="button" onclick="openSearchResultsModal({ destination: '${hotel.name}', checkin: 'Nov 22', checkout: 'Nov 24', adults: 2, rooms: 1 })" class="w-full py-2.5 bg-brand-terracotta hover:bg-brand-gold-rich text-white text-xs uppercase tracking-wider font-bold rounded shadow transition-all flex items-center justify-center gap-1.5 cursor-pointer">
                   <span>Book Now</span>
                   <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i>
                 </button>
@@ -553,21 +578,1987 @@
         `;
       }
 
+      // Expose globally so destinations-modal click handler can update view instantly!
+      window.renderCityView = renderCityView;
+
       // Handle dropdown change
       if (selector) {
         selector.addEventListener('change', (e) => {
-          const chosen = e.target.value;
-          const newUrl = chosen === 'all' ? 'stays.html' : `stays.html?city=${chosen}`;
+          const chosen = normalizeSlug(e.target.value);
+          const newUrl = chosen === 'all' ? 'stays.html?city=all' : `stays.html?city=${chosen}`;
           history.pushState(null, '', newUrl);
           renderCityView(chosen);
           window.scrollTo({ top: 0, behavior: 'smooth' });
         });
       }
 
+      // Handle browser back / forward navigation
+      window.addEventListener('popstate', () => {
+        const currentCity = getCitySlugFromUrl();
+        renderCityView(currentCity);
+      });
+
       // Initial view render
       const initialCity = getCitySlugFromUrl();
       renderCityView(initialCity);
     });
   </script>
+
+
+  <!-- MEGA DESTINATIONS & HOTELS MODAL (Matching Official royalorchidhotels.com Screenshot) -->
+  <div id="destinations-modal" class="modal-backdrop fixed inset-0 z-50 flex items-start justify-center p-2 sm:p-4 md:p-6 pt-8 sm:pt-12 overflow-y-auto bg-black/60 backdrop-blur-sm">
+    <div class="modal-content w-full max-w-7xl bg-white text-text-primary rounded-xl shadow-2xl overflow-hidden border border-border flex flex-col my-auto max-h-[92vh]">
+      
+      <!-- Top Title Bar -->
+      <div class="px-5 py-4 bg-brand-slate text-white flex items-center justify-between border-b border-white/10 shrink-0">
+        <div class="flex items-center gap-3">
+          <img src="images/brands/logo-2.webp" alt="Royal Orchid & Regenta" class="h-6 sm:h-7 w-auto brightness-0 invert" />
+          <span class="hidden sm:inline-block w-px h-5 bg-white/20"></span>
+          <span class="hidden sm:inline-block text-xs uppercase tracking-widest text-brand-brass font-bold">Destinations & Hotels Directory</span>
+        </div>
+        <button type="button" class="modal-close-trigger p-1.5 text-white/70 hover:text-white hover:bg-white/10 rounded-full transition-colors" aria-label="Close Destinations Menu">
+          <i data-lucide="x" class="w-6 h-6"></i>
+        </button>
+      </div>
+
+      <!-- Navigation Tabs (Matching Screenshot: Our Hotels, International Hotels, Upcoming Hotels) -->
+      <div class="px-5 pt-3 pb-1 bg-surface flex flex-wrap items-center justify-between gap-3 border-b border-border shrink-0">
+        <div class="flex items-center gap-2 sm:gap-3" id="dest-tab-buttons">
+          <button type="button" class="dest-tab-btn active px-4 py-2 rounded-t font-bold text-xs uppercase tracking-wider transition-all border-b-2 border-brand-terracotta text-brand-slate bg-brand-terracotta/10" data-tab="our-hotels">
+            Our Hotels <span class="ml-1 text-[10px] px-1.5 py-0.5 rounded-full bg-brand-slate text-white">72 Cities</span>
+          </button>
+          <button type="button" class="dest-tab-btn px-4 py-2 rounded-t font-bold text-xs uppercase tracking-wider transition-all border-b-2 border-transparent text-text-muted hover:text-brand-slate" data-tab="intl-hotels">
+            International Hotels <span class="ml-1 text-[10px] px-1.5 py-0.5 rounded-full bg-surface-subtle text-text-secondary border border-border">2 Countries</span>
+          </button>
+          <button type="button" class="dest-tab-btn px-4 py-2 rounded-t font-bold text-xs uppercase tracking-wider transition-all border-b-2 border-transparent text-text-muted hover:text-brand-slate" data-tab="upcoming-hotels">
+            Upcoming Hotels <span class="ml-1 text-[10px] px-1.5 py-0.5 rounded-full bg-brand-terracotta text-white">39 Pipeline</span>
+          </button>
+        </div>
+
+        <div class="text-[11px] text-text-secondary hidden md:flex items-center gap-2">
+          <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
+          <span>Click any city or hotel to select for instant booking</span>
+        </div>
+      </div>
+
+      <!-- Search Input Bar (Matching Screenshot: Search Destinations And Hotels) -->
+      <div class="px-5 py-4 bg-surface-subtle border-b border-border shrink-0">
+        <div class="relative max-w-3xl mx-auto">
+          <i data-lucide="search" class="w-4 h-4 text-brand-terracotta absolute left-3.5 top-3.5"></i>
+          <input id="mega-dest-search-input" type="text" placeholder="Search Destinations And Hotels (e.g. Bangalore, Goa, Jaipur, Udaipur, Regenta Central...)" class="w-full pl-10 pr-10 py-2.5 bg-white border border-border rounded-lg text-xs sm:text-sm font-semibold text-text-primary focus:outline-none focus:border-brand-terracotta focus:ring-1 focus:ring-brand-terracotta shadow-sm transition-all" />
+          <button id="mega-dest-search-clear" type="button" class="hidden absolute right-3 top-2.5 text-text-muted hover:text-text-primary p-0.5">
+            <i data-lucide="x" class="w-4 h-4"></i>
+          </button>
+        </div>
+      </div>
+
+      <!-- Scrollable Tab Content Container -->
+      <div class="p-5 sm:p-6 overflow-y-auto flex-1 custom-scrollbar bg-white">
+        
+        <!-- PANE 1: OUR HOTELS (72 Cities Domestic India) -->
+        <div id="pane-our-hotels" class="dest-tab-pane">
+<div class="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-6 lg:grid-cols-8 gap-x-4 gap-y-2 text-xs">
+  <div class="dest-city-group py-1 border-b border-border/40" data-city="ahmedabad">
+    <div class="flex items-center gap-1.5">
+      <button type="button" class="dest-expand-btn text-brand-terracotta hover:text-brand-gold-rich font-bold text-sm leading-none w-4 h-4 flex items-center justify-center shrink-0 cursor-pointer select-none" data-city="Ahmedabad" title="Toggle hotels in Ahmedabad">
+        +
+      </button>
+      <button type="button" class="dest-select-btn text-left text-xs font-semibold text-text-secondary hover:text-brand-slate truncate transition-colors flex-1" data-selection="Ahmedabad (All Properties)" data-type="city">
+        Ahmedabad
+      </button>
+    </div>
+    <div class="dest-city-accordion hidden mt-1.5 pl-3 pr-1 py-1.5 bg-surface-subtle rounded border-l-2 border-brand-terracotta space-y-1.5">
+      <div class="text-[10px] uppercase tracking-wider font-bold text-brand-slate/70 pb-0.5 border-b border-border-subtle flex items-center justify-between">
+        <span>Hotels in Ahmedabad</span>
+        <span class="text-brand-terracotta font-extrabold">2</span>
+      </div>
+      <button type="button" class="dest-select-btn block w-full text-left text-[11px] font-medium text-text-secondary hover:text-brand-terracotta transition-colors py-0.5 truncate" data-selection="Regenta Central Antarim, Navrangpura" data-type="hotel" title="Regenta Central Antarim, Navrangpura">
+        • Regenta Central Antarim, Navrangpura
+      </button>
+      <button type="button" class="dest-select-btn block w-full text-left text-[11px] font-medium text-text-secondary hover:text-brand-terracotta transition-colors py-0.5 truncate" data-selection="Regenta Inn, Ranip, Ahmedabad" data-type="hotel" title="Regenta Inn, Ranip, Ahmedabad">
+        • Regenta Inn, Ranip, Ahmedabad
+      </button>
+    </div>
+  </div>
+  <div class="dest-city-group py-1 border-b border-border/40" data-city="ajmer">
+    <div class="flex items-center gap-1.5">
+      <button type="button" class="dest-expand-btn text-brand-terracotta hover:text-brand-gold-rich font-bold text-sm leading-none w-4 h-4 flex items-center justify-center shrink-0 cursor-pointer select-none" data-city="Ajmer" title="Toggle hotels in Ajmer">
+        +
+      </button>
+      <button type="button" class="dest-select-btn text-left text-xs font-semibold text-text-secondary hover:text-brand-slate truncate transition-colors flex-1" data-selection="Ajmer (All Properties)" data-type="city">
+        Ajmer
+      </button>
+    </div>
+    <div class="dest-city-accordion hidden mt-1.5 pl-3 pr-1 py-1.5 bg-surface-subtle rounded border-l-2 border-brand-terracotta space-y-1.5">
+      <div class="text-[10px] uppercase tracking-wider font-bold text-brand-slate/70 pb-0.5 border-b border-border-subtle flex items-center justify-between">
+        <span>Hotels in Ajmer</span>
+        <span class="text-brand-terracotta font-extrabold">1</span>
+      </div>
+      <button type="button" class="dest-select-btn block w-full text-left text-[11px] font-medium text-text-secondary hover:text-brand-terracotta transition-colors py-0.5 truncate" data-selection="Regenta Inn Embassy, Ajmer" data-type="hotel" title="Regenta Inn Embassy, Ajmer">
+        • Regenta Inn Embassy, Ajmer
+      </button>
+    </div>
+  </div>
+  <div class="dest-city-group py-1 border-b border-border/40" data-city="ambala">
+    <div class="flex items-center gap-1.5">
+      <button type="button" class="dest-expand-btn text-brand-terracotta hover:text-brand-gold-rich font-bold text-sm leading-none w-4 h-4 flex items-center justify-center shrink-0 cursor-pointer select-none" data-city="Ambala" title="Toggle hotels in Ambala">
+        +
+      </button>
+      <button type="button" class="dest-select-btn text-left text-xs font-semibold text-text-secondary hover:text-brand-slate truncate transition-colors flex-1" data-selection="Ambala (All Properties)" data-type="city">
+        Ambala
+      </button>
+    </div>
+    <div class="dest-city-accordion hidden mt-1.5 pl-3 pr-1 py-1.5 bg-surface-subtle rounded border-l-2 border-brand-terracotta space-y-1.5">
+      <div class="text-[10px] uppercase tracking-wider font-bold text-brand-slate/70 pb-0.5 border-b border-border-subtle flex items-center justify-between">
+        <span>Hotels in Ambala</span>
+        <span class="text-brand-terracotta font-extrabold">1</span>
+      </div>
+      <button type="button" class="dest-select-btn block w-full text-left text-[11px] font-medium text-text-secondary hover:text-brand-terracotta transition-colors py-0.5 truncate" data-selection="Regenta Central City Vilas, Ambala" data-type="hotel" title="Regenta Central City Vilas, Ambala">
+        • Regenta Central City Vilas, Ambala
+      </button>
+    </div>
+  </div>
+  <div class="dest-city-group py-1 border-b border-border/40" data-city="amritsar">
+    <div class="flex items-center gap-1.5">
+      <button type="button" class="dest-expand-btn text-brand-terracotta hover:text-brand-gold-rich font-bold text-sm leading-none w-4 h-4 flex items-center justify-center shrink-0 cursor-pointer select-none" data-city="Amritsar" title="Toggle hotels in Amritsar">
+        +
+      </button>
+      <button type="button" class="dest-select-btn text-left text-xs font-semibold text-text-secondary hover:text-brand-slate truncate transition-colors flex-1" data-selection="Amritsar (All Properties)" data-type="city">
+        Amritsar
+      </button>
+    </div>
+    <div class="dest-city-accordion hidden mt-1.5 pl-3 pr-1 py-1.5 bg-surface-subtle rounded border-l-2 border-brand-terracotta space-y-1.5">
+      <div class="text-[10px] uppercase tracking-wider font-bold text-brand-slate/70 pb-0.5 border-b border-border-subtle flex items-center justify-between">
+        <span>Hotels in Amritsar</span>
+        <span class="text-brand-terracotta font-extrabold">2</span>
+      </div>
+      <button type="button" class="dest-select-btn block w-full text-left text-[11px] font-medium text-text-secondary hover:text-brand-terracotta transition-colors py-0.5 truncate" data-selection="Regenta Central, Amritsar" data-type="hotel" title="Regenta Central, Amritsar">
+        • Regenta Central, Amritsar
+      </button>
+      <button type="button" class="dest-select-btn block w-full text-left text-[11px] font-medium text-text-secondary hover:text-brand-terracotta transition-colors py-0.5 truncate" data-selection="Regenta Place, Amritsar" data-type="hotel" title="Regenta Place, Amritsar">
+        • Regenta Place, Amritsar
+      </button>
+    </div>
+  </div>
+  <div class="dest-city-group py-1 border-b border-border/40" data-city="baddi">
+    <div class="flex items-center gap-1.5">
+      <button type="button" class="dest-expand-btn text-brand-terracotta hover:text-brand-gold-rich font-bold text-sm leading-none w-4 h-4 flex items-center justify-center shrink-0 cursor-pointer select-none" data-city="Baddi" title="Toggle hotels in Baddi">
+        +
+      </button>
+      <button type="button" class="dest-select-btn text-left text-xs font-semibold text-text-secondary hover:text-brand-slate truncate transition-colors flex-1" data-selection="Baddi (All Properties)" data-type="city">
+        Baddi
+      </button>
+    </div>
+    <div class="dest-city-accordion hidden mt-1.5 pl-3 pr-1 py-1.5 bg-surface-subtle rounded border-l-2 border-brand-terracotta space-y-1.5">
+      <div class="text-[10px] uppercase tracking-wider font-bold text-brand-slate/70 pb-0.5 border-b border-border-subtle flex items-center justify-between">
+        <span>Hotels in Baddi</span>
+        <span class="text-brand-terracotta font-extrabold">1</span>
+      </div>
+      <button type="button" class="dest-select-btn block w-full text-left text-[11px] font-medium text-text-secondary hover:text-brand-terracotta transition-colors py-0.5 truncate" data-selection="Regenta Resort Baddi, Himachal Pradesh" data-type="hotel" title="Regenta Resort Baddi, Himachal Pradesh">
+        • Regenta Resort Baddi, Himachal Pradesh
+      </button>
+    </div>
+  </div>
+  <div class="dest-city-group py-1 border-b border-border/40" data-city="bangalore">
+    <div class="flex items-center gap-1.5">
+      <button type="button" class="dest-expand-btn text-brand-terracotta hover:text-brand-gold-rich font-bold text-sm leading-none w-4 h-4 flex items-center justify-center shrink-0 cursor-pointer select-none" data-city="Bangalore" title="Toggle hotels in Bangalore">
+        +
+      </button>
+      <button type="button" class="dest-select-btn text-left text-xs font-semibold text-text-secondary hover:text-brand-slate truncate transition-colors flex-1" data-selection="Bangalore (All Properties)" data-type="city">
+        Bangalore
+      </button>
+    </div>
+    <div class="dest-city-accordion hidden mt-1.5 pl-3 pr-1 py-1.5 bg-surface-subtle rounded border-l-2 border-brand-terracotta space-y-1.5">
+      <div class="text-[10px] uppercase tracking-wider font-bold text-brand-slate/70 pb-0.5 border-b border-border-subtle flex items-center justify-between">
+        <span>Hotels in Bangalore</span>
+        <span class="text-brand-terracotta font-extrabold">5</span>
+      </div>
+      <button type="button" class="dest-select-btn block w-full text-left text-[11px] font-medium text-text-secondary hover:text-brand-terracotta transition-colors py-0.5 truncate" data-selection="Hotel Royal Orchid, Bengaluru (Old Airport Road / Golf View)" data-type="hotel" title="Hotel Royal Orchid, Bengaluru (Old Airport Road / Golf View)">
+        • Hotel Royal Orchid, Bengaluru (Old Airport Road / Golf View)
+      </button>
+      <button type="button" class="dest-select-btn block w-full text-left text-[11px] font-medium text-text-secondary hover:text-brand-terracotta transition-colors py-0.5 truncate" data-selection="Royal Orchid Resort & Convention Centre, Yelahanka" data-type="hotel" title="Royal Orchid Resort & Convention Centre, Yelahanka">
+        • Royal Orchid Resort & Convention Centre, Yelahanka
+      </button>
+      <button type="button" class="dest-select-btn block w-full text-left text-[11px] font-medium text-text-secondary hover:text-brand-terracotta transition-colors py-0.5 truncate" data-selection="Regenta Place, Bengaluru (Cunningham Road)" data-type="hotel" title="Regenta Place, Bengaluru (Cunningham Road)">
+        • Regenta Place, Bengaluru (Cunningham Road)
+      </button>
+      <button type="button" class="dest-select-btn block w-full text-left text-[11px] font-medium text-text-secondary hover:text-brand-terracotta transition-colors py-0.5 truncate" data-selection="Regenta Inn Grand, Koramangala" data-type="hotel" title="Regenta Inn Grand, Koramangala">
+        • Regenta Inn Grand, Koramangala
+      </button>
+      <button type="button" class="dest-select-btn block w-full text-left text-[11px] font-medium text-text-secondary hover:text-brand-terracotta transition-colors py-0.5 truncate" data-selection="Regenta Inn, Indiranagar" data-type="hotel" title="Regenta Inn, Indiranagar">
+        • Regenta Inn, Indiranagar
+      </button>
+    </div>
+  </div>
+  <div class="dest-city-group py-1 border-b border-border/40" data-city="belagavi">
+    <div class="flex items-center gap-1.5">
+      <button type="button" class="dest-expand-btn text-brand-terracotta hover:text-brand-gold-rich font-bold text-sm leading-none w-4 h-4 flex items-center justify-center shrink-0 cursor-pointer select-none" data-city="Belagavi" title="Toggle hotels in Belagavi">
+        +
+      </button>
+      <button type="button" class="dest-select-btn text-left text-xs font-semibold text-text-secondary hover:text-brand-slate truncate transition-colors flex-1" data-selection="Belagavi (All Properties)" data-type="city">
+        Belagavi
+      </button>
+    </div>
+    <div class="dest-city-accordion hidden mt-1.5 pl-3 pr-1 py-1.5 bg-surface-subtle rounded border-l-2 border-brand-terracotta space-y-1.5">
+      <div class="text-[10px] uppercase tracking-wider font-bold text-brand-slate/70 pb-0.5 border-b border-border-subtle flex items-center justify-between">
+        <span>Hotels in Belagavi</span>
+        <span class="text-brand-terracotta font-extrabold">1</span>
+      </div>
+      <button type="button" class="dest-select-btn block w-full text-left text-[11px] font-medium text-text-secondary hover:text-brand-terracotta transition-colors py-0.5 truncate" data-selection="Regenta Resort Belagavi" data-type="hotel" title="Regenta Resort Belagavi">
+        • Regenta Resort Belagavi
+      </button>
+    </div>
+  </div>
+  <div class="dest-city-group py-1 border-b border-border/40" data-city="bhadohi">
+    <div class="flex items-center gap-1.5">
+      <button type="button" class="dest-expand-btn text-brand-terracotta hover:text-brand-gold-rich font-bold text-sm leading-none w-4 h-4 flex items-center justify-center shrink-0 cursor-pointer select-none" data-city="Bhadohi" title="Toggle hotels in Bhadohi">
+        +
+      </button>
+      <button type="button" class="dest-select-btn text-left text-xs font-semibold text-text-secondary hover:text-brand-slate truncate transition-colors flex-1" data-selection="Bhadohi (All Properties)" data-type="city">
+        Bhadohi
+      </button>
+    </div>
+    <div class="dest-city-accordion hidden mt-1.5 pl-3 pr-1 py-1.5 bg-surface-subtle rounded border-l-2 border-brand-terracotta space-y-1.5">
+      <div class="text-[10px] uppercase tracking-wider font-bold text-brand-slate/70 pb-0.5 border-b border-border-subtle flex items-center justify-between">
+        <span>Hotels in Bhadohi</span>
+        <span class="text-brand-terracotta font-extrabold">1</span>
+      </div>
+      <button type="button" class="dest-select-btn block w-full text-left text-[11px] font-medium text-text-secondary hover:text-brand-terracotta transition-colors py-0.5 truncate" data-selection="Regenta Camellia, Bhadohi" data-type="hotel" title="Regenta Camellia, Bhadohi">
+        • Regenta Camellia, Bhadohi
+      </button>
+    </div>
+  </div>
+  <div class="dest-city-group py-1 border-b border-border/40" data-city="bharuch">
+    <div class="flex items-center gap-1.5">
+      <button type="button" class="dest-expand-btn text-brand-terracotta hover:text-brand-gold-rich font-bold text-sm leading-none w-4 h-4 flex items-center justify-center shrink-0 cursor-pointer select-none" data-city="Bharuch" title="Toggle hotels in Bharuch">
+        +
+      </button>
+      <button type="button" class="dest-select-btn text-left text-xs font-semibold text-text-secondary hover:text-brand-slate truncate transition-colors flex-1" data-selection="Bharuch (All Properties)" data-type="city">
+        Bharuch
+      </button>
+    </div>
+    <div class="dest-city-accordion hidden mt-1.5 pl-3 pr-1 py-1.5 bg-surface-subtle rounded border-l-2 border-brand-terracotta space-y-1.5">
+      <div class="text-[10px] uppercase tracking-wider font-bold text-brand-slate/70 pb-0.5 border-b border-border-subtle flex items-center justify-between">
+        <span>Hotels in Bharuch</span>
+        <span class="text-brand-terracotta font-extrabold">1</span>
+      </div>
+      <button type="button" class="dest-select-btn block w-full text-left text-[11px] font-medium text-text-secondary hover:text-brand-terracotta transition-colors py-0.5 truncate" data-selection="Regenta Central Green Leaf, Bharuch" data-type="hotel" title="Regenta Central Green Leaf, Bharuch">
+        • Regenta Central Green Leaf, Bharuch
+      </button>
+    </div>
+  </div>
+  <div class="dest-city-group py-1 border-b border-border/40" data-city="bhopal">
+    <div class="flex items-center gap-1.5">
+      <button type="button" class="dest-expand-btn text-brand-terracotta hover:text-brand-gold-rich font-bold text-sm leading-none w-4 h-4 flex items-center justify-center shrink-0 cursor-pointer select-none" data-city="Bhopal" title="Toggle hotels in Bhopal">
+        +
+      </button>
+      <button type="button" class="dest-select-btn text-left text-xs font-semibold text-text-secondary hover:text-brand-slate truncate transition-colors flex-1" data-selection="Bhopal (All Properties)" data-type="city">
+        Bhopal
+      </button>
+    </div>
+    <div class="dest-city-accordion hidden mt-1.5 pl-3 pr-1 py-1.5 bg-surface-subtle rounded border-l-2 border-brand-terracotta space-y-1.5">
+      <div class="text-[10px] uppercase tracking-wider font-bold text-brand-slate/70 pb-0.5 border-b border-border-subtle flex items-center justify-between">
+        <span>Hotels in Bhopal</span>
+        <span class="text-brand-terracotta font-extrabold">1</span>
+      </div>
+      <button type="button" class="dest-select-btn block w-full text-left text-[11px] font-medium text-text-secondary hover:text-brand-terracotta transition-colors py-0.5 truncate" data-selection="Regenta Place, Bhopal" data-type="hotel" title="Regenta Place, Bhopal">
+        • Regenta Place, Bhopal
+      </button>
+    </div>
+  </div>
+  <div class="dest-city-group py-1 border-b border-border/40" data-city="bhuj">
+    <div class="flex items-center gap-1.5">
+      <button type="button" class="dest-expand-btn text-brand-terracotta hover:text-brand-gold-rich font-bold text-sm leading-none w-4 h-4 flex items-center justify-center shrink-0 cursor-pointer select-none" data-city="Bhuj" title="Toggle hotels in Bhuj">
+        +
+      </button>
+      <button type="button" class="dest-select-btn text-left text-xs font-semibold text-text-secondary hover:text-brand-slate truncate transition-colors flex-1" data-selection="Bhuj (All Properties)" data-type="city">
+        Bhuj
+      </button>
+    </div>
+    <div class="dest-city-accordion hidden mt-1.5 pl-3 pr-1 py-1.5 bg-surface-subtle rounded border-l-2 border-brand-terracotta space-y-1.5">
+      <div class="text-[10px] uppercase tracking-wider font-bold text-brand-slate/70 pb-0.5 border-b border-border-subtle flex items-center justify-between">
+        <span>Hotels in Bhuj</span>
+        <span class="text-brand-terracotta font-extrabold">1</span>
+      </div>
+      <button type="button" class="dest-select-btn block w-full text-left text-[11px] font-medium text-text-secondary hover:text-brand-terracotta transition-colors py-0.5 truncate" data-selection="Regenta Resort Bhuj, Kutch" data-type="hotel" title="Regenta Resort Bhuj, Kutch">
+        • Regenta Resort Bhuj, Kutch
+      </button>
+    </div>
+  </div>
+  <div class="dest-city-group py-1 border-b border-border/40" data-city="chandigarh">
+    <div class="flex items-center gap-1.5">
+      <button type="button" class="dest-expand-btn text-brand-terracotta hover:text-brand-gold-rich font-bold text-sm leading-none w-4 h-4 flex items-center justify-center shrink-0 cursor-pointer select-none" data-city="Chandigarh" title="Toggle hotels in Chandigarh">
+        +
+      </button>
+      <button type="button" class="dest-select-btn text-left text-xs font-semibold text-text-secondary hover:text-brand-slate truncate transition-colors flex-1" data-selection="Chandigarh (All Properties)" data-type="city">
+        Chandigarh
+      </button>
+    </div>
+    <div class="dest-city-accordion hidden mt-1.5 pl-3 pr-1 py-1.5 bg-surface-subtle rounded border-l-2 border-brand-terracotta space-y-1.5">
+      <div class="text-[10px] uppercase tracking-wider font-bold text-brand-slate/70 pb-0.5 border-b border-border-subtle flex items-center justify-between">
+        <span>Hotels in Chandigarh</span>
+        <span class="text-brand-terracotta font-extrabold">1</span>
+      </div>
+      <button type="button" class="dest-select-btn block w-full text-left text-[11px] font-medium text-text-secondary hover:text-brand-terracotta transition-colors py-0.5 truncate" data-selection="Regenta Central Cassia, Zirakpur, Chandigarh" data-type="hotel" title="Regenta Central Cassia, Zirakpur, Chandigarh">
+        • Regenta Central Cassia, Zirakpur, Chandigarh
+      </button>
+    </div>
+  </div>
+  <div class="dest-city-group py-1 border-b border-border/40" data-city="dahej">
+    <div class="flex items-center gap-1.5">
+      <button type="button" class="dest-expand-btn text-brand-terracotta hover:text-brand-gold-rich font-bold text-sm leading-none w-4 h-4 flex items-center justify-center shrink-0 cursor-pointer select-none" data-city="Dahej" title="Toggle hotels in Dahej">
+        +
+      </button>
+      <button type="button" class="dest-select-btn text-left text-xs font-semibold text-text-secondary hover:text-brand-slate truncate transition-colors flex-1" data-selection="Dahej (All Properties)" data-type="city">
+        Dahej
+      </button>
+    </div>
+    <div class="dest-city-accordion hidden mt-1.5 pl-3 pr-1 py-1.5 bg-surface-subtle rounded border-l-2 border-brand-terracotta space-y-1.5">
+      <div class="text-[10px] uppercase tracking-wider font-bold text-brand-slate/70 pb-0.5 border-b border-border-subtle flex items-center justify-between">
+        <span>Hotels in Dahej</span>
+        <span class="text-brand-terracotta font-extrabold">1</span>
+      </div>
+      <button type="button" class="dest-select-btn block w-full text-left text-[11px] font-medium text-text-secondary hover:text-brand-terracotta transition-colors py-0.5 truncate" data-selection="Regenta Central, Dahej" data-type="hotel" title="Regenta Central, Dahej">
+        • Regenta Central, Dahej
+      </button>
+    </div>
+  </div>
+  <div class="dest-city-group py-1 border-b border-border/40" data-city="dalhousie">
+    <div class="flex items-center gap-1.5">
+      <button type="button" class="dest-expand-btn text-brand-terracotta hover:text-brand-gold-rich font-bold text-sm leading-none w-4 h-4 flex items-center justify-center shrink-0 cursor-pointer select-none" data-city="Dalhousie" title="Toggle hotels in Dalhousie">
+        +
+      </button>
+      <button type="button" class="dest-select-btn text-left text-xs font-semibold text-text-secondary hover:text-brand-slate truncate transition-colors flex-1" data-selection="Dalhousie (All Properties)" data-type="city">
+        Dalhousie
+      </button>
+    </div>
+    <div class="dest-city-accordion hidden mt-1.5 pl-3 pr-1 py-1.5 bg-surface-subtle rounded border-l-2 border-brand-terracotta space-y-1.5">
+      <div class="text-[10px] uppercase tracking-wider font-bold text-brand-slate/70 pb-0.5 border-b border-border-subtle flex items-center justify-between">
+        <span>Hotels in Dalhousie</span>
+        <span class="text-brand-terracotta font-extrabold">1</span>
+      </div>
+      <button type="button" class="dest-select-btn block w-full text-left text-[11px] font-medium text-text-secondary hover:text-brand-terracotta transition-colors py-0.5 truncate" data-selection="Regenta Resort Dalhousie" data-type="hotel" title="Regenta Resort Dalhousie">
+        • Regenta Resort Dalhousie
+      </button>
+    </div>
+  </div>
+  <div class="dest-city-group py-1 border-b border-border/40" data-city="dapoli">
+    <div class="flex items-center gap-1.5">
+      <button type="button" class="dest-expand-btn text-brand-terracotta hover:text-brand-gold-rich font-bold text-sm leading-none w-4 h-4 flex items-center justify-center shrink-0 cursor-pointer select-none" data-city="Dapoli" title="Toggle hotels in Dapoli">
+        +
+      </button>
+      <button type="button" class="dest-select-btn text-left text-xs font-semibold text-text-secondary hover:text-brand-slate truncate transition-colors flex-1" data-selection="Dapoli (All Properties)" data-type="city">
+        Dapoli
+      </button>
+    </div>
+    <div class="dest-city-accordion hidden mt-1.5 pl-3 pr-1 py-1.5 bg-surface-subtle rounded border-l-2 border-brand-terracotta space-y-1.5">
+      <div class="text-[10px] uppercase tracking-wider font-bold text-brand-slate/70 pb-0.5 border-b border-border-subtle flex items-center justify-between">
+        <span>Hotels in Dapoli</span>
+        <span class="text-brand-terracotta font-extrabold">1</span>
+      </div>
+      <button type="button" class="dest-select-btn block w-full text-left text-[11px] font-medium text-text-secondary hover:text-brand-terracotta transition-colors py-0.5 truncate" data-selection="Regenta Resort Murud, Dapoli" data-type="hotel" title="Regenta Resort Murud, Dapoli">
+        • Regenta Resort Murud, Dapoli
+      </button>
+    </div>
+  </div>
+  <div class="dest-city-group py-1 border-b border-border/40" data-city="dehradun">
+    <div class="flex items-center gap-1.5">
+      <button type="button" class="dest-expand-btn text-brand-terracotta hover:text-brand-gold-rich font-bold text-sm leading-none w-4 h-4 flex items-center justify-center shrink-0 cursor-pointer select-none" data-city="Dehradun" title="Toggle hotels in Dehradun">
+        +
+      </button>
+      <button type="button" class="dest-select-btn text-left text-xs font-semibold text-text-secondary hover:text-brand-slate truncate transition-colors flex-1" data-selection="Dehradun (All Properties)" data-type="city">
+        Dehradun
+      </button>
+    </div>
+    <div class="dest-city-accordion hidden mt-1.5 pl-3 pr-1 py-1.5 bg-surface-subtle rounded border-l-2 border-brand-terracotta space-y-1.5">
+      <div class="text-[10px] uppercase tracking-wider font-bold text-brand-slate/70 pb-0.5 border-b border-border-subtle flex items-center justify-between">
+        <span>Hotels in Dehradun</span>
+        <span class="text-brand-terracotta font-extrabold">1</span>
+      </div>
+      <button type="button" class="dest-select-btn block w-full text-left text-[11px] font-medium text-text-secondary hover:text-brand-terracotta transition-colors py-0.5 truncate" data-selection="Regenta Dehradun, Saharanpur Road" data-type="hotel" title="Regenta Dehradun, Saharanpur Road">
+        • Regenta Dehradun, Saharanpur Road
+      </button>
+    </div>
+  </div>
+  <div class="dest-city-group py-1 border-b border-border/40" data-city="dharamshala">
+    <div class="flex items-center gap-1.5">
+      <button type="button" class="dest-expand-btn text-brand-terracotta hover:text-brand-gold-rich font-bold text-sm leading-none w-4 h-4 flex items-center justify-center shrink-0 cursor-pointer select-none" data-city="Dharamshala" title="Toggle hotels in Dharamshala">
+        +
+      </button>
+      <button type="button" class="dest-select-btn text-left text-xs font-semibold text-text-secondary hover:text-brand-slate truncate transition-colors flex-1" data-selection="Dharamshala (All Properties)" data-type="city">
+        Dharamshala
+      </button>
+    </div>
+    <div class="dest-city-accordion hidden mt-1.5 pl-3 pr-1 py-1.5 bg-surface-subtle rounded border-l-2 border-brand-terracotta space-y-1.5">
+      <div class="text-[10px] uppercase tracking-wider font-bold text-brand-slate/70 pb-0.5 border-b border-border-subtle flex items-center justify-between">
+        <span>Hotels in Dharamshala</span>
+        <span class="text-brand-terracotta font-extrabold">1</span>
+      </div>
+      <button type="button" class="dest-select-btn block w-full text-left text-[11px] font-medium text-text-secondary hover:text-brand-terracotta transition-colors py-0.5 truncate" data-selection="Regenta Resort Dharamshala" data-type="hotel" title="Regenta Resort Dharamshala">
+        • Regenta Resort Dharamshala
+      </button>
+    </div>
+  </div>
+  <div class="dest-city-group py-1 border-b border-border/40" data-city="dwarka">
+    <div class="flex items-center gap-1.5">
+      <button type="button" class="dest-expand-btn text-brand-terracotta hover:text-brand-gold-rich font-bold text-sm leading-none w-4 h-4 flex items-center justify-center shrink-0 cursor-pointer select-none" data-city="Dwarka" title="Toggle hotels in Dwarka">
+        +
+      </button>
+      <button type="button" class="dest-select-btn text-left text-xs font-semibold text-text-secondary hover:text-brand-slate truncate transition-colors flex-1" data-selection="Dwarka (All Properties)" data-type="city">
+        Dwarka
+      </button>
+    </div>
+    <div class="dest-city-accordion hidden mt-1.5 pl-3 pr-1 py-1.5 bg-surface-subtle rounded border-l-2 border-brand-terracotta space-y-1.5">
+      <div class="text-[10px] uppercase tracking-wider font-bold text-brand-slate/70 pb-0.5 border-b border-border-subtle flex items-center justify-between">
+        <span>Hotels in Dwarka</span>
+        <span class="text-brand-terracotta font-extrabold">1</span>
+      </div>
+      <button type="button" class="dest-select-btn block w-full text-left text-[11px] font-medium text-text-secondary hover:text-brand-terracotta transition-colors py-0.5 truncate" data-selection="Regenta Inn Dwarka, Gujarat" data-type="hotel" title="Regenta Inn Dwarka, Gujarat">
+        • Regenta Inn Dwarka, Gujarat
+      </button>
+    </div>
+  </div>
+  <div class="dest-city-group py-1 border-b border-border/40" data-city="ekta nagar">
+    <div class="flex items-center gap-1.5">
+      <button type="button" class="dest-expand-btn text-brand-terracotta hover:text-brand-gold-rich font-bold text-sm leading-none w-4 h-4 flex items-center justify-center shrink-0 cursor-pointer select-none" data-city="Ekta Nagar" title="Toggle hotels in Ekta Nagar">
+        +
+      </button>
+      <button type="button" class="dest-select-btn text-left text-xs font-semibold text-text-secondary hover:text-brand-slate truncate transition-colors flex-1" data-selection="Ekta Nagar (All Properties)" data-type="city">
+        Ekta Nagar
+      </button>
+    </div>
+    <div class="dest-city-accordion hidden mt-1.5 pl-3 pr-1 py-1.5 bg-surface-subtle rounded border-l-2 border-brand-terracotta space-y-1.5">
+      <div class="text-[10px] uppercase tracking-wider font-bold text-brand-slate/70 pb-0.5 border-b border-border-subtle flex items-center justify-between">
+        <span>Hotels in Ekta Nagar</span>
+        <span class="text-brand-terracotta font-extrabold">1</span>
+      </div>
+      <button type="button" class="dest-select-btn block w-full text-left text-[11px] font-medium text-text-secondary hover:text-brand-terracotta transition-colors py-0.5 truncate" data-selection="Regenta Resort Ekta Nagar (Statue of Unity)" data-type="hotel" title="Regenta Resort Ekta Nagar (Statue of Unity)">
+        • Regenta Resort Ekta Nagar (Statue of Unity)
+      </button>
+    </div>
+  </div>
+  <div class="dest-city-group py-1 border-b border-border/40" data-city="gangtok">
+    <div class="flex items-center gap-1.5">
+      <button type="button" class="dest-expand-btn text-brand-terracotta hover:text-brand-gold-rich font-bold text-sm leading-none w-4 h-4 flex items-center justify-center shrink-0 cursor-pointer select-none" data-city="Gangtok" title="Toggle hotels in Gangtok">
+        +
+      </button>
+      <button type="button" class="dest-select-btn text-left text-xs font-semibold text-text-secondary hover:text-brand-slate truncate transition-colors flex-1" data-selection="Gangtok (All Properties)" data-type="city">
+        Gangtok
+      </button>
+    </div>
+    <div class="dest-city-accordion hidden mt-1.5 pl-3 pr-1 py-1.5 bg-surface-subtle rounded border-l-2 border-brand-terracotta space-y-1.5">
+      <div class="text-[10px] uppercase tracking-wider font-bold text-brand-slate/70 pb-0.5 border-b border-border-subtle flex items-center justify-between">
+        <span>Hotels in Gangtok</span>
+        <span class="text-brand-terracotta font-extrabold">1</span>
+      </div>
+      <button type="button" class="dest-select-btn block w-full text-left text-[11px] font-medium text-text-secondary hover:text-brand-terracotta transition-colors py-0.5 truncate" data-selection="Regenta Place Gangtok, Sikkim" data-type="hotel" title="Regenta Place Gangtok, Sikkim">
+        • Regenta Place Gangtok, Sikkim
+      </button>
+    </div>
+  </div>
+  <div class="dest-city-group py-1 border-b border-border/40" data-city="goa">
+    <div class="flex items-center gap-1.5">
+      <button type="button" class="dest-expand-btn text-brand-terracotta hover:text-brand-gold-rich font-bold text-sm leading-none w-4 h-4 flex items-center justify-center shrink-0 cursor-pointer select-none" data-city="Goa" title="Toggle hotels in Goa">
+        +
+      </button>
+      <button type="button" class="dest-select-btn text-left text-xs font-semibold text-text-secondary hover:text-brand-slate truncate transition-colors flex-1" data-selection="Goa (All Properties)" data-type="city">
+        Goa
+      </button>
+    </div>
+    <div class="dest-city-accordion hidden mt-1.5 pl-3 pr-1 py-1.5 bg-surface-subtle rounded border-l-2 border-brand-terracotta space-y-1.5">
+      <div class="text-[10px] uppercase tracking-wider font-bold text-brand-slate/70 pb-0.5 border-b border-border-subtle flex items-center justify-between">
+        <span>Hotels in Goa</span>
+        <span class="text-brand-terracotta font-extrabold">4</span>
+      </div>
+      <button type="button" class="dest-select-btn block w-full text-left text-[11px] font-medium text-text-secondary hover:text-brand-terracotta transition-colors py-0.5 truncate" data-selection="Royal Orchid Beach Resort & Spa, Utorda Beach, South Goa" data-type="hotel" title="Royal Orchid Beach Resort & Spa, Utorda Beach, South Goa">
+        • Royal Orchid Beach Resort & Spa, Utorda Beach, South Goa
+      </button>
+      <button type="button" class="dest-select-btn block w-full text-left text-[11px] font-medium text-text-secondary hover:text-brand-terracotta transition-colors py-0.5 truncate" data-selection="Regenta Resort Varca Beach, South Goa" data-type="hotel" title="Regenta Resort Varca Beach, South Goa">
+        • Regenta Resort Varca Beach, South Goa
+      </button>
+      <button type="button" class="dest-select-btn block w-full text-left text-[11px] font-medium text-text-secondary hover:text-brand-terracotta transition-colors py-0.5 truncate" data-selection="Regenta Central Imperial, Candolim, North Goa" data-type="hotel" title="Regenta Central Imperial, Candolim, North Goa">
+        • Regenta Central Imperial, Candolim, North Goa
+      </button>
+      <button type="button" class="dest-select-btn block w-full text-left text-[11px] font-medium text-text-secondary hover:text-brand-terracotta transition-colors py-0.5 truncate" data-selection="Regenta Place Greenfields, Baga, North Goa" data-type="hotel" title="Regenta Place Greenfields, Baga, North Goa">
+        • Regenta Place Greenfields, Baga, North Goa
+      </button>
+    </div>
+  </div>
+  <div class="dest-city-group py-1 border-b border-border/40" data-city="greater noida">
+    <div class="flex items-center gap-1.5">
+      <button type="button" class="dest-expand-btn text-brand-terracotta hover:text-brand-gold-rich font-bold text-sm leading-none w-4 h-4 flex items-center justify-center shrink-0 cursor-pointer select-none" data-city="Greater Noida" title="Toggle hotels in Greater Noida">
+        +
+      </button>
+      <button type="button" class="dest-select-btn text-left text-xs font-semibold text-text-secondary hover:text-brand-slate truncate transition-colors flex-1" data-selection="Greater Noida (All Properties)" data-type="city">
+        Greater Noida
+      </button>
+    </div>
+    <div class="dest-city-accordion hidden mt-1.5 pl-3 pr-1 py-1.5 bg-surface-subtle rounded border-l-2 border-brand-terracotta space-y-1.5">
+      <div class="text-[10px] uppercase tracking-wider font-bold text-brand-slate/70 pb-0.5 border-b border-border-subtle flex items-center justify-between">
+        <span>Hotels in Greater Noida</span>
+        <span class="text-brand-terracotta font-extrabold">1</span>
+      </div>
+      <button type="button" class="dest-select-btn block w-full text-left text-[11px] font-medium text-text-secondary hover:text-brand-terracotta transition-colors py-0.5 truncate" data-selection="Regenta Central, Greater Noida" data-type="hotel" title="Regenta Central, Greater Noida">
+        • Regenta Central, Greater Noida
+      </button>
+    </div>
+  </div>
+  <div class="dest-city-group py-1 border-b border-border/40" data-city="gurugram">
+    <div class="flex items-center gap-1.5">
+      <button type="button" class="dest-expand-btn text-brand-terracotta hover:text-brand-gold-rich font-bold text-sm leading-none w-4 h-4 flex items-center justify-center shrink-0 cursor-pointer select-none" data-city="Gurugram" title="Toggle hotels in Gurugram">
+        +
+      </button>
+      <button type="button" class="dest-select-btn text-left text-xs font-semibold text-text-secondary hover:text-brand-slate truncate transition-colors flex-1" data-selection="Gurugram (All Properties)" data-type="city">
+        Gurugram
+      </button>
+    </div>
+    <div class="dest-city-accordion hidden mt-1.5 pl-3 pr-1 py-1.5 bg-surface-subtle rounded border-l-2 border-brand-terracotta space-y-1.5">
+      <div class="text-[10px] uppercase tracking-wider font-bold text-brand-slate/70 pb-0.5 border-b border-border-subtle flex items-center justify-between">
+        <span>Hotels in Gurugram</span>
+        <span class="text-brand-terracotta font-extrabold">1</span>
+      </div>
+      <button type="button" class="dest-select-btn block w-full text-left text-[11px] font-medium text-text-secondary hover:text-brand-terracotta transition-colors py-0.5 truncate" data-selection="Regenta Suites, Gurugram (Sohna Road)" data-type="hotel" title="Regenta Suites, Gurugram (Sohna Road)">
+        • Regenta Suites, Gurugram (Sohna Road)
+      </button>
+    </div>
+  </div>
+  <div class="dest-city-group py-1 border-b border-border/40" data-city="gwalior">
+    <div class="flex items-center gap-1.5">
+      <button type="button" class="dest-expand-btn text-brand-terracotta hover:text-brand-gold-rich font-bold text-sm leading-none w-4 h-4 flex items-center justify-center shrink-0 cursor-pointer select-none" data-city="Gwalior" title="Toggle hotels in Gwalior">
+        +
+      </button>
+      <button type="button" class="dest-select-btn text-left text-xs font-semibold text-text-secondary hover:text-brand-slate truncate transition-colors flex-1" data-selection="Gwalior (All Properties)" data-type="city">
+        Gwalior
+      </button>
+    </div>
+    <div class="dest-city-accordion hidden mt-1.5 pl-3 pr-1 py-1.5 bg-surface-subtle rounded border-l-2 border-brand-terracotta space-y-1.5">
+      <div class="text-[10px] uppercase tracking-wider font-bold text-brand-slate/70 pb-0.5 border-b border-border-subtle flex items-center justify-between">
+        <span>Hotels in Gwalior</span>
+        <span class="text-brand-terracotta font-extrabold">1</span>
+      </div>
+      <button type="button" class="dest-select-btn block w-full text-left text-[11px] font-medium text-text-secondary hover:text-brand-terracotta transition-colors py-0.5 truncate" data-selection="Regenta Resort Gwalior" data-type="hotel" title="Regenta Resort Gwalior">
+        • Regenta Resort Gwalior
+      </button>
+    </div>
+  </div>
+  <div class="dest-city-group py-1 border-b border-border/40" data-city="hampi">
+    <div class="flex items-center gap-1.5">
+      <button type="button" class="dest-expand-btn text-brand-terracotta hover:text-brand-gold-rich font-bold text-sm leading-none w-4 h-4 flex items-center justify-center shrink-0 cursor-pointer select-none" data-city="Hampi" title="Toggle hotels in Hampi">
+        +
+      </button>
+      <button type="button" class="dest-select-btn text-left text-xs font-semibold text-text-secondary hover:text-brand-slate truncate transition-colors flex-1" data-selection="Hampi (All Properties)" data-type="city">
+        Hampi
+      </button>
+    </div>
+    <div class="dest-city-accordion hidden mt-1.5 pl-3 pr-1 py-1.5 bg-surface-subtle rounded border-l-2 border-brand-terracotta space-y-1.5">
+      <div class="text-[10px] uppercase tracking-wider font-bold text-brand-slate/70 pb-0.5 border-b border-border-subtle flex items-center justify-between">
+        <span>Hotels in Hampi</span>
+        <span class="text-brand-terracotta font-extrabold">1</span>
+      </div>
+      <button type="button" class="dest-select-btn block w-full text-left text-[11px] font-medium text-text-secondary hover:text-brand-terracotta transition-colors py-0.5 truncate" data-selection="Regenta Resort Hampi, Vijayanagar" data-type="hotel" title="Regenta Resort Hampi, Vijayanagar">
+        • Regenta Resort Hampi, Vijayanagar
+      </button>
+    </div>
+  </div>
+  <div class="dest-city-group py-1 border-b border-border/40" data-city="haridwar">
+    <div class="flex items-center gap-1.5">
+      <button type="button" class="dest-expand-btn text-brand-terracotta hover:text-brand-gold-rich font-bold text-sm leading-none w-4 h-4 flex items-center justify-center shrink-0 cursor-pointer select-none" data-city="Haridwar" title="Toggle hotels in Haridwar">
+        +
+      </button>
+      <button type="button" class="dest-select-btn text-left text-xs font-semibold text-text-secondary hover:text-brand-slate truncate transition-colors flex-1" data-selection="Haridwar (All Properties)" data-type="city">
+        Haridwar
+      </button>
+    </div>
+    <div class="dest-city-accordion hidden mt-1.5 pl-3 pr-1 py-1.5 bg-surface-subtle rounded border-l-2 border-brand-terracotta space-y-1.5">
+      <div class="text-[10px] uppercase tracking-wider font-bold text-brand-slate/70 pb-0.5 border-b border-border-subtle flex items-center justify-between">
+        <span>Hotels in Haridwar</span>
+        <span class="text-brand-terracotta font-extrabold">1</span>
+      </div>
+      <button type="button" class="dest-select-btn block w-full text-left text-[11px] font-medium text-text-secondary hover:text-brand-terracotta transition-colors py-0.5 truncate" data-selection="Regenta Resort Haridwar" data-type="hotel" title="Regenta Resort Haridwar">
+        • Regenta Resort Haridwar
+      </button>
+    </div>
+  </div>
+  <div class="dest-city-group py-1 border-b border-border/40" data-city="hubballi">
+    <div class="flex items-center gap-1.5">
+      <button type="button" class="dest-expand-btn text-brand-terracotta hover:text-brand-gold-rich font-bold text-sm leading-none w-4 h-4 flex items-center justify-center shrink-0 cursor-pointer select-none" data-city="Hubballi" title="Toggle hotels in Hubballi">
+        +
+      </button>
+      <button type="button" class="dest-select-btn text-left text-xs font-semibold text-text-secondary hover:text-brand-slate truncate transition-colors flex-1" data-selection="Hubballi (All Properties)" data-type="city">
+        Hubballi
+      </button>
+    </div>
+    <div class="dest-city-accordion hidden mt-1.5 pl-3 pr-1 py-1.5 bg-surface-subtle rounded border-l-2 border-brand-terracotta space-y-1.5">
+      <div class="text-[10px] uppercase tracking-wider font-bold text-brand-slate/70 pb-0.5 border-b border-border-subtle flex items-center justify-between">
+        <span>Hotels in Hubballi</span>
+        <span class="text-brand-terracotta font-extrabold">1</span>
+      </div>
+      <button type="button" class="dest-select-btn block w-full text-left text-[11px] font-medium text-text-secondary hover:text-brand-terracotta transition-colors py-0.5 truncate" data-selection="Regenta Place Hubballi" data-type="hotel" title="Regenta Place Hubballi">
+        • Regenta Place Hubballi
+      </button>
+    </div>
+  </div>
+  <div class="dest-city-group py-1 border-b border-border/40" data-city="hyderabad">
+    <div class="flex items-center gap-1.5">
+      <button type="button" class="dest-expand-btn text-brand-terracotta hover:text-brand-gold-rich font-bold text-sm leading-none w-4 h-4 flex items-center justify-center shrink-0 cursor-pointer select-none" data-city="Hyderabad" title="Toggle hotels in Hyderabad">
+        +
+      </button>
+      <button type="button" class="dest-select-btn text-left text-xs font-semibold text-text-secondary hover:text-brand-slate truncate transition-colors flex-1" data-selection="Hyderabad (All Properties)" data-type="city">
+        Hyderabad
+      </button>
+    </div>
+    <div class="dest-city-accordion hidden mt-1.5 pl-3 pr-1 py-1.5 bg-surface-subtle rounded border-l-2 border-brand-terracotta space-y-1.5">
+      <div class="text-[10px] uppercase tracking-wider font-bold text-brand-slate/70 pb-0.5 border-b border-border-subtle flex items-center justify-between">
+        <span>Hotels in Hyderabad</span>
+        <span class="text-brand-terracotta font-extrabold">1</span>
+      </div>
+      <button type="button" class="dest-select-btn block w-full text-left text-[11px] font-medium text-text-secondary hover:text-brand-terracotta transition-colors py-0.5 truncate" data-selection="Regenta Central Banjara Hills, Hyderabad" data-type="hotel" title="Regenta Central Banjara Hills, Hyderabad">
+        • Regenta Central Banjara Hills, Hyderabad
+      </button>
+    </div>
+  </div>
+  <div class="dest-city-group py-1 border-b border-border/40" data-city="igatpuri">
+    <div class="flex items-center gap-1.5">
+      <button type="button" class="dest-expand-btn text-brand-terracotta hover:text-brand-gold-rich font-bold text-sm leading-none w-4 h-4 flex items-center justify-center shrink-0 cursor-pointer select-none" data-city="Igatpuri" title="Toggle hotels in Igatpuri">
+        +
+      </button>
+      <button type="button" class="dest-select-btn text-left text-xs font-semibold text-text-secondary hover:text-brand-slate truncate transition-colors flex-1" data-selection="Igatpuri (All Properties)" data-type="city">
+        Igatpuri
+      </button>
+    </div>
+    <div class="dest-city-accordion hidden mt-1.5 pl-3 pr-1 py-1.5 bg-surface-subtle rounded border-l-2 border-brand-terracotta space-y-1.5">
+      <div class="text-[10px] uppercase tracking-wider font-bold text-brand-slate/70 pb-0.5 border-b border-border-subtle flex items-center justify-between">
+        <span>Hotels in Igatpuri</span>
+        <span class="text-brand-terracotta font-extrabold">1</span>
+      </div>
+      <button type="button" class="dest-select-btn block w-full text-left text-[11px] font-medium text-text-secondary hover:text-brand-terracotta transition-colors py-0.5 truncate" data-selection="Regenta Resort Igatpuri" data-type="hotel" title="Regenta Resort Igatpuri">
+        • Regenta Resort Igatpuri
+      </button>
+    </div>
+  </div>
+  <div class="dest-city-group py-1 border-b border-border/40" data-city="jaipur">
+    <div class="flex items-center gap-1.5">
+      <button type="button" class="dest-expand-btn text-brand-terracotta hover:text-brand-gold-rich font-bold text-sm leading-none w-4 h-4 flex items-center justify-center shrink-0 cursor-pointer select-none" data-city="Jaipur" title="Toggle hotels in Jaipur">
+        +
+      </button>
+      <button type="button" class="dest-select-btn text-left text-xs font-semibold text-text-secondary hover:text-brand-slate truncate transition-colors flex-1" data-selection="Jaipur (All Properties)" data-type="city">
+        Jaipur
+      </button>
+    </div>
+    <div class="dest-city-accordion hidden mt-1.5 pl-3 pr-1 py-1.5 bg-surface-subtle rounded border-l-2 border-brand-terracotta space-y-1.5">
+      <div class="text-[10px] uppercase tracking-wider font-bold text-brand-slate/70 pb-0.5 border-b border-border-subtle flex items-center justify-between">
+        <span>Hotels in Jaipur</span>
+        <span class="text-brand-terracotta font-extrabold">3</span>
+      </div>
+      <button type="button" class="dest-select-btn block w-full text-left text-[11px] font-medium text-text-secondary hover:text-brand-terracotta transition-colors py-0.5 truncate" data-selection="Hotel Royal Orchid, Tonk Road, Jaipur" data-type="hotel" title="Hotel Royal Orchid, Tonk Road, Jaipur">
+        • Hotel Royal Orchid, Tonk Road, Jaipur
+      </button>
+      <button type="button" class="dest-select-btn block w-full text-left text-[11px] font-medium text-text-secondary hover:text-brand-terracotta transition-colors py-0.5 truncate" data-selection="Regenta Central Jal Mahal, Amer Road" data-type="hotel" title="Regenta Central Jal Mahal, Amer Road">
+        • Regenta Central Jal Mahal, Amer Road
+      </button>
+      <button type="button" class="dest-select-btn block w-full text-left text-[11px] font-medium text-text-secondary hover:text-brand-terracotta transition-colors py-0.5 truncate" data-selection="Regenta Suites, Jaipur" data-type="hotel" title="Regenta Suites, Jaipur">
+        • Regenta Suites, Jaipur
+      </button>
+    </div>
+  </div>
+  <div class="dest-city-group py-1 border-b border-border/40" data-city="jamnagar">
+    <div class="flex items-center gap-1.5">
+      <button type="button" class="dest-expand-btn text-brand-terracotta hover:text-brand-gold-rich font-bold text-sm leading-none w-4 h-4 flex items-center justify-center shrink-0 cursor-pointer select-none" data-city="Jamnagar" title="Toggle hotels in Jamnagar">
+        +
+      </button>
+      <button type="button" class="dest-select-btn text-left text-xs font-semibold text-text-secondary hover:text-brand-slate truncate transition-colors flex-1" data-selection="Jamnagar (All Properties)" data-type="city">
+        Jamnagar
+      </button>
+    </div>
+    <div class="dest-city-accordion hidden mt-1.5 pl-3 pr-1 py-1.5 bg-surface-subtle rounded border-l-2 border-brand-terracotta space-y-1.5">
+      <div class="text-[10px] uppercase tracking-wider font-bold text-brand-slate/70 pb-0.5 border-b border-border-subtle flex items-center justify-between">
+        <span>Hotels in Jamnagar</span>
+        <span class="text-brand-terracotta font-extrabold">1</span>
+      </div>
+      <button type="button" class="dest-select-btn block w-full text-left text-[11px] font-medium text-text-secondary hover:text-brand-terracotta transition-colors py-0.5 truncate" data-selection="Regenta Central Jamnagar" data-type="hotel" title="Regenta Central Jamnagar">
+        • Regenta Central Jamnagar
+      </button>
+    </div>
+  </div>
+  <div class="dest-city-group py-1 border-b border-border/40" data-city="jhansi">
+    <div class="flex items-center gap-1.5">
+      <button type="button" class="dest-expand-btn text-brand-terracotta hover:text-brand-gold-rich font-bold text-sm leading-none w-4 h-4 flex items-center justify-center shrink-0 cursor-pointer select-none" data-city="Jhansi" title="Toggle hotels in Jhansi">
+        +
+      </button>
+      <button type="button" class="dest-select-btn text-left text-xs font-semibold text-text-secondary hover:text-brand-slate truncate transition-colors flex-1" data-selection="Jhansi (All Properties)" data-type="city">
+        Jhansi
+      </button>
+    </div>
+    <div class="dest-city-accordion hidden mt-1.5 pl-3 pr-1 py-1.5 bg-surface-subtle rounded border-l-2 border-brand-terracotta space-y-1.5">
+      <div class="text-[10px] uppercase tracking-wider font-bold text-brand-slate/70 pb-0.5 border-b border-border-subtle flex items-center justify-between">
+        <span>Hotels in Jhansi</span>
+        <span class="text-brand-terracotta font-extrabold">1</span>
+      </div>
+      <button type="button" class="dest-select-btn block w-full text-left text-[11px] font-medium text-text-secondary hover:text-brand-terracotta transition-colors py-0.5 truncate" data-selection="Regenta Place Jhansi" data-type="hotel" title="Regenta Place Jhansi">
+        • Regenta Place Jhansi
+      </button>
+    </div>
+  </div>
+  <div class="dest-city-group py-1 border-b border-border/40" data-city="kabini wildlife">
+    <div class="flex items-center gap-1.5">
+      <button type="button" class="dest-expand-btn text-brand-terracotta hover:text-brand-gold-rich font-bold text-sm leading-none w-4 h-4 flex items-center justify-center shrink-0 cursor-pointer select-none" data-city="Kabini Wildlife" title="Toggle hotels in Kabini Wildlife">
+        +
+      </button>
+      <button type="button" class="dest-select-btn text-left text-xs font-semibold text-text-secondary hover:text-brand-slate truncate transition-colors flex-1" data-selection="Kabini Wildlife (All Properties)" data-type="city">
+        Kabini Wildlife
+      </button>
+    </div>
+    <div class="dest-city-accordion hidden mt-1.5 pl-3 pr-1 py-1.5 bg-surface-subtle rounded border-l-2 border-brand-terracotta space-y-1.5">
+      <div class="text-[10px] uppercase tracking-wider font-bold text-brand-slate/70 pb-0.5 border-b border-border-subtle flex items-center justify-between">
+        <span>Hotels in Kabini Wildlife</span>
+        <span class="text-brand-terracotta font-extrabold">1</span>
+      </div>
+      <button type="button" class="dest-select-btn block w-full text-left text-[11px] font-medium text-text-secondary hover:text-brand-terracotta transition-colors py-0.5 truncate" data-selection="Regenta Kabini Springs Resort" data-type="hotel" title="Regenta Kabini Springs Resort">
+        • Regenta Kabini Springs Resort
+      </button>
+    </div>
+  </div>
+  <div class="dest-city-group py-1 border-b border-border/40" data-city="kanpur">
+    <div class="flex items-center gap-1.5">
+      <button type="button" class="dest-expand-btn text-brand-terracotta hover:text-brand-gold-rich font-bold text-sm leading-none w-4 h-4 flex items-center justify-center shrink-0 cursor-pointer select-none" data-city="Kanpur" title="Toggle hotels in Kanpur">
+        +
+      </button>
+      <button type="button" class="dest-select-btn text-left text-xs font-semibold text-text-secondary hover:text-brand-slate truncate transition-colors flex-1" data-selection="Kanpur (All Properties)" data-type="city">
+        Kanpur
+      </button>
+    </div>
+    <div class="dest-city-accordion hidden mt-1.5 pl-3 pr-1 py-1.5 bg-surface-subtle rounded border-l-2 border-brand-terracotta space-y-1.5">
+      <div class="text-[10px] uppercase tracking-wider font-bold text-brand-slate/70 pb-0.5 border-b border-border-subtle flex items-center justify-between">
+        <span>Hotels in Kanpur</span>
+        <span class="text-brand-terracotta font-extrabold">1</span>
+      </div>
+      <button type="button" class="dest-select-btn block w-full text-left text-[11px] font-medium text-text-secondary hover:text-brand-terracotta transition-colors py-0.5 truncate" data-selection="Regenta Central The Crystal, Kanpur" data-type="hotel" title="Regenta Central The Crystal, Kanpur">
+        • Regenta Central The Crystal, Kanpur
+      </button>
+    </div>
+  </div>
+  <div class="dest-city-group py-1 border-b border-border/40" data-city="kasauli">
+    <div class="flex items-center gap-1.5">
+      <button type="button" class="dest-expand-btn text-brand-terracotta hover:text-brand-gold-rich font-bold text-sm leading-none w-4 h-4 flex items-center justify-center shrink-0 cursor-pointer select-none" data-city="Kasauli" title="Toggle hotels in Kasauli">
+        +
+      </button>
+      <button type="button" class="dest-select-btn text-left text-xs font-semibold text-text-secondary hover:text-brand-slate truncate transition-colors flex-1" data-selection="Kasauli (All Properties)" data-type="city">
+        Kasauli
+      </button>
+    </div>
+    <div class="dest-city-accordion hidden mt-1.5 pl-3 pr-1 py-1.5 bg-surface-subtle rounded border-l-2 border-brand-terracotta space-y-1.5">
+      <div class="text-[10px] uppercase tracking-wider font-bold text-brand-slate/70 pb-0.5 border-b border-border-subtle flex items-center justify-between">
+        <span>Hotels in Kasauli</span>
+        <span class="text-brand-terracotta font-extrabold">1</span>
+      </div>
+      <button type="button" class="dest-select-btn block w-full text-left text-[11px] font-medium text-text-secondary hover:text-brand-terracotta transition-colors py-0.5 truncate" data-selection="Regenta Resort Kasauli" data-type="hotel" title="Regenta Resort Kasauli">
+        • Regenta Resort Kasauli
+      </button>
+    </div>
+  </div>
+  <div class="dest-city-group py-1 border-b border-border/40" data-city="kedarnath">
+    <div class="flex items-center gap-1.5">
+      <button type="button" class="dest-expand-btn text-brand-terracotta hover:text-brand-gold-rich font-bold text-sm leading-none w-4 h-4 flex items-center justify-center shrink-0 cursor-pointer select-none" data-city="Kedarnath" title="Toggle hotels in Kedarnath">
+        +
+      </button>
+      <button type="button" class="dest-select-btn text-left text-xs font-semibold text-text-secondary hover:text-brand-slate truncate transition-colors flex-1" data-selection="Kedarnath (All Properties)" data-type="city">
+        Kedarnath
+      </button>
+    </div>
+    <div class="dest-city-accordion hidden mt-1.5 pl-3 pr-1 py-1.5 bg-surface-subtle rounded border-l-2 border-brand-terracotta space-y-1.5">
+      <div class="text-[10px] uppercase tracking-wider font-bold text-brand-slate/70 pb-0.5 border-b border-border-subtle flex items-center justify-between">
+        <span>Hotels in Kedarnath</span>
+        <span class="text-brand-terracotta font-extrabold">1</span>
+      </div>
+      <button type="button" class="dest-select-btn block w-full text-left text-[11px] font-medium text-text-secondary hover:text-brand-terracotta transition-colors py-0.5 truncate" data-selection="Regenta Resort Kedarnath" data-type="hotel" title="Regenta Resort Kedarnath">
+        • Regenta Resort Kedarnath
+      </button>
+    </div>
+  </div>
+  <div class="dest-city-group py-1 border-b border-border/40" data-city="khatu">
+    <div class="flex items-center gap-1.5">
+      <button type="button" class="dest-expand-btn text-brand-terracotta hover:text-brand-gold-rich font-bold text-sm leading-none w-4 h-4 flex items-center justify-center shrink-0 cursor-pointer select-none" data-city="Khatu" title="Toggle hotels in Khatu">
+        +
+      </button>
+      <button type="button" class="dest-select-btn text-left text-xs font-semibold text-text-secondary hover:text-brand-slate truncate transition-colors flex-1" data-selection="Khatu (All Properties)" data-type="city">
+        Khatu
+      </button>
+    </div>
+    <div class="dest-city-accordion hidden mt-1.5 pl-3 pr-1 py-1.5 bg-surface-subtle rounded border-l-2 border-brand-terracotta space-y-1.5">
+      <div class="text-[10px] uppercase tracking-wider font-bold text-brand-slate/70 pb-0.5 border-b border-border-subtle flex items-center justify-between">
+        <span>Hotels in Khatu</span>
+        <span class="text-brand-terracotta font-extrabold">1</span>
+      </div>
+      <button type="button" class="dest-select-btn block w-full text-left text-[11px] font-medium text-text-secondary hover:text-brand-terracotta transition-colors py-0.5 truncate" data-selection="Regenta Place Khatu Shyamji" data-type="hotel" title="Regenta Place Khatu Shyamji">
+        • Regenta Place Khatu Shyamji
+      </button>
+    </div>
+  </div>
+  <div class="dest-city-group py-1 border-b border-border/40" data-city="kolhapur">
+    <div class="flex items-center gap-1.5">
+      <button type="button" class="dest-expand-btn text-brand-terracotta hover:text-brand-gold-rich font-bold text-sm leading-none w-4 h-4 flex items-center justify-center shrink-0 cursor-pointer select-none" data-city="Kolhapur" title="Toggle hotels in Kolhapur">
+        +
+      </button>
+      <button type="button" class="dest-select-btn text-left text-xs font-semibold text-text-secondary hover:text-brand-slate truncate transition-colors flex-1" data-selection="Kolhapur (All Properties)" data-type="city">
+        Kolhapur
+      </button>
+    </div>
+    <div class="dest-city-accordion hidden mt-1.5 pl-3 pr-1 py-1.5 bg-surface-subtle rounded border-l-2 border-brand-terracotta space-y-1.5">
+      <div class="text-[10px] uppercase tracking-wider font-bold text-brand-slate/70 pb-0.5 border-b border-border-subtle flex items-center justify-between">
+        <span>Hotels in Kolhapur</span>
+        <span class="text-brand-terracotta font-extrabold">1</span>
+      </div>
+      <button type="button" class="dest-select-btn block w-full text-left text-[11px] font-medium text-text-secondary hover:text-brand-terracotta transition-colors py-0.5 truncate" data-selection="Regenta Place Kolhapur" data-type="hotel" title="Regenta Place Kolhapur">
+        • Regenta Place Kolhapur
+      </button>
+    </div>
+  </div>
+  <div class="dest-city-group py-1 border-b border-border/40" data-city="kolkata">
+    <div class="flex items-center gap-1.5">
+      <button type="button" class="dest-expand-btn text-brand-terracotta hover:text-brand-gold-rich font-bold text-sm leading-none w-4 h-4 flex items-center justify-center shrink-0 cursor-pointer select-none" data-city="Kolkata" title="Toggle hotels in Kolkata">
+        +
+      </button>
+      <button type="button" class="dest-select-btn text-left text-xs font-semibold text-text-secondary hover:text-brand-slate truncate transition-colors flex-1" data-selection="Kolkata (All Properties)" data-type="city">
+        Kolkata
+      </button>
+    </div>
+    <div class="dest-city-accordion hidden mt-1.5 pl-3 pr-1 py-1.5 bg-surface-subtle rounded border-l-2 border-brand-terracotta space-y-1.5">
+      <div class="text-[10px] uppercase tracking-wider font-bold text-brand-slate/70 pb-0.5 border-b border-border-subtle flex items-center justify-between">
+        <span>Hotels in Kolkata</span>
+        <span class="text-brand-terracotta font-extrabold">1</span>
+      </div>
+      <button type="button" class="dest-select-btn block w-full text-left text-[11px] font-medium text-text-secondary hover:text-brand-terracotta transition-colors py-0.5 truncate" data-selection="Regenta Orkos, Kasba, Kolkata" data-type="hotel" title="Regenta Orkos, Kasba, Kolkata">
+        • Regenta Orkos, Kasba, Kolkata
+      </button>
+    </div>
+  </div>
+  <div class="dest-city-group py-1 border-b border-border/40" data-city="kota">
+    <div class="flex items-center gap-1.5">
+      <button type="button" class="dest-expand-btn text-brand-terracotta hover:text-brand-gold-rich font-bold text-sm leading-none w-4 h-4 flex items-center justify-center shrink-0 cursor-pointer select-none" data-city="Kota" title="Toggle hotels in Kota">
+        +
+      </button>
+      <button type="button" class="dest-select-btn text-left text-xs font-semibold text-text-secondary hover:text-brand-slate truncate transition-colors flex-1" data-selection="Kota (All Properties)" data-type="city">
+        Kota
+      </button>
+    </div>
+    <div class="dest-city-accordion hidden mt-1.5 pl-3 pr-1 py-1.5 bg-surface-subtle rounded border-l-2 border-brand-terracotta space-y-1.5">
+      <div class="text-[10px] uppercase tracking-wider font-bold text-brand-slate/70 pb-0.5 border-b border-border-subtle flex items-center justify-between">
+        <span>Hotels in Kota</span>
+        <span class="text-brand-terracotta font-extrabold">1</span>
+      </div>
+      <button type="button" class="dest-select-btn block w-full text-left text-[11px] font-medium text-text-secondary hover:text-brand-terracotta transition-colors py-0.5 truncate" data-selection="Regenta Resort Kota" data-type="hotel" title="Regenta Resort Kota">
+        • Regenta Resort Kota
+      </button>
+    </div>
+  </div>
+  <div class="dest-city-group py-1 border-b border-border/40" data-city="lonavala">
+    <div class="flex items-center gap-1.5">
+      <button type="button" class="dest-expand-btn text-brand-terracotta hover:text-brand-gold-rich font-bold text-sm leading-none w-4 h-4 flex items-center justify-center shrink-0 cursor-pointer select-none" data-city="Lonavala" title="Toggle hotels in Lonavala">
+        +
+      </button>
+      <button type="button" class="dest-select-btn text-left text-xs font-semibold text-text-secondary hover:text-brand-slate truncate transition-colors flex-1" data-selection="Lonavala (All Properties)" data-type="city">
+        Lonavala
+      </button>
+    </div>
+    <div class="dest-city-accordion hidden mt-1.5 pl-3 pr-1 py-1.5 bg-surface-subtle rounded border-l-2 border-brand-terracotta space-y-1.5">
+      <div class="text-[10px] uppercase tracking-wider font-bold text-brand-slate/70 pb-0.5 border-b border-border-subtle flex items-center justify-between">
+        <span>Hotels in Lonavala</span>
+        <span class="text-brand-terracotta font-extrabold">1</span>
+      </div>
+      <button type="button" class="dest-select-btn block w-full text-left text-[11px] font-medium text-text-secondary hover:text-brand-terracotta transition-colors py-0.5 truncate" data-selection="Regenta Resort & Spa Lonavala" data-type="hotel" title="Regenta Resort & Spa Lonavala">
+        • Regenta Resort & Spa Lonavala
+      </button>
+    </div>
+  </div>
+  <div class="dest-city-group py-1 border-b border-border/40" data-city="lucknow">
+    <div class="flex items-center gap-1.5">
+      <button type="button" class="dest-expand-btn text-brand-terracotta hover:text-brand-gold-rich font-bold text-sm leading-none w-4 h-4 flex items-center justify-center shrink-0 cursor-pointer select-none" data-city="Lucknow" title="Toggle hotels in Lucknow">
+        +
+      </button>
+      <button type="button" class="dest-select-btn text-left text-xs font-semibold text-text-secondary hover:text-brand-slate truncate transition-colors flex-1" data-selection="Lucknow (All Properties)" data-type="city">
+        Lucknow
+      </button>
+    </div>
+    <div class="dest-city-accordion hidden mt-1.5 pl-3 pr-1 py-1.5 bg-surface-subtle rounded border-l-2 border-brand-terracotta space-y-1.5">
+      <div class="text-[10px] uppercase tracking-wider font-bold text-brand-slate/70 pb-0.5 border-b border-border-subtle flex items-center justify-between">
+        <span>Hotels in Lucknow</span>
+        <span class="text-brand-terracotta font-extrabold">1</span>
+      </div>
+      <button type="button" class="dest-select-btn block w-full text-left text-[11px] font-medium text-text-secondary hover:text-brand-terracotta transition-colors py-0.5 truncate" data-selection="Regenta Central Lucknow" data-type="hotel" title="Regenta Central Lucknow">
+        • Regenta Central Lucknow
+      </button>
+    </div>
+  </div>
+  <div class="dest-city-group py-1 border-b border-border/40" data-city="ludhiana">
+    <div class="flex items-center gap-1.5">
+      <button type="button" class="dest-expand-btn text-brand-terracotta hover:text-brand-gold-rich font-bold text-sm leading-none w-4 h-4 flex items-center justify-center shrink-0 cursor-pointer select-none" data-city="Ludhiana" title="Toggle hotels in Ludhiana">
+        +
+      </button>
+      <button type="button" class="dest-select-btn text-left text-xs font-semibold text-text-secondary hover:text-brand-slate truncate transition-colors flex-1" data-selection="Ludhiana (All Properties)" data-type="city">
+        Ludhiana
+      </button>
+    </div>
+    <div class="dest-city-accordion hidden mt-1.5 pl-3 pr-1 py-1.5 bg-surface-subtle rounded border-l-2 border-brand-terracotta space-y-1.5">
+      <div class="text-[10px] uppercase tracking-wider font-bold text-brand-slate/70 pb-0.5 border-b border-border-subtle flex items-center justify-between">
+        <span>Hotels in Ludhiana</span>
+        <span class="text-brand-terracotta font-extrabold">1</span>
+      </div>
+      <button type="button" class="dest-select-btn block w-full text-left text-[11px] font-medium text-text-secondary hover:text-brand-terracotta transition-colors py-0.5 truncate" data-selection="Regenta Central Klassik, Ludhiana" data-type="hotel" title="Regenta Central Klassik, Ludhiana">
+        • Regenta Central Klassik, Ludhiana
+      </button>
+    </div>
+  </div>
+  <div class="dest-city-group py-1 border-b border-border/40" data-city="mahabaleshwar">
+    <div class="flex items-center gap-1.5">
+      <button type="button" class="dest-expand-btn text-brand-terracotta hover:text-brand-gold-rich font-bold text-sm leading-none w-4 h-4 flex items-center justify-center shrink-0 cursor-pointer select-none" data-city="Mahabaleshwar" title="Toggle hotels in Mahabaleshwar">
+        +
+      </button>
+      <button type="button" class="dest-select-btn text-left text-xs font-semibold text-text-secondary hover:text-brand-slate truncate transition-colors flex-1" data-selection="Mahabaleshwar (All Properties)" data-type="city">
+        Mahabaleshwar
+      </button>
+    </div>
+    <div class="dest-city-accordion hidden mt-1.5 pl-3 pr-1 py-1.5 bg-surface-subtle rounded border-l-2 border-brand-terracotta space-y-1.5">
+      <div class="text-[10px] uppercase tracking-wider font-bold text-brand-slate/70 pb-0.5 border-b border-border-subtle flex items-center justify-between">
+        <span>Hotels in Mahabaleshwar</span>
+        <span class="text-brand-terracotta font-extrabold">1</span>
+      </div>
+      <button type="button" class="dest-select-btn block w-full text-left text-[11px] font-medium text-text-secondary hover:text-brand-terracotta transition-colors py-0.5 truncate" data-selection="Regenta Place Mahabaleshwar" data-type="hotel" title="Regenta Place Mahabaleshwar">
+        • Regenta Place Mahabaleshwar
+      </button>
+    </div>
+  </div>
+  <div class="dest-city-group py-1 border-b border-border/40" data-city="manali">
+    <div class="flex items-center gap-1.5">
+      <button type="button" class="dest-expand-btn text-brand-terracotta hover:text-brand-gold-rich font-bold text-sm leading-none w-4 h-4 flex items-center justify-center shrink-0 cursor-pointer select-none" data-city="Manali" title="Toggle hotels in Manali">
+        +
+      </button>
+      <button type="button" class="dest-select-btn text-left text-xs font-semibold text-text-secondary hover:text-brand-slate truncate transition-colors flex-1" data-selection="Manali (All Properties)" data-type="city">
+        Manali
+      </button>
+    </div>
+    <div class="dest-city-accordion hidden mt-1.5 pl-3 pr-1 py-1.5 bg-surface-subtle rounded border-l-2 border-brand-terracotta space-y-1.5">
+      <div class="text-[10px] uppercase tracking-wider font-bold text-brand-slate/70 pb-0.5 border-b border-border-subtle flex items-center justify-between">
+        <span>Hotels in Manali</span>
+        <span class="text-brand-terracotta font-extrabold">1</span>
+      </div>
+      <button type="button" class="dest-select-btn block w-full text-left text-[11px] font-medium text-text-secondary hover:text-brand-terracotta transition-colors py-0.5 truncate" data-selection="Regenta Resort & Spa Manali" data-type="hotel" title="Regenta Resort & Spa Manali">
+        • Regenta Resort & Spa Manali
+      </button>
+    </div>
+  </div>
+  <div class="dest-city-group py-1 border-b border-border/40" data-city="mcleod ganj">
+    <div class="flex items-center gap-1.5">
+      <button type="button" class="dest-expand-btn text-brand-terracotta hover:text-brand-gold-rich font-bold text-sm leading-none w-4 h-4 flex items-center justify-center shrink-0 cursor-pointer select-none" data-city="McLeod Ganj" title="Toggle hotels in McLeod Ganj">
+        +
+      </button>
+      <button type="button" class="dest-select-btn text-left text-xs font-semibold text-text-secondary hover:text-brand-slate truncate transition-colors flex-1" data-selection="McLeod Ganj (All Properties)" data-type="city">
+        McLeod Ganj
+      </button>
+    </div>
+    <div class="dest-city-accordion hidden mt-1.5 pl-3 pr-1 py-1.5 bg-surface-subtle rounded border-l-2 border-brand-terracotta space-y-1.5">
+      <div class="text-[10px] uppercase tracking-wider font-bold text-brand-slate/70 pb-0.5 border-b border-border-subtle flex items-center justify-between">
+        <span>Hotels in McLeod Ganj</span>
+        <span class="text-brand-terracotta font-extrabold">1</span>
+      </div>
+      <button type="button" class="dest-select-btn block w-full text-left text-[11px] font-medium text-text-secondary hover:text-brand-terracotta transition-colors py-0.5 truncate" data-selection="Regenta Resort McLeod Ganj" data-type="hotel" title="Regenta Resort McLeod Ganj">
+        • Regenta Resort McLeod Ganj
+      </button>
+    </div>
+  </div>
+  <div class="dest-city-group py-1 border-b border-border/40" data-city="mohali">
+    <div class="flex items-center gap-1.5">
+      <button type="button" class="dest-expand-btn text-brand-terracotta hover:text-brand-gold-rich font-bold text-sm leading-none w-4 h-4 flex items-center justify-center shrink-0 cursor-pointer select-none" data-city="Mohali" title="Toggle hotels in Mohali">
+        +
+      </button>
+      <button type="button" class="dest-select-btn text-left text-xs font-semibold text-text-secondary hover:text-brand-slate truncate transition-colors flex-1" data-selection="Mohali (All Properties)" data-type="city">
+        Mohali
+      </button>
+    </div>
+    <div class="dest-city-accordion hidden mt-1.5 pl-3 pr-1 py-1.5 bg-surface-subtle rounded border-l-2 border-brand-terracotta space-y-1.5">
+      <div class="text-[10px] uppercase tracking-wider font-bold text-brand-slate/70 pb-0.5 border-b border-border-subtle flex items-center justify-between">
+        <span>Hotels in Mohali</span>
+        <span class="text-brand-terracotta font-extrabold">1</span>
+      </div>
+      <button type="button" class="dest-select-btn block w-full text-left text-[11px] font-medium text-text-secondary hover:text-brand-terracotta transition-colors py-0.5 truncate" data-selection="Regenta Central Mohali" data-type="hotel" title="Regenta Central Mohali">
+        • Regenta Central Mohali
+      </button>
+    </div>
+  </div>
+  <div class="dest-city-group py-1 border-b border-border/40" data-city="morbi">
+    <div class="flex items-center gap-1.5">
+      <button type="button" class="dest-expand-btn text-brand-terracotta hover:text-brand-gold-rich font-bold text-sm leading-none w-4 h-4 flex items-center justify-center shrink-0 cursor-pointer select-none" data-city="Morbi" title="Toggle hotels in Morbi">
+        +
+      </button>
+      <button type="button" class="dest-select-btn text-left text-xs font-semibold text-text-secondary hover:text-brand-slate truncate transition-colors flex-1" data-selection="Morbi (All Properties)" data-type="city">
+        Morbi
+      </button>
+    </div>
+    <div class="dest-city-accordion hidden mt-1.5 pl-3 pr-1 py-1.5 bg-surface-subtle rounded border-l-2 border-brand-terracotta space-y-1.5">
+      <div class="text-[10px] uppercase tracking-wider font-bold text-brand-slate/70 pb-0.5 border-b border-border-subtle flex items-center justify-between">
+        <span>Hotels in Morbi</span>
+        <span class="text-brand-terracotta font-extrabold">1</span>
+      </div>
+      <button type="button" class="dest-select-btn block w-full text-left text-[11px] font-medium text-text-secondary hover:text-brand-terracotta transition-colors py-0.5 truncate" data-selection="Regenta Place Morbi" data-type="hotel" title="Regenta Place Morbi">
+        • Regenta Place Morbi
+      </button>
+    </div>
+  </div>
+  <div class="dest-city-group py-1 border-b border-border/40" data-city="mumbai">
+    <div class="flex items-center gap-1.5">
+      <button type="button" class="dest-expand-btn text-brand-terracotta hover:text-brand-gold-rich font-bold text-sm leading-none w-4 h-4 flex items-center justify-center shrink-0 cursor-pointer select-none" data-city="Mumbai" title="Toggle hotels in Mumbai">
+        +
+      </button>
+      <button type="button" class="dest-select-btn text-left text-xs font-semibold text-text-secondary hover:text-brand-slate truncate transition-colors flex-1" data-selection="Mumbai (All Properties)" data-type="city">
+        Mumbai
+      </button>
+    </div>
+    <div class="dest-city-accordion hidden mt-1.5 pl-3 pr-1 py-1.5 bg-surface-subtle rounded border-l-2 border-brand-terracotta space-y-1.5">
+      <div class="text-[10px] uppercase tracking-wider font-bold text-brand-slate/70 pb-0.5 border-b border-border-subtle flex items-center justify-between">
+        <span>Hotels in Mumbai</span>
+        <span class="text-brand-terracotta font-extrabold">1</span>
+      </div>
+      <button type="button" class="dest-select-btn block w-full text-left text-[11px] font-medium text-text-secondary hover:text-brand-terracotta transition-colors py-0.5 truncate" data-selection="Regenta Place The Emerald, Juhu, Mumbai" data-type="hotel" title="Regenta Place The Emerald, Juhu, Mumbai">
+        • Regenta Place The Emerald, Juhu, Mumbai
+      </button>
+    </div>
+  </div>
+  <div class="dest-city-group py-1 border-b border-border/40" data-city="mysore">
+    <div class="flex items-center gap-1.5">
+      <button type="button" class="dest-expand-btn text-brand-terracotta hover:text-brand-gold-rich font-bold text-sm leading-none w-4 h-4 flex items-center justify-center shrink-0 cursor-pointer select-none" data-city="Mysore" title="Toggle hotels in Mysore">
+        +
+      </button>
+      <button type="button" class="dest-select-btn text-left text-xs font-semibold text-text-secondary hover:text-brand-slate truncate transition-colors flex-1" data-selection="Mysore (All Properties)" data-type="city">
+        Mysore
+      </button>
+    </div>
+    <div class="dest-city-accordion hidden mt-1.5 pl-3 pr-1 py-1.5 bg-surface-subtle rounded border-l-2 border-brand-terracotta space-y-1.5">
+      <div class="text-[10px] uppercase tracking-wider font-bold text-brand-slate/70 pb-0.5 border-b border-border-subtle flex items-center justify-between">
+        <span>Hotels in Mysore</span>
+        <span class="text-brand-terracotta font-extrabold">2</span>
+      </div>
+      <button type="button" class="dest-select-btn block w-full text-left text-[11px] font-medium text-text-secondary hover:text-brand-terracotta transition-colors py-0.5 truncate" data-selection="Royal Orchid Metropole, Mysore" data-type="hotel" title="Royal Orchid Metropole, Mysore">
+        • Royal Orchid Metropole, Mysore
+      </button>
+      <button type="button" class="dest-select-btn block w-full text-left text-[11px] font-medium text-text-secondary hover:text-brand-terracotta transition-colors py-0.5 truncate" data-selection="Royal Orchid Brindavan Garden, Mysore" data-type="hotel" title="Royal Orchid Brindavan Garden, Mysore">
+        • Royal Orchid Brindavan Garden, Mysore
+      </button>
+    </div>
+  </div>
+  <div class="dest-city-group py-1 border-b border-border/40" data-city="nagpur">
+    <div class="flex items-center gap-1.5">
+      <button type="button" class="dest-expand-btn text-brand-terracotta hover:text-brand-gold-rich font-bold text-sm leading-none w-4 h-4 flex items-center justify-center shrink-0 cursor-pointer select-none" data-city="Nagpur" title="Toggle hotels in Nagpur">
+        +
+      </button>
+      <button type="button" class="dest-select-btn text-left text-xs font-semibold text-text-secondary hover:text-brand-slate truncate transition-colors flex-1" data-selection="Nagpur (All Properties)" data-type="city">
+        Nagpur
+      </button>
+    </div>
+    <div class="dest-city-accordion hidden mt-1.5 pl-3 pr-1 py-1.5 bg-surface-subtle rounded border-l-2 border-brand-terracotta space-y-1.5">
+      <div class="text-[10px] uppercase tracking-wider font-bold text-brand-slate/70 pb-0.5 border-b border-border-subtle flex items-center justify-between">
+        <span>Hotels in Nagpur</span>
+        <span class="text-brand-terracotta font-extrabold">1</span>
+      </div>
+      <button type="button" class="dest-select-btn block w-full text-left text-[11px] font-medium text-text-secondary hover:text-brand-terracotta transition-colors py-0.5 truncate" data-selection="Regenta Central Nagpur" data-type="hotel" title="Regenta Central Nagpur">
+        • Regenta Central Nagpur
+      </button>
+    </div>
+  </div>
+  <div class="dest-city-group py-1 border-b border-border/40" data-city="nashik">
+    <div class="flex items-center gap-1.5">
+      <button type="button" class="dest-expand-btn text-brand-terracotta hover:text-brand-gold-rich font-bold text-sm leading-none w-4 h-4 flex items-center justify-center shrink-0 cursor-pointer select-none" data-city="Nashik" title="Toggle hotels in Nashik">
+        +
+      </button>
+      <button type="button" class="dest-select-btn text-left text-xs font-semibold text-text-secondary hover:text-brand-slate truncate transition-colors flex-1" data-selection="Nashik (All Properties)" data-type="city">
+        Nashik
+      </button>
+    </div>
+    <div class="dest-city-accordion hidden mt-1.5 pl-3 pr-1 py-1.5 bg-surface-subtle rounded border-l-2 border-brand-terracotta space-y-1.5">
+      <div class="text-[10px] uppercase tracking-wider font-bold text-brand-slate/70 pb-0.5 border-b border-border-subtle flex items-center justify-between">
+        <span>Hotels in Nashik</span>
+        <span class="text-brand-terracotta font-extrabold">1</span>
+      </div>
+      <button type="button" class="dest-select-btn block w-full text-left text-[11px] font-medium text-text-secondary hover:text-brand-terracotta transition-colors py-0.5 truncate" data-selection="Regenta Resort Somnath Nashik" data-type="hotel" title="Regenta Resort Somnath Nashik">
+        • Regenta Resort Somnath Nashik
+      </button>
+    </div>
+  </div>
+  <div class="dest-city-group py-1 border-b border-border/40" data-city="nellore">
+    <div class="flex items-center gap-1.5">
+      <button type="button" class="dest-expand-btn text-brand-terracotta hover:text-brand-gold-rich font-bold text-sm leading-none w-4 h-4 flex items-center justify-center shrink-0 cursor-pointer select-none" data-city="Nellore" title="Toggle hotels in Nellore">
+        +
+      </button>
+      <button type="button" class="dest-select-btn text-left text-xs font-semibold text-text-secondary hover:text-brand-slate truncate transition-colors flex-1" data-selection="Nellore (All Properties)" data-type="city">
+        Nellore
+      </button>
+    </div>
+    <div class="dest-city-accordion hidden mt-1.5 pl-3 pr-1 py-1.5 bg-surface-subtle rounded border-l-2 border-brand-terracotta space-y-1.5">
+      <div class="text-[10px] uppercase tracking-wider font-bold text-brand-slate/70 pb-0.5 border-b border-border-subtle flex items-center justify-between">
+        <span>Hotels in Nellore</span>
+        <span class="text-brand-terracotta font-extrabold">1</span>
+      </div>
+      <button type="button" class="dest-select-btn block w-full text-left text-[11px] font-medium text-text-secondary hover:text-brand-terracotta transition-colors py-0.5 truncate" data-selection="Regenta Central Nellore" data-type="hotel" title="Regenta Central Nellore">
+        • Regenta Central Nellore
+      </button>
+    </div>
+  </div>
+  <div class="dest-city-group py-1 border-b border-border/40" data-city="noida">
+    <div class="flex items-center gap-1.5">
+      <button type="button" class="dest-expand-btn text-brand-terracotta hover:text-brand-gold-rich font-bold text-sm leading-none w-4 h-4 flex items-center justify-center shrink-0 cursor-pointer select-none" data-city="Noida" title="Toggle hotels in Noida">
+        +
+      </button>
+      <button type="button" class="dest-select-btn text-left text-xs font-semibold text-text-secondary hover:text-brand-slate truncate transition-colors flex-1" data-selection="Noida (All Properties)" data-type="city">
+        Noida
+      </button>
+    </div>
+    <div class="dest-city-accordion hidden mt-1.5 pl-3 pr-1 py-1.5 bg-surface-subtle rounded border-l-2 border-brand-terracotta space-y-1.5">
+      <div class="text-[10px] uppercase tracking-wider font-bold text-brand-slate/70 pb-0.5 border-b border-border-subtle flex items-center justify-between">
+        <span>Hotels in Noida</span>
+        <span class="text-brand-terracotta font-extrabold">1</span>
+      </div>
+      <button type="button" class="dest-select-btn block w-full text-left text-[11px] font-medium text-text-secondary hover:text-brand-terracotta transition-colors py-0.5 truncate" data-selection="Regenta Central Sector 49, Noida" data-type="hotel" title="Regenta Central Sector 49, Noida">
+        • Regenta Central Sector 49, Noida
+      </button>
+    </div>
+  </div>
+  <div class="dest-city-group py-1 border-b border-border/40" data-city="panchkula">
+    <div class="flex items-center gap-1.5">
+      <button type="button" class="dest-expand-btn text-brand-terracotta hover:text-brand-gold-rich font-bold text-sm leading-none w-4 h-4 flex items-center justify-center shrink-0 cursor-pointer select-none" data-city="Panchkula" title="Toggle hotels in Panchkula">
+        +
+      </button>
+      <button type="button" class="dest-select-btn text-left text-xs font-semibold text-text-secondary hover:text-brand-slate truncate transition-colors flex-1" data-selection="Panchkula (All Properties)" data-type="city">
+        Panchkula
+      </button>
+    </div>
+    <div class="dest-city-accordion hidden mt-1.5 pl-3 pr-1 py-1.5 bg-surface-subtle rounded border-l-2 border-brand-terracotta space-y-1.5">
+      <div class="text-[10px] uppercase tracking-wider font-bold text-brand-slate/70 pb-0.5 border-b border-border-subtle flex items-center justify-between">
+        <span>Hotels in Panchkula</span>
+        <span class="text-brand-terracotta font-extrabold">1</span>
+      </div>
+      <button type="button" class="dest-select-btn block w-full text-left text-[11px] font-medium text-text-secondary hover:text-brand-terracotta transition-colors py-0.5 truncate" data-selection="Regenta Central Panchkula" data-type="hotel" title="Regenta Central Panchkula">
+        • Regenta Central Panchkula
+      </button>
+    </div>
+  </div>
+  <div class="dest-city-group py-1 border-b border-border/40" data-city="phagwara">
+    <div class="flex items-center gap-1.5">
+      <button type="button" class="dest-expand-btn text-brand-terracotta hover:text-brand-gold-rich font-bold text-sm leading-none w-4 h-4 flex items-center justify-center shrink-0 cursor-pointer select-none" data-city="Phagwara" title="Toggle hotels in Phagwara">
+        +
+      </button>
+      <button type="button" class="dest-select-btn text-left text-xs font-semibold text-text-secondary hover:text-brand-slate truncate transition-colors flex-1" data-selection="Phagwara (All Properties)" data-type="city">
+        Phagwara
+      </button>
+    </div>
+    <div class="dest-city-accordion hidden mt-1.5 pl-3 pr-1 py-1.5 bg-surface-subtle rounded border-l-2 border-brand-terracotta space-y-1.5">
+      <div class="text-[10px] uppercase tracking-wider font-bold text-brand-slate/70 pb-0.5 border-b border-border-subtle flex items-center justify-between">
+        <span>Hotels in Phagwara</span>
+        <span class="text-brand-terracotta font-extrabold">1</span>
+      </div>
+      <button type="button" class="dest-select-btn block w-full text-left text-[11px] font-medium text-text-secondary hover:text-brand-terracotta transition-colors py-0.5 truncate" data-selection="Regenta Place Phagwara" data-type="hotel" title="Regenta Place Phagwara">
+        • Regenta Place Phagwara
+      </button>
+    </div>
+  </div>
+  <div class="dest-city-group py-1 border-b border-border/40" data-city="pune">
+    <div class="flex items-center gap-1.5">
+      <button type="button" class="dest-expand-btn text-brand-terracotta hover:text-brand-gold-rich font-bold text-sm leading-none w-4 h-4 flex items-center justify-center shrink-0 cursor-pointer select-none" data-city="Pune" title="Toggle hotels in Pune">
+        +
+      </button>
+      <button type="button" class="dest-select-btn text-left text-xs font-semibold text-text-secondary hover:text-brand-slate truncate transition-colors flex-1" data-selection="Pune (All Properties)" data-type="city">
+        Pune
+      </button>
+    </div>
+    <div class="dest-city-accordion hidden mt-1.5 pl-3 pr-1 py-1.5 bg-surface-subtle rounded border-l-2 border-brand-terracotta space-y-1.5">
+      <div class="text-[10px] uppercase tracking-wider font-bold text-brand-slate/70 pb-0.5 border-b border-border-subtle flex items-center justify-between">
+        <span>Hotels in Pune</span>
+        <span class="text-brand-terracotta font-extrabold">2</span>
+      </div>
+      <button type="button" class="dest-select-btn block w-full text-left text-[11px] font-medium text-text-secondary hover:text-brand-terracotta transition-colors py-0.5 truncate" data-selection="Hotel Royal Orchid Central, Kalyani Nagar, Pune" data-type="hotel" title="Hotel Royal Orchid Central, Kalyani Nagar, Pune">
+        • Hotel Royal Orchid Central, Kalyani Nagar, Pune
+      </button>
+      <button type="button" class="dest-select-btn block w-full text-left text-[11px] font-medium text-text-secondary hover:text-brand-terracotta transition-colors py-0.5 truncate" data-selection="Regenta Place, Pune" data-type="hotel" title="Regenta Place, Pune">
+        • Regenta Place, Pune
+      </button>
+    </div>
+  </div>
+  <div class="dest-city-group py-1 border-b border-border/40" data-city="puri">
+    <div class="flex items-center gap-1.5">
+      <button type="button" class="dest-expand-btn text-brand-terracotta hover:text-brand-gold-rich font-bold text-sm leading-none w-4 h-4 flex items-center justify-center shrink-0 cursor-pointer select-none" data-city="Puri" title="Toggle hotels in Puri">
+        +
+      </button>
+      <button type="button" class="dest-select-btn text-left text-xs font-semibold text-text-secondary hover:text-brand-slate truncate transition-colors flex-1" data-selection="Puri (All Properties)" data-type="city">
+        Puri
+      </button>
+    </div>
+    <div class="dest-city-accordion hidden mt-1.5 pl-3 pr-1 py-1.5 bg-surface-subtle rounded border-l-2 border-brand-terracotta space-y-1.5">
+      <div class="text-[10px] uppercase tracking-wider font-bold text-brand-slate/70 pb-0.5 border-b border-border-subtle flex items-center justify-between">
+        <span>Hotels in Puri</span>
+        <span class="text-brand-terracotta font-extrabold">1</span>
+      </div>
+      <button type="button" class="dest-select-btn block w-full text-left text-[11px] font-medium text-text-secondary hover:text-brand-terracotta transition-colors py-0.5 truncate" data-selection="Regenta Central Puri (Sea Facing)" data-type="hotel" title="Regenta Central Puri (Sea Facing)">
+        • Regenta Central Puri (Sea Facing)
+      </button>
+    </div>
+  </div>
+  <div class="dest-city-group py-1 border-b border-border/40" data-city="raipur">
+    <div class="flex items-center gap-1.5">
+      <button type="button" class="dest-expand-btn text-brand-terracotta hover:text-brand-gold-rich font-bold text-sm leading-none w-4 h-4 flex items-center justify-center shrink-0 cursor-pointer select-none" data-city="Raipur" title="Toggle hotels in Raipur">
+        +
+      </button>
+      <button type="button" class="dest-select-btn text-left text-xs font-semibold text-text-secondary hover:text-brand-slate truncate transition-colors flex-1" data-selection="Raipur (All Properties)" data-type="city">
+        Raipur
+      </button>
+    </div>
+    <div class="dest-city-accordion hidden mt-1.5 pl-3 pr-1 py-1.5 bg-surface-subtle rounded border-l-2 border-brand-terracotta space-y-1.5">
+      <div class="text-[10px] uppercase tracking-wider font-bold text-brand-slate/70 pb-0.5 border-b border-border-subtle flex items-center justify-between">
+        <span>Hotels in Raipur</span>
+        <span class="text-brand-terracotta font-extrabold">1</span>
+      </div>
+      <button type="button" class="dest-select-btn block w-full text-left text-[11px] font-medium text-text-secondary hover:text-brand-terracotta transition-colors py-0.5 truncate" data-selection="Regenta Central Raipur" data-type="hotel" title="Regenta Central Raipur">
+        • Regenta Central Raipur
+      </button>
+    </div>
+  </div>
+  <div class="dest-city-group py-1 border-b border-border/40" data-city="rajkot">
+    <div class="flex items-center gap-1.5">
+      <button type="button" class="dest-expand-btn text-brand-terracotta hover:text-brand-gold-rich font-bold text-sm leading-none w-4 h-4 flex items-center justify-center shrink-0 cursor-pointer select-none" data-city="Rajkot" title="Toggle hotels in Rajkot">
+        +
+      </button>
+      <button type="button" class="dest-select-btn text-left text-xs font-semibold text-text-secondary hover:text-brand-slate truncate transition-colors flex-1" data-selection="Rajkot (All Properties)" data-type="city">
+        Rajkot
+      </button>
+    </div>
+    <div class="dest-city-accordion hidden mt-1.5 pl-3 pr-1 py-1.5 bg-surface-subtle rounded border-l-2 border-brand-terracotta space-y-1.5">
+      <div class="text-[10px] uppercase tracking-wider font-bold text-brand-slate/70 pb-0.5 border-b border-border-subtle flex items-center justify-between">
+        <span>Hotels in Rajkot</span>
+        <span class="text-brand-terracotta font-extrabold">1</span>
+      </div>
+      <button type="button" class="dest-select-btn block w-full text-left text-[11px] font-medium text-text-secondary hover:text-brand-terracotta transition-colors py-0.5 truncate" data-selection="Regenta Central Rajkot" data-type="hotel" title="Regenta Central Rajkot">
+        • Regenta Central Rajkot
+      </button>
+    </div>
+  </div>
+  <div class="dest-city-group py-1 border-b border-border/40" data-city="ranthambore">
+    <div class="flex items-center gap-1.5">
+      <button type="button" class="dest-expand-btn text-brand-terracotta hover:text-brand-gold-rich font-bold text-sm leading-none w-4 h-4 flex items-center justify-center shrink-0 cursor-pointer select-none" data-city="Ranthambore" title="Toggle hotels in Ranthambore">
+        +
+      </button>
+      <button type="button" class="dest-select-btn text-left text-xs font-semibold text-text-secondary hover:text-brand-slate truncate transition-colors flex-1" data-selection="Ranthambore (All Properties)" data-type="city">
+        Ranthambore
+      </button>
+    </div>
+    <div class="dest-city-accordion hidden mt-1.5 pl-3 pr-1 py-1.5 bg-surface-subtle rounded border-l-2 border-brand-terracotta space-y-1.5">
+      <div class="text-[10px] uppercase tracking-wider font-bold text-brand-slate/70 pb-0.5 border-b border-border-subtle flex items-center justify-between">
+        <span>Hotels in Ranthambore</span>
+        <span class="text-brand-terracotta font-extrabold">1</span>
+      </div>
+      <button type="button" class="dest-select-btn block w-full text-left text-[11px] font-medium text-text-secondary hover:text-brand-terracotta transition-colors py-0.5 truncate" data-selection="Regenta Resort Vanya Mahal, Ranthambore" data-type="hotel" title="Regenta Resort Vanya Mahal, Ranthambore">
+        • Regenta Resort Vanya Mahal, Ranthambore
+      </button>
+    </div>
+  </div>
+  <div class="dest-city-group py-1 border-b border-border/40" data-city="rishikesh">
+    <div class="flex items-center gap-1.5">
+      <button type="button" class="dest-expand-btn text-brand-terracotta hover:text-brand-gold-rich font-bold text-sm leading-none w-4 h-4 flex items-center justify-center shrink-0 cursor-pointer select-none" data-city="Rishikesh" title="Toggle hotels in Rishikesh">
+        +
+      </button>
+      <button type="button" class="dest-select-btn text-left text-xs font-semibold text-text-secondary hover:text-brand-slate truncate transition-colors flex-1" data-selection="Rishikesh (All Properties)" data-type="city">
+        Rishikesh
+      </button>
+    </div>
+    <div class="dest-city-accordion hidden mt-1.5 pl-3 pr-1 py-1.5 bg-surface-subtle rounded border-l-2 border-brand-terracotta space-y-1.5">
+      <div class="text-[10px] uppercase tracking-wider font-bold text-brand-slate/70 pb-0.5 border-b border-border-subtle flex items-center justify-between">
+        <span>Hotels in Rishikesh</span>
+        <span class="text-brand-terracotta font-extrabold">1</span>
+      </div>
+      <button type="button" class="dest-select-btn block w-full text-left text-[11px] font-medium text-text-secondary hover:text-brand-terracotta transition-colors py-0.5 truncate" data-selection="Regenta Central Rishikesh" data-type="hotel" title="Regenta Central Rishikesh">
+        • Regenta Central Rishikesh
+      </button>
+    </div>
+  </div>
+  <div class="dest-city-group py-1 border-b border-border/40" data-city="sakleshpur">
+    <div class="flex items-center gap-1.5">
+      <button type="button" class="dest-expand-btn text-brand-terracotta hover:text-brand-gold-rich font-bold text-sm leading-none w-4 h-4 flex items-center justify-center shrink-0 cursor-pointer select-none" data-city="Sakleshpur" title="Toggle hotels in Sakleshpur">
+        +
+      </button>
+      <button type="button" class="dest-select-btn text-left text-xs font-semibold text-text-secondary hover:text-brand-slate truncate transition-colors flex-1" data-selection="Sakleshpur (All Properties)" data-type="city">
+        Sakleshpur
+      </button>
+    </div>
+    <div class="dest-city-accordion hidden mt-1.5 pl-3 pr-1 py-1.5 bg-surface-subtle rounded border-l-2 border-brand-terracotta space-y-1.5">
+      <div class="text-[10px] uppercase tracking-wider font-bold text-brand-slate/70 pb-0.5 border-b border-border-subtle flex items-center justify-between">
+        <span>Hotels in Sakleshpur</span>
+        <span class="text-brand-terracotta font-extrabold">1</span>
+      </div>
+      <button type="button" class="dest-select-btn block w-full text-left text-[11px] font-medium text-text-secondary hover:text-brand-terracotta transition-colors py-0.5 truncate" data-selection="Regenta Resort Sakleshpur" data-type="hotel" title="Regenta Resort Sakleshpur">
+        • Regenta Resort Sakleshpur
+      </button>
+    </div>
+  </div>
+  <div class="dest-city-group py-1 border-b border-border/40" data-city="sambalpur">
+    <div class="flex items-center gap-1.5">
+      <button type="button" class="dest-expand-btn text-brand-terracotta hover:text-brand-gold-rich font-bold text-sm leading-none w-4 h-4 flex items-center justify-center shrink-0 cursor-pointer select-none" data-city="Sambalpur" title="Toggle hotels in Sambalpur">
+        +
+      </button>
+      <button type="button" class="dest-select-btn text-left text-xs font-semibold text-text-secondary hover:text-brand-slate truncate transition-colors flex-1" data-selection="Sambalpur (All Properties)" data-type="city">
+        Sambalpur
+      </button>
+    </div>
+    <div class="dest-city-accordion hidden mt-1.5 pl-3 pr-1 py-1.5 bg-surface-subtle rounded border-l-2 border-brand-terracotta space-y-1.5">
+      <div class="text-[10px] uppercase tracking-wider font-bold text-brand-slate/70 pb-0.5 border-b border-border-subtle flex items-center justify-between">
+        <span>Hotels in Sambalpur</span>
+        <span class="text-brand-terracotta font-extrabold">1</span>
+      </div>
+      <button type="button" class="dest-select-btn block w-full text-left text-[11px] font-medium text-text-secondary hover:text-brand-terracotta transition-colors py-0.5 truncate" data-selection="Regenta Central Sambalpur" data-type="hotel" title="Regenta Central Sambalpur">
+        • Regenta Central Sambalpur
+      </button>
+    </div>
+  </div>
+  <div class="dest-city-group py-1 border-b border-border/40" data-city="shimla">
+    <div class="flex items-center gap-1.5">
+      <button type="button" class="dest-expand-btn text-brand-terracotta hover:text-brand-gold-rich font-bold text-sm leading-none w-4 h-4 flex items-center justify-center shrink-0 cursor-pointer select-none" data-city="Shimla" title="Toggle hotels in Shimla">
+        +
+      </button>
+      <button type="button" class="dest-select-btn text-left text-xs font-semibold text-text-secondary hover:text-brand-slate truncate transition-colors flex-1" data-selection="Shimla (All Properties)" data-type="city">
+        Shimla
+      </button>
+    </div>
+    <div class="dest-city-accordion hidden mt-1.5 pl-3 pr-1 py-1.5 bg-surface-subtle rounded border-l-2 border-brand-terracotta space-y-1.5">
+      <div class="text-[10px] uppercase tracking-wider font-bold text-brand-slate/70 pb-0.5 border-b border-border-subtle flex items-center justify-between">
+        <span>Hotels in Shimla</span>
+        <span class="text-brand-terracotta font-extrabold">1</span>
+      </div>
+      <button type="button" class="dest-select-btn block w-full text-left text-[11px] font-medium text-text-secondary hover:text-brand-terracotta transition-colors py-0.5 truncate" data-selection="Regenta Resort & Spa Mashobra, Shimla" data-type="hotel" title="Regenta Resort & Spa Mashobra, Shimla">
+        • Regenta Resort & Spa Mashobra, Shimla
+      </button>
+    </div>
+  </div>
+  <div class="dest-city-group py-1 border-b border-border/40" data-city="shimoga">
+    <div class="flex items-center gap-1.5">
+      <button type="button" class="dest-expand-btn text-brand-terracotta hover:text-brand-gold-rich font-bold text-sm leading-none w-4 h-4 flex items-center justify-center shrink-0 cursor-pointer select-none" data-city="Shimoga" title="Toggle hotels in Shimoga">
+        +
+      </button>
+      <button type="button" class="dest-select-btn text-left text-xs font-semibold text-text-secondary hover:text-brand-slate truncate transition-colors flex-1" data-selection="Shimoga (All Properties)" data-type="city">
+        Shimoga
+      </button>
+    </div>
+    <div class="dest-city-accordion hidden mt-1.5 pl-3 pr-1 py-1.5 bg-surface-subtle rounded border-l-2 border-brand-terracotta space-y-1.5">
+      <div class="text-[10px] uppercase tracking-wider font-bold text-brand-slate/70 pb-0.5 border-b border-border-subtle flex items-center justify-between">
+        <span>Hotels in Shimoga</span>
+        <span class="text-brand-terracotta font-extrabold">1</span>
+      </div>
+      <button type="button" class="dest-select-btn block w-full text-left text-[11px] font-medium text-text-secondary hover:text-brand-terracotta transition-colors py-0.5 truncate" data-selection="Regenta Central Shimoga" data-type="hotel" title="Regenta Central Shimoga">
+        • Regenta Central Shimoga
+      </button>
+    </div>
+  </div>
+  <div class="dest-city-group py-1 border-b border-border/40" data-city="solapur">
+    <div class="flex items-center gap-1.5">
+      <button type="button" class="dest-expand-btn text-brand-terracotta hover:text-brand-gold-rich font-bold text-sm leading-none w-4 h-4 flex items-center justify-center shrink-0 cursor-pointer select-none" data-city="Solapur" title="Toggle hotels in Solapur">
+        +
+      </button>
+      <button type="button" class="dest-select-btn text-left text-xs font-semibold text-text-secondary hover:text-brand-slate truncate transition-colors flex-1" data-selection="Solapur (All Properties)" data-type="city">
+        Solapur
+      </button>
+    </div>
+    <div class="dest-city-accordion hidden mt-1.5 pl-3 pr-1 py-1.5 bg-surface-subtle rounded border-l-2 border-brand-terracotta space-y-1.5">
+      <div class="text-[10px] uppercase tracking-wider font-bold text-brand-slate/70 pb-0.5 border-b border-border-subtle flex items-center justify-between">
+        <span>Hotels in Solapur</span>
+        <span class="text-brand-terracotta font-extrabold">1</span>
+      </div>
+      <button type="button" class="dest-select-btn block w-full text-left text-[11px] font-medium text-text-secondary hover:text-brand-terracotta transition-colors py-0.5 truncate" data-selection="Regenta Place Solapur" data-type="hotel" title="Regenta Place Solapur">
+        • Regenta Place Solapur
+      </button>
+    </div>
+  </div>
+  <div class="dest-city-group py-1 border-b border-border/40" data-city="somnath">
+    <div class="flex items-center gap-1.5">
+      <button type="button" class="dest-expand-btn text-brand-terracotta hover:text-brand-gold-rich font-bold text-sm leading-none w-4 h-4 flex items-center justify-center shrink-0 cursor-pointer select-none" data-city="Somnath" title="Toggle hotels in Somnath">
+        +
+      </button>
+      <button type="button" class="dest-select-btn text-left text-xs font-semibold text-text-secondary hover:text-brand-slate truncate transition-colors flex-1" data-selection="Somnath (All Properties)" data-type="city">
+        Somnath
+      </button>
+    </div>
+    <div class="dest-city-accordion hidden mt-1.5 pl-3 pr-1 py-1.5 bg-surface-subtle rounded border-l-2 border-brand-terracotta space-y-1.5">
+      <div class="text-[10px] uppercase tracking-wider font-bold text-brand-slate/70 pb-0.5 border-b border-border-subtle flex items-center justify-between">
+        <span>Hotels in Somnath</span>
+        <span class="text-brand-terracotta font-extrabold">1</span>
+      </div>
+      <button type="button" class="dest-select-btn block w-full text-left text-[11px] font-medium text-text-secondary hover:text-brand-terracotta transition-colors py-0.5 truncate" data-selection="Regenta Central Somnath" data-type="hotel" title="Regenta Central Somnath">
+        • Regenta Central Somnath
+      </button>
+    </div>
+  </div>
+  <div class="dest-city-group py-1 border-b border-border/40" data-city="srinagar">
+    <div class="flex items-center gap-1.5">
+      <button type="button" class="dest-expand-btn text-brand-terracotta hover:text-brand-gold-rich font-bold text-sm leading-none w-4 h-4 flex items-center justify-center shrink-0 cursor-pointer select-none" data-city="Srinagar" title="Toggle hotels in Srinagar">
+        +
+      </button>
+      <button type="button" class="dest-select-btn text-left text-xs font-semibold text-text-secondary hover:text-brand-slate truncate transition-colors flex-1" data-selection="Srinagar (All Properties)" data-type="city">
+        Srinagar
+      </button>
+    </div>
+    <div class="dest-city-accordion hidden mt-1.5 pl-3 pr-1 py-1.5 bg-surface-subtle rounded border-l-2 border-brand-terracotta space-y-1.5">
+      <div class="text-[10px] uppercase tracking-wider font-bold text-brand-slate/70 pb-0.5 border-b border-border-subtle flex items-center justify-between">
+        <span>Hotels in Srinagar</span>
+        <span class="text-brand-terracotta font-extrabold">1</span>
+      </div>
+      <button type="button" class="dest-select-btn block w-full text-left text-[11px] font-medium text-text-secondary hover:text-brand-terracotta transition-colors py-0.5 truncate" data-selection="Regenta Central Point, Srinagar, Kashmir" data-type="hotel" title="Regenta Central Point, Srinagar, Kashmir">
+        • Regenta Central Point, Srinagar, Kashmir
+      </button>
+    </div>
+  </div>
+  <div class="dest-city-group py-1 border-b border-border/40" data-city="surat">
+    <div class="flex items-center gap-1.5">
+      <button type="button" class="dest-expand-btn text-brand-terracotta hover:text-brand-gold-rich font-bold text-sm leading-none w-4 h-4 flex items-center justify-center shrink-0 cursor-pointer select-none" data-city="Surat" title="Toggle hotels in Surat">
+        +
+      </button>
+      <button type="button" class="dest-select-btn text-left text-xs font-semibold text-text-secondary hover:text-brand-slate truncate transition-colors flex-1" data-selection="Surat (All Properties)" data-type="city">
+        Surat
+      </button>
+    </div>
+    <div class="dest-city-accordion hidden mt-1.5 pl-3 pr-1 py-1.5 bg-surface-subtle rounded border-l-2 border-brand-terracotta space-y-1.5">
+      <div class="text-[10px] uppercase tracking-wider font-bold text-brand-slate/70 pb-0.5 border-b border-border-subtle flex items-center justify-between">
+        <span>Hotels in Surat</span>
+        <span class="text-brand-terracotta font-extrabold">1</span>
+      </div>
+      <button type="button" class="dest-select-btn block w-full text-left text-[11px] font-medium text-text-secondary hover:text-brand-terracotta transition-colors py-0.5 truncate" data-selection="Regenta Central Surat" data-type="hotel" title="Regenta Central Surat">
+        • Regenta Central Surat
+      </button>
+    </div>
+  </div>
+  <div class="dest-city-group py-1 border-b border-border/40" data-city="tirupati">
+    <div class="flex items-center gap-1.5">
+      <button type="button" class="dest-expand-btn text-brand-terracotta hover:text-brand-gold-rich font-bold text-sm leading-none w-4 h-4 flex items-center justify-center shrink-0 cursor-pointer select-none" data-city="Tirupati" title="Toggle hotels in Tirupati">
+        +
+      </button>
+      <button type="button" class="dest-select-btn text-left text-xs font-semibold text-text-secondary hover:text-brand-slate truncate transition-colors flex-1" data-selection="Tirupati (All Properties)" data-type="city">
+        Tirupati
+      </button>
+    </div>
+    <div class="dest-city-accordion hidden mt-1.5 pl-3 pr-1 py-1.5 bg-surface-subtle rounded border-l-2 border-brand-terracotta space-y-1.5">
+      <div class="text-[10px] uppercase tracking-wider font-bold text-brand-slate/70 pb-0.5 border-b border-border-subtle flex items-center justify-between">
+        <span>Hotels in Tirupati</span>
+        <span class="text-brand-terracotta font-extrabold">1</span>
+      </div>
+      <button type="button" class="dest-select-btn block w-full text-left text-[11px] font-medium text-text-secondary hover:text-brand-terracotta transition-colors py-0.5 truncate" data-selection="Regenta Central Tirupati" data-type="hotel" title="Regenta Central Tirupati">
+        • Regenta Central Tirupati
+      </button>
+    </div>
+  </div>
+  <div class="dest-city-group py-1 border-b border-border/40" data-city="udaipur">
+    <div class="flex items-center gap-1.5">
+      <button type="button" class="dest-expand-btn text-brand-terracotta hover:text-brand-gold-rich font-bold text-sm leading-none w-4 h-4 flex items-center justify-center shrink-0 cursor-pointer select-none" data-city="Udaipur" title="Toggle hotels in Udaipur">
+        +
+      </button>
+      <button type="button" class="dest-select-btn text-left text-xs font-semibold text-text-secondary hover:text-brand-slate truncate transition-colors flex-1" data-selection="Udaipur (All Properties)" data-type="city">
+        Udaipur
+      </button>
+    </div>
+    <div class="dest-city-accordion hidden mt-1.5 pl-3 pr-1 py-1.5 bg-surface-subtle rounded border-l-2 border-brand-terracotta space-y-1.5">
+      <div class="text-[10px] uppercase tracking-wider font-bold text-brand-slate/70 pb-0.5 border-b border-border-subtle flex items-center justify-between">
+        <span>Hotels in Udaipur</span>
+        <span class="text-brand-terracotta font-extrabold">2</span>
+      </div>
+      <button type="button" class="dest-select-btn block w-full text-left text-[11px] font-medium text-text-secondary hover:text-brand-terracotta transition-colors py-0.5 truncate" data-selection="Regenta Central Mewar, Sukher, Udaipur" data-type="hotel" title="Regenta Central Mewar, Sukher, Udaipur">
+        • Regenta Central Mewar, Sukher, Udaipur
+      </button>
+      <button type="button" class="dest-select-btn block w-full text-left text-[11px] font-medium text-text-secondary hover:text-brand-terracotta transition-colors py-0.5 truncate" data-selection="Regenta Suites, Udaipur" data-type="hotel" title="Regenta Suites, Udaipur">
+        • Regenta Suites, Udaipur
+      </button>
+    </div>
+  </div>
+</div>
+        </div>
+
+        <!-- PANE 2: INTERNATIONAL HOTELS -->
+        <div id="pane-intl-hotels" class="dest-tab-pane hidden">
+<div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 max-w-4xl text-xs">
+  <div class="dest-city-group p-4 rounded-lg bg-surface-subtle border border-border" data-city="nepal">
+    <div class="flex items-center justify-between mb-3 pb-2 border-b border-border">
+      <div class="flex items-center gap-2">
+        <span class="text-brand-terracotta font-bold text-base leading-none">+</span>
+        <button type="button" class="dest-select-btn text-sm font-bold text-text-primary hover:text-brand-terracotta transition-colors" data-selection="Nepal" data-type="city">
+          Nepal
+        </button>
+      </div>
+      <span class="px-2 py-0.5 rounded text-[10px] font-bold uppercase bg-brand-slate text-brand-brass">
+        2 Hotels
+      </span>
+    </div>
+    <div class="space-y-2">
+      <button type="button" class="dest-select-btn w-full text-left p-2 rounded bg-white border border-border/60 hover:border-brand-terracotta hover:shadow-sm text-xs font-medium text-text-primary hover:text-brand-terracotta transition-all block" data-selection="Regenta Resort & Spa By Riverside, Chitwan, Nepal" data-type="hotel">
+        <span class="font-semibold block">Regenta Resort & Spa By Riverside, Chitwan</span>
+        <span class="text-[10px] text-emerald-700 font-bold uppercase">Narayani Riverfront · Direct Privilege</span>
+      </button>
+      <button type="button" class="dest-select-btn w-full text-left p-2 rounded bg-white border border-border/60 hover:border-brand-terracotta hover:shadow-sm text-xs font-medium text-text-primary hover:text-brand-terracotta transition-all block" data-selection="Regenta Place, Sabrina, Nepal" data-type="hotel">
+        <span class="font-semibold block">Regenta Place, Sabrina, Kathmandu</span>
+        <span class="text-[10px] text-emerald-700 font-bold uppercase">Shivapuri Hills · Direct Privilege</span>
+      </button>
+    </div>
+  </div>
+
+  <div class="dest-city-group p-4 rounded-lg bg-surface-subtle border border-border" data-city="sri-lanka">
+    <div class="flex items-center justify-between mb-3 pb-2 border-b border-border">
+      <div class="flex items-center gap-2">
+        <span class="text-brand-terracotta font-bold text-base leading-none">+</span>
+        <button type="button" class="dest-select-btn text-sm font-bold text-text-primary hover:text-brand-terracotta transition-colors" data-selection="Sri Lanka" data-type="city">
+          Sri Lanka
+        </button>
+      </div>
+      <span class="px-2 py-0.5 rounded text-[10px] font-bold uppercase bg-brand-slate text-brand-brass">
+        1 Hotel
+      </span>
+    </div>
+    <div class="space-y-2">
+      <button type="button" class="dest-select-btn w-full text-left p-2 rounded bg-white border border-border/60 hover:border-brand-terracotta hover:shadow-sm text-xs font-medium text-text-primary hover:text-brand-terracotta transition-all block" data-selection="Regenta, Arie Lagoon, Negombo, Sri Lanka" data-type="hotel">
+        <span class="font-semibold block">Regenta, Arie Lagoon, Negombo</span>
+        <span class="text-[10px] text-emerald-700 font-bold uppercase">Lagoon & Ocean Front · Direct Privilege</span>
+      </button>
+    </div>
+  </div>
+</div>
+        </div>
+
+        <!-- PANE 3: UPCOMING HOTELS (5-Region Column Grid) -->
+        <div id="pane-upcoming-hotels" class="dest-tab-pane hidden">
+<div class="mb-4 pb-3 border-b border-border flex items-center justify-between">
+  <div>
+    <h3 class="font-serif text-xl font-normal text-text-primary">Upcoming Hotel Openings</h3>
+    <p class="text-xs text-text-secondary mt-0.5">Explore our upcoming 39+ pipeline properties expanding across premier business, heritage, and leisure destinations.</p>
+  </div>
+  <span class="px-2.5 py-1 rounded bg-brand-terracotta text-white font-bold text-xs uppercase tracking-wider">
+    Expanding Horizons
+  </span>
+</div>
+<div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6 text-xs">
+  <div class="bg-surface-subtle p-4 rounded-lg border border-border">
+    <div class="flex items-center justify-between pb-2 mb-3 border-b border-border">
+      <span class="font-serif text-base font-bold text-brand-slate uppercase tracking-wider">International</span>
+      <span class="px-1.5 py-0.5 rounded bg-brand-slate text-brand-brass text-[10px] font-extrabold">1</span>
+    </div>
+    <ul class="space-y-2">
+      <li class="p-2 rounded bg-white border border-border/50 text-[11px] leading-tight flex flex-col gap-1">
+        <span class="font-semibold text-text-primary">Regenta, Nepal</span>
+        <span class="text-[9px] uppercase font-bold text-brand-terracotta tracking-wider flex items-center gap-1">
+          <span class="w-1.5 h-1.5 rounded-full bg-brand-terracotta animate-pulse"></span>
+          Opening Soon
+        </span>
+      </li>
+    </ul>
+  </div>
+  <div class="bg-surface-subtle p-4 rounded-lg border border-border">
+    <div class="flex items-center justify-between pb-2 mb-3 border-b border-border">
+      <span class="font-serif text-base font-bold text-brand-slate uppercase tracking-wider">North</span>
+      <span class="px-1.5 py-0.5 rounded bg-brand-slate text-brand-brass text-[10px] font-extrabold">18</span>
+    </div>
+    <ul class="space-y-2">
+      <li class="p-2 rounded bg-white border border-border/50 text-[11px] leading-tight flex flex-col gap-1">
+        <span class="font-semibold text-text-primary">Regenta, Marrievilla, Ambala</span>
+        <span class="text-[9px] uppercase font-bold text-brand-terracotta tracking-wider flex items-center gap-1">
+          <span class="w-1.5 h-1.5 rounded-full bg-brand-terracotta animate-pulse"></span>
+          Opening Soon
+        </span>
+      </li>
+      <li class="p-2 rounded bg-white border border-border/50 text-[11px] leading-tight flex flex-col gap-1">
+        <span class="font-semibold text-text-primary">Regenta Resort, Bari Sadri, Chittorgarh</span>
+        <span class="text-[9px] uppercase font-bold text-brand-terracotta tracking-wider flex items-center gap-1">
+          <span class="w-1.5 h-1.5 rounded-full bg-brand-terracotta animate-pulse"></span>
+          Opening Soon
+        </span>
+      </li>
+      <li class="p-2 rounded bg-white border border-border/50 text-[11px] leading-tight flex flex-col gap-1">
+        <span class="font-semibold text-text-primary">Regenta Resort, Pushkar</span>
+        <span class="text-[9px] uppercase font-bold text-brand-terracotta tracking-wider flex items-center gap-1">
+          <span class="w-1.5 h-1.5 rounded-full bg-brand-terracotta animate-pulse"></span>
+          Opening Soon
+        </span>
+      </li>
+      <li class="p-2 rounded bg-white border border-border/50 text-[11px] leading-tight flex flex-col gap-1">
+        <span class="font-semibold text-text-primary">Regenta, Gurgaon, Sector 70</span>
+        <span class="text-[9px] uppercase font-bold text-brand-terracotta tracking-wider flex items-center gap-1">
+          <span class="w-1.5 h-1.5 rounded-full bg-brand-terracotta animate-pulse"></span>
+          Opening Soon
+        </span>
+      </li>
+      <li class="p-2 rounded bg-white border border-border/50 text-[11px] leading-tight flex flex-col gap-1">
+        <span class="font-semibold text-text-primary">Regenta, Mussoorie</span>
+        <span class="text-[9px] uppercase font-bold text-brand-terracotta tracking-wider flex items-center gap-1">
+          <span class="w-1.5 h-1.5 rounded-full bg-brand-terracotta animate-pulse"></span>
+          Opening Soon
+        </span>
+      </li>
+      <li class="p-2 rounded bg-white border border-border/50 text-[11px] leading-tight flex flex-col gap-1">
+        <span class="font-semibold text-text-primary">Regenta Place, Mall Road, Mussoorie</span>
+        <span class="text-[9px] uppercase font-bold text-brand-terracotta tracking-wider flex items-center gap-1">
+          <span class="w-1.5 h-1.5 rounded-full bg-brand-terracotta animate-pulse"></span>
+          Opening Soon
+        </span>
+      </li>
+      <li class="p-2 rounded bg-white border border-border/50 text-[11px] leading-tight flex flex-col gap-1">
+        <span class="font-semibold text-text-primary">Regenta, Lucknow</span>
+        <span class="text-[9px] uppercase font-bold text-brand-terracotta tracking-wider flex items-center gap-1">
+          <span class="w-1.5 h-1.5 rounded-full bg-brand-terracotta animate-pulse"></span>
+          Opening Soon
+        </span>
+      </li>
+      <li class="p-2 rounded bg-white border border-border/50 text-[11px] leading-tight flex flex-col gap-1">
+        <span class="font-semibold text-text-primary">Regenta, Varanasi</span>
+        <span class="text-[9px] uppercase font-bold text-brand-terracotta tracking-wider flex items-center gap-1">
+          <span class="w-1.5 h-1.5 rounded-full bg-brand-terracotta animate-pulse"></span>
+          Opening Soon
+        </span>
+      </li>
+      <li class="p-2 rounded bg-white border border-border/50 text-[11px] leading-tight flex flex-col gap-1">
+        <span class="font-semibold text-text-primary">Regenta Place, Vrindavan</span>
+        <span class="text-[9px] uppercase font-bold text-brand-terracotta tracking-wider flex items-center gap-1">
+          <span class="w-1.5 h-1.5 rounded-full bg-brand-terracotta animate-pulse"></span>
+          Opening Soon
+        </span>
+      </li>
+      <li class="p-2 rounded bg-white border border-border/50 text-[11px] leading-tight flex flex-col gap-1">
+        <span class="font-semibold text-text-primary">Regenta Place, Bathinda</span>
+        <span class="text-[9px] uppercase font-bold text-brand-terracotta tracking-wider flex items-center gap-1">
+          <span class="w-1.5 h-1.5 rounded-full bg-brand-terracotta animate-pulse"></span>
+          Opening Soon
+        </span>
+      </li>
+      <li class="p-2 rounded bg-white border border-border/50 text-[11px] leading-tight flex flex-col gap-1">
+        <span class="font-semibold text-text-primary">Regenta Central, Amritsar</span>
+        <span class="text-[9px] uppercase font-bold text-brand-terracotta tracking-wider flex items-center gap-1">
+          <span class="w-1.5 h-1.5 rounded-full bg-brand-terracotta animate-pulse"></span>
+          Opening Soon
+        </span>
+      </li>
+      <li class="p-2 rounded bg-white border border-border/50 text-[11px] leading-tight flex flex-col gap-1">
+        <span class="font-semibold text-text-primary">Regenta, Gwalior</span>
+        <span class="text-[9px] uppercase font-bold text-brand-terracotta tracking-wider flex items-center gap-1">
+          <span class="w-1.5 h-1.5 rounded-full bg-brand-terracotta animate-pulse"></span>
+          Opening Soon
+        </span>
+      </li>
+      <li class="p-2 rounded bg-white border border-border/50 text-[11px] leading-tight flex flex-col gap-1">
+        <span class="font-semibold text-text-primary">Regenta Jodhpur</span>
+        <span class="text-[9px] uppercase font-bold text-brand-terracotta tracking-wider flex items-center gap-1">
+          <span class="w-1.5 h-1.5 rounded-full bg-brand-terracotta animate-pulse"></span>
+          Opening Soon
+        </span>
+      </li>
+      <li class="p-2 rounded bg-white border border-border/50 text-[11px] leading-tight flex flex-col gap-1">
+        <span class="font-semibold text-text-primary">Regenta Suites & Residences, Jaipur</span>
+        <span class="text-[9px] uppercase font-bold text-brand-terracotta tracking-wider flex items-center gap-1">
+          <span class="w-1.5 h-1.5 rounded-full bg-brand-terracotta animate-pulse"></span>
+          Opening Soon
+        </span>
+      </li>
+      <li class="p-2 rounded bg-white border border-border/50 text-[11px] leading-tight flex flex-col gap-1">
+        <span class="font-semibold text-text-primary">Regenta Place, Sitara, Udaipur</span>
+        <span class="text-[9px] uppercase font-bold text-brand-terracotta tracking-wider flex items-center gap-1">
+          <span class="w-1.5 h-1.5 rounded-full bg-brand-terracotta animate-pulse"></span>
+          Opening Soon
+        </span>
+      </li>
+      <li class="p-2 rounded bg-white border border-border/50 text-[11px] leading-tight flex flex-col gap-1">
+        <span class="font-semibold text-text-primary">Regenta Place, Jim Corbett</span>
+        <span class="text-[9px] uppercase font-bold text-brand-terracotta tracking-wider flex items-center gap-1">
+          <span class="w-1.5 h-1.5 rounded-full bg-brand-terracotta animate-pulse"></span>
+          Opening Soon
+        </span>
+      </li>
+      <li class="p-2 rounded bg-white border border-border/50 text-[11px] leading-tight flex flex-col gap-1">
+        <span class="font-semibold text-text-primary">Regenta Central, Vrindavan</span>
+        <span class="text-[9px] uppercase font-bold text-brand-terracotta tracking-wider flex items-center gap-1">
+          <span class="w-1.5 h-1.5 rounded-full bg-brand-terracotta animate-pulse"></span>
+          Opening Soon
+        </span>
+      </li>
+      <li class="p-2 rounded bg-white border border-border/50 text-[11px] leading-tight flex flex-col gap-1">
+        <span class="font-semibold text-text-primary">Regenta Central, Orai</span>
+        <span class="text-[9px] uppercase font-bold text-brand-terracotta tracking-wider flex items-center gap-1">
+          <span class="w-1.5 h-1.5 rounded-full bg-brand-terracotta animate-pulse"></span>
+          Opening Soon
+        </span>
+      </li>
+    </ul>
+  </div>
+  <div class="bg-surface-subtle p-4 rounded-lg border border-border">
+    <div class="flex items-center justify-between pb-2 mb-3 border-b border-border">
+      <span class="font-serif text-base font-bold text-brand-slate uppercase tracking-wider">South</span>
+      <span class="px-1.5 py-0.5 rounded bg-brand-slate text-brand-brass text-[10px] font-extrabold">4</span>
+    </div>
+    <ul class="space-y-2">
+      <li class="p-2 rounded bg-white border border-border/50 text-[11px] leading-tight flex flex-col gap-1">
+        <span class="font-semibold text-text-primary">Z by Regenta, Airport Road, Bangalore</span>
+        <span class="text-[9px] uppercase font-bold text-brand-terracotta tracking-wider flex items-center gap-1">
+          <span class="w-1.5 h-1.5 rounded-full bg-brand-terracotta animate-pulse"></span>
+          Opening Soon
+        </span>
+      </li>
+      <li class="p-2 rounded bg-white border border-border/50 text-[11px] leading-tight flex flex-col gap-1">
+        <span class="font-semibold text-text-primary">Regenta Resort, Kushal Nagar, Coorg</span>
+        <span class="text-[9px] uppercase font-bold text-brand-terracotta tracking-wider flex items-center gap-1">
+          <span class="w-1.5 h-1.5 rounded-full bg-brand-terracotta animate-pulse"></span>
+          Opening Soon
+        </span>
+      </li>
+      <li class="p-2 rounded bg-white border border-border/50 text-[11px] leading-tight flex flex-col gap-1">
+        <span class="font-semibold text-text-primary">Crestoria, Goa</span>
+        <span class="text-[9px] uppercase font-bold text-brand-terracotta tracking-wider flex items-center gap-1">
+          <span class="w-1.5 h-1.5 rounded-full bg-brand-terracotta animate-pulse"></span>
+          Opening Soon
+        </span>
+      </li>
+      <li class="p-2 rounded bg-white border border-border/50 text-[11px] leading-tight flex flex-col gap-1">
+        <span class="font-semibold text-text-primary">Regenta Baga Resort, Goa</span>
+        <span class="text-[9px] uppercase font-bold text-brand-terracotta tracking-wider flex items-center gap-1">
+          <span class="w-1.5 h-1.5 rounded-full bg-brand-terracotta animate-pulse"></span>
+          Opening Soon
+        </span>
+      </li>
+    </ul>
+  </div>
+  <div class="bg-surface-subtle p-4 rounded-lg border border-border">
+    <div class="flex items-center justify-between pb-2 mb-3 border-b border-border">
+      <span class="font-serif text-base font-bold text-brand-slate uppercase tracking-wider">East</span>
+      <span class="px-1.5 py-0.5 rounded bg-brand-slate text-brand-brass text-[10px] font-extrabold">2</span>
+    </div>
+    <ul class="space-y-2">
+      <li class="p-2 rounded bg-white border border-border/50 text-[11px] leading-tight flex flex-col gap-1">
+        <span class="font-semibold text-text-primary">Regenta Inn, Tezpur, Assam</span>
+        <span class="text-[9px] uppercase font-bold text-brand-terracotta tracking-wider flex items-center gap-1">
+          <span class="w-1.5 h-1.5 rounded-full bg-brand-terracotta animate-pulse"></span>
+          Opening Soon
+        </span>
+      </li>
+      <li class="p-2 rounded bg-white border border-border/50 text-[11px] leading-tight flex flex-col gap-1">
+        <span class="font-semibold text-text-primary">Regenta, Jamshedpur</span>
+        <span class="text-[9px] uppercase font-bold text-brand-terracotta tracking-wider flex items-center gap-1">
+          <span class="w-1.5 h-1.5 rounded-full bg-brand-terracotta animate-pulse"></span>
+          Opening Soon
+        </span>
+      </li>
+    </ul>
+  </div>
+  <div class="bg-surface-subtle p-4 rounded-lg border border-border">
+    <div class="flex items-center justify-between pb-2 mb-3 border-b border-border">
+      <span class="font-serif text-base font-bold text-brand-slate uppercase tracking-wider">West</span>
+      <span class="px-1.5 py-0.5 rounded bg-brand-slate text-brand-brass text-[10px] font-extrabold">16</span>
+    </div>
+    <ul class="space-y-2">
+      <li class="p-2 rounded bg-white border border-border/50 text-[11px] leading-tight flex flex-col gap-1">
+        <span class="font-semibold text-text-primary">Regenta Forest Resort, Sasan Gir</span>
+        <span class="text-[9px] uppercase font-bold text-brand-terracotta tracking-wider flex items-center gap-1">
+          <span class="w-1.5 h-1.5 rounded-full bg-brand-terracotta animate-pulse"></span>
+          Opening Soon
+        </span>
+      </li>
+      <li class="p-2 rounded bg-white border border-border/50 text-[11px] leading-tight flex flex-col gap-1">
+        <span class="font-semibold text-text-primary">Regenta Place, Rajkot</span>
+        <span class="text-[9px] uppercase font-bold text-brand-terracotta tracking-wider flex items-center gap-1">
+          <span class="w-1.5 h-1.5 rounded-full bg-brand-terracotta animate-pulse"></span>
+          Opening Soon
+        </span>
+      </li>
+      <li class="p-2 rounded bg-white border border-border/50 text-[11px] leading-tight flex flex-col gap-1">
+        <span class="font-semibold text-text-primary">Regenta, Nanded</span>
+        <span class="text-[9px] uppercase font-bold text-brand-terracotta tracking-wider flex items-center gap-1">
+          <span class="w-1.5 h-1.5 rounded-full bg-brand-terracotta animate-pulse"></span>
+          Opening Soon
+        </span>
+      </li>
+      <li class="p-2 rounded bg-white border border-border/50 text-[11px] leading-tight flex flex-col gap-1">
+        <span class="font-semibold text-text-primary">Regenta, Rajkot</span>
+        <span class="text-[9px] uppercase font-bold text-brand-terracotta tracking-wider flex items-center gap-1">
+          <span class="w-1.5 h-1.5 rounded-full bg-brand-terracotta animate-pulse"></span>
+          Opening Soon
+        </span>
+      </li>
+      <li class="p-2 rounded bg-white border border-border/50 text-[11px] leading-tight flex flex-col gap-1">
+        <span class="font-semibold text-text-primary">Regenta Resort, Bhavnagar</span>
+        <span class="text-[9px] uppercase font-bold text-brand-terracotta tracking-wider flex items-center gap-1">
+          <span class="w-1.5 h-1.5 rounded-full bg-brand-terracotta animate-pulse"></span>
+          Opening Soon
+        </span>
+      </li>
+      <li class="p-2 rounded bg-white border border-border/50 text-[11px] leading-tight flex flex-col gap-1">
+        <span class="font-semibold text-text-primary">Regenta, Dahanu</span>
+        <span class="text-[9px] uppercase font-bold text-brand-terracotta tracking-wider flex items-center gap-1">
+          <span class="w-1.5 h-1.5 rounded-full bg-brand-terracotta animate-pulse"></span>
+          Opening Soon
+        </span>
+      </li>
+      <li class="p-2 rounded bg-white border border-border/50 text-[11px] leading-tight flex flex-col gap-1">
+        <span class="font-semibold text-text-primary">Regenta Resort, Gir</span>
+        <span class="text-[9px] uppercase font-bold text-brand-terracotta tracking-wider flex items-center gap-1">
+          <span class="w-1.5 h-1.5 rounded-full bg-brand-terracotta animate-pulse"></span>
+          Opening Soon
+        </span>
+      </li>
+      <li class="p-2 rounded bg-white border border-border/50 text-[11px] leading-tight flex flex-col gap-1">
+        <span class="font-semibold text-text-primary">Regenta Central, Dhule</span>
+        <span class="text-[9px] uppercase font-bold text-brand-terracotta tracking-wider flex items-center gap-1">
+          <span class="w-1.5 h-1.5 rounded-full bg-brand-terracotta animate-pulse"></span>
+          Opening Soon
+        </span>
+      </li>
+      <li class="p-2 rounded bg-white border border-border/50 text-[11px] leading-tight flex flex-col gap-1">
+        <span class="font-semibold text-text-primary">Regenta Resort, Mulshi, Pune</span>
+        <span class="text-[9px] uppercase font-bold text-brand-terracotta tracking-wider flex items-center gap-1">
+          <span class="w-1.5 h-1.5 rounded-full bg-brand-terracotta animate-pulse"></span>
+          Opening Soon
+        </span>
+      </li>
+      <li class="p-2 rounded bg-white border border-border/50 text-[11px] leading-tight flex flex-col gap-1">
+        <span class="font-semibold text-text-primary">Regenta Resort, Panchgani</span>
+        <span class="text-[9px] uppercase font-bold text-brand-terracotta tracking-wider flex items-center gap-1">
+          <span class="w-1.5 h-1.5 rounded-full bg-brand-terracotta animate-pulse"></span>
+          Opening Soon
+        </span>
+      </li>
+      <li class="p-2 rounded bg-white border border-border/50 text-[11px] leading-tight flex flex-col gap-1">
+        <span class="font-semibold text-text-primary">Regenta Resort, Jabalpur</span>
+        <span class="text-[9px] uppercase font-bold text-brand-terracotta tracking-wider flex items-center gap-1">
+          <span class="w-1.5 h-1.5 rounded-full bg-brand-terracotta animate-pulse"></span>
+          Opening Soon
+        </span>
+      </li>
+      <li class="p-2 rounded bg-white border border-border/50 text-[11px] leading-tight flex flex-col gap-1">
+        <span class="font-semibold text-text-primary">Crestoria, Bhopal</span>
+        <span class="text-[9px] uppercase font-bold text-brand-terracotta tracking-wider flex items-center gap-1">
+          <span class="w-1.5 h-1.5 rounded-full bg-brand-terracotta animate-pulse"></span>
+          Opening Soon
+        </span>
+      </li>
+      <li class="p-2 rounded bg-white border border-border/50 text-[11px] leading-tight flex flex-col gap-1">
+        <span class="font-semibold text-text-primary">Regenta, Bhopal</span>
+        <span class="text-[9px] uppercase font-bold text-brand-terracotta tracking-wider flex items-center gap-1">
+          <span class="w-1.5 h-1.5 rounded-full bg-brand-terracotta animate-pulse"></span>
+          Opening Soon
+        </span>
+      </li>
+      <li class="p-2 rounded bg-white border border-border/50 text-[11px] leading-tight flex flex-col gap-1">
+        <span class="font-semibold text-text-primary">Regenta Inn, Anjar</span>
+        <span class="text-[9px] uppercase font-bold text-brand-terracotta tracking-wider flex items-center gap-1">
+          <span class="w-1.5 h-1.5 rounded-full bg-brand-terracotta animate-pulse"></span>
+          Opening Soon
+        </span>
+      </li>
+      <li class="p-2 rounded bg-white border border-border/50 text-[11px] leading-tight flex flex-col gap-1">
+        <span class="font-semibold text-text-primary">Regenta Resort, Saputara</span>
+        <span class="text-[9px] uppercase font-bold text-brand-terracotta tracking-wider flex items-center gap-1">
+          <span class="w-1.5 h-1.5 rounded-full bg-brand-terracotta animate-pulse"></span>
+          Opening Soon
+        </span>
+      </li>
+      <li class="p-2 rounded bg-white border border-border/50 text-[11px] leading-tight flex flex-col gap-1">
+        <span class="font-semibold text-text-primary">Regenta, Mundra</span>
+        <span class="text-[9px] uppercase font-bold text-brand-terracotta tracking-wider flex items-center gap-1">
+          <span class="w-1.5 h-1.5 rounded-full bg-brand-terracotta animate-pulse"></span>
+          Opening Soon
+        </span>
+      </li>
+    </ul>
+  </div>
+</div>
+        </div>
+
+        <!-- LIVE SEARCH RESULTS PANE (Dynamic Filtering) -->
+        <div id="pane-search-results" class="hidden">
+          <div class="flex items-center justify-between pb-3 mb-4 border-b border-border">
+            <span class="text-xs font-bold uppercase tracking-wider text-text-muted">Search Results</span>
+            <span id="search-result-count" class="text-xs font-semibold text-brand-terracotta">0 matching destinations found</span>
+          </div>
+          <div id="search-results-grid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 text-xs">
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Modal Footer -->
+      <div class="p-3.5 sm:p-4 bg-surface-subtle border-t border-border flex flex-wrap items-center justify-between text-xs text-text-secondary shrink-0 gap-2">
+        <div class="flex items-center gap-2 text-[11px]">
+          <span class="font-semibold text-text-primary">Need assistance planning your itinerary?</span>
+          <a href="tel:+918041783000" class="text-brand-terracotta hover:underline font-bold flex items-center gap-1">
+            <i data-lucide="phone-call" class="w-3 h-3"></i>
+            <span>+91 80 4178 3000</span>
+          </a>
+        </div>
+        <a href="stays.html" class="text-xs font-bold uppercase tracking-wider text-brand-slate hover:text-brand-terracotta flex items-center gap-1 transition-colors">
+          <span>Open Full Property Directory</span>
+          <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i>
+        </a>
+      </div>
+
+    </div>
+  </div>
+
+<!-- Search Results Modal -->
+  <div id="search-results-modal" class="modal-backdrop fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/75 backdrop-blur-md">
+    <div class="modal-content w-full max-w-3xl bg-white text-text-primary rounded shadow-2xl overflow-hidden max-h-[90vh] flex flex-col">
+      <div class="p-5 bg-brand-slate text-white flex items-center justify-between">
+        <div>
+          <span class="text-[10px] uppercase tracking-widest text-brand-brass font-bold">Direct Rate Availability</span>
+          <h3 id="search-modal-destination" class="font-serif text-2xl font-normal text-white">Hotel Royal Orchid, Bengaluru</h3>
+          <p id="search-modal-summary" class="text-xs text-white/70 mt-0.5">Nov 22 → Nov 24 · 2 Adults · 1 Room</p>
+        </div>
+        <button type="button" class="modal-close-trigger p-1 text-white/70 hover:text-brand-brass">
+          <i data-lucide="x" class="w-6 h-6"></i>
+        </button>
+      </div>
+
+      <div class="p-6 overflow-y-auto space-y-4">
+        <div class="p-3 bg-emerald-50 border border-emerald-200 rounded flex items-center justify-between text-xs text-emerald-900">
+          <div class="flex items-center gap-2">
+            <i data-lucide="check-circle" class="w-4 h-4 text-emerald-600"></i>
+            <span><strong>Best Rate Guaranteed:</strong> Direct rates with 20% Regenta Rewards Member savings applied.</span>
+          </div>
+          <span class="text-[10px] uppercase font-bold bg-emerald-600 text-white px-2 py-0.5 rounded">Lowest Online</span>
+        </div>
+
+        <div class="p-4 border border-border rounded flex flex-col sm:flex-row items-center justify-between gap-4">
+          <div class="flex items-center gap-4">
+            <img src="images/hotels/bangalore_08_09_2020_06_09_461.jpg" alt="Deluxe Room" class="w-24 h-20 object-cover rounded" />
+            <div>
+              <h4 class="font-serif text-xl font-normal text-text-primary">Deluxe Club Room (Golf View)</h4>
+              <p class="text-xs text-text-muted mt-0.5">380 sq ft · King Bed · High-speed Wi-Fi · Buffet Breakfast</p>
+              <div class="flex items-center gap-2 mt-2">
+                <span class="member-rate-badge text-[10px] uppercase px-1.5 py-0.5 rounded bg-brand-terracotta text-white font-bold">Regenta Rewards Member</span>
+                <span class="text-xs text-text-muted line-through">₹7,500</span>
+              </div>
+            </div>
+          </div>
+          <div class="text-right sm:text-right flex-shrink-0">
+            <div class="font-serif text-2xl font-bold text-text-primary">₹6,000</div>
+            <div class="text-[10px] text-text-muted">/ night + taxes</div>
+            <button type="button" onclick="alert('Booking confirmed in sandbox! Booking reference: ROHL-' + Math.floor(Math.random()*90000+10000)); closeModal(document.getElementById('search-results-modal'));" class="bg-brand-terracotta hover:bg-brand-gold-rich text-white px-4 py-2 text-xs uppercase tracking-wider font-bold rounded mt-2">
+              Reserve Room
+            </button>
+          </div>
+        </div>
+
+        <div class="p-4 border border-border rounded flex flex-col sm:flex-row items-center justify-between gap-4">
+          <div class="flex items-center gap-4">
+            <img src="images/hotels/bangalore_17_20_2020_12_20_252.jpg" alt="Executive Heritage Suite" class="w-24 h-20 object-cover rounded" />
+            <div>
+              <h4 class="font-serif text-xl font-normal text-text-primary">Executive Heritage Suite</h4>
+              <p class="text-xs text-text-muted mt-0.5">620 sq ft · Living Room + Master Bedroom · Lounge Access</p>
+              <div class="flex items-center gap-2 mt-2">
+                <span class="member-rate-badge text-[10px] uppercase px-1.5 py-0.5 rounded bg-brand-terracotta text-white font-bold">Regenta Rewards Member</span>
+                <span class="text-xs text-text-muted line-through">₹11,500</span>
+              </div>
+            </div>
+          </div>
+          <div class="text-right sm:text-right flex-shrink-0">
+            <div class="font-serif text-2xl font-bold text-text-primary">₹9,200</div>
+            <div class="text-[10px] text-text-muted">/ night + taxes</div>
+            <button type="button" onclick="alert('Booking confirmed in sandbox! Booking reference: ROHL-' + Math.floor(Math.random()*90000+10000)); closeModal(document.getElementById('search-results-modal'));" class="bg-brand-terracotta hover:bg-brand-gold-rich text-white px-4 py-2 text-xs uppercase tracking-wider font-bold rounded mt-2">
+              Reserve Suite
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
 </body>
 </html>

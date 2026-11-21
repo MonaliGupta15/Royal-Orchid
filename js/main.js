@@ -1094,14 +1094,25 @@ function initDestinationsModal() {
   modal.addEventListener('click', (e) => {
     const selBtn = e.target.closest('.dest-select-btn');
     if (!selBtn) return;
-    const selection = selBtn.getAttribute('data-selection');
+    const selection = selBtn.getAttribute('data-selection') || '';
     const type = selBtn.getAttribute('data-type');
     const parentCity = selBtn.closest('.dest-city-group')?.getAttribute('data-city');
 
-    if (type === 'city') {
-      // User clicked on a city name (e.g. Ahmedabad, Bangalore, Goa, Jaipur)
-      // Navigate directly to that city's dedicated hotel details page!
-      const slug = parentCity || selection.toLowerCase().replace(/[^a-z0-9]/g, '-').replace('-all-properties', '');
+    if (type === 'city' || selection.includes('(All Properties)')) {
+      // User clicked on a city or country (e.g. Ahmedabad, Bangalore, Goa, Jaipur, Nepal, Sri Lanka)
+      let raw = parentCity || selection;
+      let slug = raw.toLowerCase().replace(/\s*\(all properties\)/i, '').replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+      
+      closeModal(modal);
+
+      // If already on stays.html and renderCityView is available, update smoothly
+      if (typeof window.renderCityView === 'function') {
+        history.pushState(null, '', `stays.html?city=${slug}`);
+        window.renderCityView(slug);
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+        return;
+      }
+
       window.location.href = `stays.html?city=${slug}`;
       return;
     }
@@ -1118,8 +1129,21 @@ function initDestinationsModal() {
         bookingSec.scrollIntoView({ behavior: 'smooth' });
       }
     } else {
-      const slug = parentCity || 'ahmedabad';
-      window.location.href = `stays.html?city=${slug}`;
+      // On stays.html or other pages
+      let slug = (parentCity || 'ahmedabad').toLowerCase().replace(/[^a-z0-9]+/g, '-');
+      closeModal(modal);
+      if (typeof window.renderCityView === 'function') {
+        history.pushState(null, '', `stays.html?city=${slug}`);
+        window.renderCityView(slug);
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+        setTimeout(() => {
+          if (typeof window.openSearchResultsModal === 'function') {
+            window.openSearchResultsModal({ destination: selection, checkin: 'Nov 22', checkout: 'Nov 24', adults: 2, rooms: 1 });
+          }
+        }, 300);
+      } else {
+        window.location.href = `stays.html?city=${slug}`;
+      }
     }
   });
 
