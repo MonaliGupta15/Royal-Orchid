@@ -1090,28 +1090,36 @@ function initDestinationsModal() {
     });
   });
 
-  // 1-Click Selection of City or Hotel
+  // 1-Click Selection: Clicking city opens its dedicated hotel page; clicking hotel selects it
   modal.addEventListener('click', (e) => {
     const selBtn = e.target.closest('.dest-select-btn');
     if (!selBtn) return;
-    e.preventDefault();
     const selection = selBtn.getAttribute('data-selection');
-    if (!selection) return;
+    const type = selBtn.getAttribute('data-type');
+    const parentCity = selBtn.closest('.dest-city-group')?.getAttribute('data-city');
 
+    if (type === 'city') {
+      // User clicked on a city name (e.g. Ahmedabad, Bangalore, Goa, Jaipur)
+      // Navigate directly to that city's dedicated hotel details page!
+      const slug = parentCity || selection.toLowerCase().replace(/[^a-z0-9]/g, '-').replace('-all-properties', '');
+      window.location.href = `stays.html?city=${slug}`;
+      return;
+    }
+
+    // User clicked on a specific hotel
+    e.preventDefault();
     const bookingDest = document.getElementById('booking-destination');
     if (bookingDest) {
       bookingDest.value = selection;
-    }
-
-    closeModal(modal);
-    showToast(`Selected destination: "${selection}". Direct rate unlocked!`, 'success');
-
-    const bookingSec = document.getElementById('booking-section');
-    if (bookingSec) {
-      const rect = bookingSec.getBoundingClientRect();
-      if (rect.top < 0 || rect.bottom > window.innerHeight) {
+      closeModal(modal);
+      showToast(`Selected "${selection}". Direct rate unlocked!`, 'success');
+      const bookingSec = document.getElementById('booking-section');
+      if (bookingSec) {
         bookingSec.scrollIntoView({ behavior: 'smooth' });
       }
+    } else {
+      const slug = parentCity || 'ahmedabad';
+      window.location.href = `stays.html?city=${slug}`;
     }
   });
 

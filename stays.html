@@ -3,13 +3,13 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Stays & Resorts Directory | Royal Orchid & Regenta Hotels</title>
-  <meta name="description" content="Explore 120+ luxury and upscale hotels across 50+ destinations in India. Filter by city, brand tier, and amenities with Best Rate Guarantee." />
+  <title>Hotels & Resorts Directory | Royal Orchid & Regenta Hotels</title>
+  <meta name="description" content="Explore official hotels and resorts across 72 cities in India and abroad. Direct booking privilege, transparent rates, and exclusive member discounts." />
 
-  <!-- Google Fonts -->
+  <!-- Google Fonts: Cormorant Garamond & Plus Jakarta Sans -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400;1,600&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
 
   <!-- Tailwind Polyfill -->
   <script>
@@ -42,33 +42,30 @@
       theme: {
         extend: {
           colors: {
-            'brand-gold': '#C5A880',
-            'brand-gold-rich': '#B89758',
-            'brand-gold-light': '#DFCDAA',
-            'brand-charcoal': '#141414',
-            'brand-dark': '#1B1B1B',
-            'brand-slate': '#1B2631',
-            'brand-emerald': '#1E3A34',
-            'brand-cream': '#FAF8F5',
-            'brand-sand': '#EFECE6',
-            'brand-stone': '#D8D2C9',
-            'bg': '#FAF8F5',
+            'brand-slate': '#131E29',
+            'brand-slate-light': '#1E2C3A',
+            'brand-charcoal': '#171A1D',
+            'brand-terracotta': '#C27D38',
+            'brand-brass': '#D4AF37',
+            'brand-gold': '#C27D38',
+            'brand-gold-rich': '#B36F2C',
+            'brand-ivory': '#F8F6F2',
+            'bg': '#F8F6F2',
             'surface': '#FFFFFF',
-            'surface-subtle': '#F6F3EE',
-            'text-primary': '#171717',
-            'text-secondary': '#5A5550',
-            'text-muted': '#8A847C',
-            'text-inverse': '#FFFFFF',
-            'border': '#E5E0D8',
-            'border-subtle': '#EFECE6',
+            'surface-subtle': '#F2EFE9',
+            'text-primary': '#171A1D',
+            'text-secondary': '#4E5862',
+            'text-muted': '#77828D',
+            'border': '#E2DDD5',
+            'border-subtle': '#EAE6DF',
           },
           fontFamily: {
             serif: ['"Cormorant Garamond"', 'Georgia', 'serif'],
             sans: ['"Plus Jakarta Sans"', 'system-ui', 'sans-serif'],
           },
           letterSpacing: {
-            luxury: '0.22em',
-            'widest-plus': '0.3em',
+            luxury: '0.18em',
+            'widest-plus': '0.25em',
           }
         }
       }
@@ -76,7 +73,7 @@
   </script>
 
   <!-- Custom CSS -->
-  <link rel="stylesheet" href="css/styles.css?v=3.4" />
+  <link rel="stylesheet" href="css/styles.css?v=3.5" />
 
   <!-- Lenis CDN -->
   <script src="https://unpkg.com/lenis@1.1.18/dist/lenis.min.js"></script>
@@ -85,529 +82,491 @@
   <script src="https://unpkg.com/lucide@latest"></script>
 </head>
 
-<body class="bg-bg text-text-primary antialiased selection:bg-brand-gold/20 relative">
-  <div class="grain-overlay"></div>
+<body class="bg-bg text-text-primary antialiased selection:bg-brand-terracotta/20 relative">
 
-  <!-- Announcement Bar -->
-  <aside id="top-announcement-bar" class="bg-brand-charcoal text-white/90 text-xs py-2 px-4 border-b border-brand-gold/20 relative z-40">
+  <!-- Top Direct Booking Privilege Bar -->
+  <aside id="top-announcement-bar" class="bg-brand-charcoal text-white text-xs py-1.5 sm:py-2 px-3 sm:px-6 border-b border-white/10 relative z-40">
     <div class="max-w-7xl mx-auto flex items-center justify-between text-[11px] sm:text-xs">
       <div class="flex items-center space-x-2">
-        <span class="px-2 py-0.5 rounded text-[10px] font-bold uppercase tracking-wider bg-brand-gold text-brand-charcoal">Best Rate Guarantee</span>
-        <span class="text-white/80">Direct booking privilege: Up to 20% off with <strong class="text-brand-gold font-semibold">Regenta Rewards</strong></span>
+        <span class="px-2 py-0.5 rounded text-[10px] font-bold uppercase tracking-wider bg-brand-terracotta text-white">Direct Privilege</span>
+        <span class="text-white/80">Guaranteed Lowest Tariffs · Flexible Cancellation · Free High-Speed Wi-Fi</span>
       </div>
-      <a href="tel:+918041783000" class="hover:text-brand-gold transition-colors hidden sm:flex items-center gap-1.5 text-white/70">
-        <i data-lucide="phone" class="w-3.5 h-3.5 text-brand-gold"></i>
+      <a href="tel:+918041783000" class="hover:text-brand-brass transition-colors hidden sm:flex items-center gap-1.5 text-white/70">
+        <i data-lucide="phone-call" class="w-3.5 h-3.5 text-brand-brass"></i>
         <span>24/7 Reservations: +91 80 4178 3000</span>
       </a>
     </div>
   </aside>
 
-  <!-- Global Header (Light Header for Subpages) -->
+  <!-- Global Header (Light Header for Internal Subpages) -->
   <header id="main-header" class="fixed top-0 left-0 right-0 z-40 transition-all duration-300 px-3 sm:px-8 py-2.5 sm:py-3.5 light-header text-text-primary shadow-sm">
     <div class="max-w-7xl mx-auto flex items-center justify-between">
+      <!-- Logo -->
       <a href="index.html" class="flex items-center space-x-3 group shrink-0 mr-4 lg:mr-6">
-        <img src="images/brands/logo-2.webp" alt="Royal Orchid Hotels" class="h-6 sm:h-9 w-auto max-w-[125px] sm:max-w-[210px] object-contain" />
+        <img src="images/brands/logo-2.webp" alt="Royal Orchid & Regenta Hotels" class="h-6 sm:h-9 w-auto max-w-[130px] sm:max-w-[210px] object-contain" />
       </a>
 
-      <nav class="hidden lg:flex items-center space-x-4 xl:space-x-6 text-[11px] xl:text-xs uppercase tracking-luxury font-medium text-text-secondary">
-        <a href="stays.html" class="text-brand-gold-rich font-semibold py-1 whitespace-nowrap">Stays</a>
-        <a href="rooms.html" class="hover:text-brand-gold transition-colors py-1 whitespace-nowrap">Rooms</a>
-        <a href="dining.html" class="hover:text-brand-gold transition-colors py-1 whitespace-nowrap">Dining</a>
-        <a href="events.html" class="hover:text-brand-gold transition-colors py-1 whitespace-nowrap">Shaadi & MICE</a>
-        <a href="offers.html" class="hover:text-brand-gold transition-colors py-1 whitespace-nowrap">Offers</a>
-        <a href="loyalty.html" class="hover:text-brand-gold transition-colors py-1 text-brand-gold-rich whitespace-nowrap">Regenta Rewards</a>
-        <a href="partner.html" class="hover:text-brand-gold transition-colors py-1 whitespace-nowrap">Partner</a>
+      <!-- Desktop Nav -->
+      <nav class="hidden lg:flex items-center space-x-5 xl:space-x-6 text-xs font-semibold uppercase tracking-wider text-text-secondary">
+        <button type="button" onclick="openDestinationsModal()" class="hover:text-brand-terracotta transition-colors py-1 flex items-center gap-1 cursor-pointer">
+          <span>Destinations</span>
+          <i data-lucide="chevron-down" class="w-3.5 h-3.5 text-brand-terracotta"></i>
+        </button>
+        <a href="stays.html" class="text-brand-terracotta font-bold py-1">Stays & Resorts</a>
+        <a href="stays.html?type=business" class="hover:text-brand-terracotta transition-colors py-1">Business Travel</a>
+        <a href="events.html" class="hover:text-brand-terracotta transition-colors py-1">Weddings & Banquets</a>
+        <a href="dining.html" class="hover:text-brand-terracotta transition-colors py-1">Dining</a>
+        <a href="offers.html" class="hover:text-brand-terracotta transition-colors py-1">Offers</a>
+        <a href="loyalty.html" class="hover:text-brand-terracotta text-brand-terracotta font-bold transition-colors py-1 flex items-center gap-1">
+          <i data-lucide="crown" class="w-3.5 h-3.5"></i>
+          <span>Rewards</span>
+        </a>
       </nav>
 
+      <!-- Right CTAs -->
       <div class="flex items-center space-x-2 sm:space-x-3 shrink-0">
-        <a href="index.html#booking-section" class="btn-gold px-3 sm:px-5 py-1.5 sm:py-2.5 text-[10px] sm:text-xs uppercase tracking-luxury font-semibold rounded-sm inline-flex items-center gap-1 sm:gap-1.5 whitespace-nowrap shadow-md">
-          <span>Book Direct</span>
+        <button type="button" onclick="openRewardsModal()" class="hidden md:inline-flex items-center gap-1 text-xs font-semibold text-text-primary hover:text-brand-terracotta transition-colors py-1.5 px-3 rounded border border-border hover:border-brand-terracotta">
+          <i data-lucide="user" class="w-3.5 h-3.5"></i>
+          <span>Sign In</span>
+        </button>
+        <a href="index.html#booking-section" class="bg-brand-terracotta hover:bg-brand-gold-rich text-white px-3.5 sm:px-5 py-2 sm:py-2.5 rounded text-xs uppercase tracking-wider font-bold transition-all shadow-md flex items-center gap-1.5">
+          <span>Find Rates</span>
           <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i>
         </a>
-        <button id="menu-toggle-btn" type="button" class="lg:hidden p-1.5 sm:p-2 text-text-primary hover:text-brand-gold transition-colors focus:outline-none shrink-0 rounded flex items-center justify-center border border-border/80 bg-surface-subtle/80" aria-label="Open navigation menu">
-          <i data-lucide="menu" class="w-6 h-6"></i>
+        <button id="menu-toggle-btn" type="button" class="lg:hidden p-2 text-text-primary hover:text-brand-terracotta focus:outline-none rounded border border-border" aria-label="Toggle Menu">
+          <i data-lucide="menu" class="w-5 h-5"></i>
         </button>
       </div>
     </div>
   </header>
 
   <!-- Mobile Drawer Menu -->
-  <div id="mobile-drawer" class="hidden fixed inset-0 z-50 flex-col bg-brand-charcoal/98 backdrop-blur-2xl text-white overflow-y-auto">
-    <div class="flex items-center justify-between px-6 py-6 border-b border-white/10">
-      <img src="images/brands/logo-2.webp" alt="Royal Orchid Hotels" class="h-10 w-auto brightness-0 invert" />
-      <button id="menu-close-btn" type="button" class="p-2 text-white/80 hover:text-brand-gold"><i data-lucide="x" class="w-6 h-6"></i></button>
-    </div>
-    <div class="flex flex-col px-6 py-8 space-y-4 text-sm uppercase tracking-luxury font-medium border-b border-white/10">
-      <a href="index.html" class="hover:text-brand-gold transition-colors py-2">Home</a>
-      <a href="stays.html" class="text-brand-gold py-2">Stays & Resorts</a>
-      <a href="rooms.html" class="hover:text-brand-gold transition-colors py-2">Rooms & Suites</a>
-      <a href="dining.html" class="hover:text-brand-gold transition-colors py-2">Dining & Bars</a>
-      <a href="events.html" class="hover:text-brand-gold transition-colors py-2">Shaadi & MICE</a>
-      <a href="offers.html" class="hover:text-brand-gold transition-colors py-2">Exclusive Offers</a>
-      <a href="loyalty.html" class="hover:text-brand-gold transition-colors py-2 text-brand-gold">Regenta Rewards</a>
-      <a href="partner.html" class="hover:text-brand-gold transition-colors py-2">Partner With Us</a>
+  <div id="mobile-drawer" class="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm opacity-0 pointer-events-none transition-opacity duration-300">
+    <div id="mobile-drawer-panel" class="absolute top-0 right-0 bottom-0 w-[85%] max-w-sm bg-brand-slate text-white shadow-2xl p-6 flex flex-col justify-between transform translate-x-full transition-transform duration-300 ease-out">
+      <div>
+        <div class="flex items-center justify-between pb-5 border-b border-white/15">
+          <img src="images/brands/logo-2.webp" alt="Royal Orchid" class="h-7 w-auto brightness-0 invert" />
+          <button id="mobile-drawer-close" type="button" class="p-2 text-white/80 hover:text-brand-brass">
+            <i data-lucide="x" class="w-6 h-6"></i>
+          </button>
+        </div>
+        <nav class="mt-6 flex flex-col space-y-4 text-sm font-semibold tracking-wide uppercase">
+          <button type="button" onclick="openDestinationsModal(); closeMobileDrawer();" class="flex items-center justify-between py-2 border-b border-white/10 hover:text-brand-brass text-left w-full">
+            <span class="flex items-center gap-2">
+              <i data-lucide="map-pin" class="w-4 h-4 text-brand-brass"></i>
+              <span>Destinations & Hotels (72 Cities)</span>
+            </span>
+            <i data-lucide="chevron-right" class="w-4 h-4 text-white/40"></i>
+          </button>
+          <a href="stays.html" class="flex items-center justify-between py-2 border-b border-white/10 text-brand-brass">
+            <span>Stays & Resorts</span>
+            <i data-lucide="chevron-right" class="w-4 h-4"></i>
+          </a>
+          <a href="stays.html?type=business" class="flex items-center justify-between py-2 border-b border-white/10 hover:text-brand-brass">
+            <span>Business Travel</span>
+            <i data-lucide="chevron-right" class="w-4 h-4 text-white/40"></i>
+          </a>
+          <a href="events.html" class="flex items-center justify-between py-2 border-b border-white/10 hover:text-brand-brass">
+            <span>Weddings & Banquets</span>
+            <i data-lucide="chevron-right" class="w-4 h-4 text-white/40"></i>
+          </a>
+          <a href="dining.html" class="flex items-center justify-between py-2 border-b border-white/10 hover:text-brand-brass">
+            <span>Dining (Tiger Trail)</span>
+            <i data-lucide="chevron-right" class="w-4 h-4 text-white/40"></i>
+          </a>
+          <a href="loyalty.html" class="flex items-center justify-between py-2 border-b border-white/10 text-brand-brass">
+            <span class="flex items-center gap-2">
+              <i data-lucide="crown" class="w-4 h-4"></i>
+              <span>Regenta Rewards VIP</span>
+            </span>
+            <i data-lucide="chevron-right" class="w-4 h-4 text-brand-brass/60"></i>
+          </a>
+        </nav>
+      </div>
+      <div class="pt-6 border-t border-white/15 space-y-3">
+        <button type="button" onclick="openRewardsModal()" class="w-full py-2.5 bg-brand-terracotta text-white rounded text-xs uppercase tracking-wider font-bold">
+          Member Sign In / Join Free
+        </button>
+      </div>
     </div>
   </div>
 
-  <!-- Hero Banner -->
-  <section class="pt-32 pb-16 bg-brand-charcoal text-white relative overflow-hidden">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 relative z-10 text-center space-y-4">
-      <span class="text-xs uppercase tracking-widest-plus text-brand-gold font-semibold">120+ HOTELS · 50+ DESTINATIONS</span>
-      <h1 class="text-4xl sm:text-5xl md:text-6xl font-serif font-normal">
-        Our Stays, Resorts & Palaces
+  <!-- MAIN CITY & STAYS CONTENT CONTAINER -->
+  <main class="max-w-7xl mx-auto px-4 sm:px-6 pt-24 sm:pt-28 pb-20">
+    
+    <!-- Centered City Dropdown Selector (Matching Screenshot royalorchidhotels.com/ahmedabad-hotels) -->
+    <div class="max-w-md mx-auto mb-6">
+      <label for="city-page-selector" class="sr-only">Select City or Destination</label>
+      <div class="relative">
+        <select id="city-page-selector" class="w-full py-3 pl-4 pr-10 text-xs sm:text-sm font-semibold text-brand-slate border border-border rounded-lg bg-white shadow-sm focus:outline-none focus:border-brand-terracotta cursor-pointer transition-all hover:border-brand-terracotta">
+          <option value="all">All Destinations (72 Cities · 100+ Hotels)</option>
+            <option value="ahmedabad">Ahmedabad</option>
+            <option value="ajmer">Ajmer</option>
+            <option value="ambala">Ambala</option>
+            <option value="amritsar">Amritsar</option>
+            <option value="baddi">Baddi</option>
+            <option value="bangalore">Bangalore (Bengaluru)</option>
+            <option value="belagavi">Belagavi</option>
+            <option value="bhadohi">Bhadohi</option>
+            <option value="bharuch">Bharuch</option>
+            <option value="bhopal">Bhopal</option>
+            <option value="bhuj">Bhuj</option>
+            <option value="chandigarh">Chandigarh</option>
+            <option value="dahej">Dahej</option>
+            <option value="dalhousie">Dalhousie</option>
+            <option value="dapoli">Dapoli</option>
+            <option value="dehradun">Dehradun</option>
+            <option value="dharamshala">Dharamshala</option>
+            <option value="dwarka">Dwarka</option>
+            <option value="ekta-nagar">Ekta Nagar</option>
+            <option value="gangtok">Gangtok</option>
+            <option value="goa">Goa</option>
+            <option value="greater-noida">Greater Noida</option>
+            <option value="gurugram">Gurugram</option>
+            <option value="gwalior">Gwalior</option>
+            <option value="hampi">Hampi</option>
+            <option value="haridwar">Haridwar</option>
+            <option value="hubballi">Hubballi</option>
+            <option value="hyderabad">Hyderabad</option>
+            <option value="igatpuri">Igatpuri</option>
+            <option value="jaipur">Jaipur</option>
+            <option value="jamnagar">Jamnagar</option>
+            <option value="jhansi">Jhansi</option>
+            <option value="kabini-wildlife">Kabini Wildlife</option>
+            <option value="kanpur">Kanpur</option>
+            <option value="kasauli">Kasauli</option>
+            <option value="kedarnath">Kedarnath</option>
+            <option value="khatu">Khatu</option>
+            <option value="kolhapur">Kolhapur</option>
+            <option value="kolkata">Kolkata</option>
+            <option value="kota">Kota</option>
+            <option value="lonavala">Lonavala</option>
+            <option value="lucknow">Lucknow</option>
+            <option value="ludhiana">Ludhiana</option>
+            <option value="mahabaleshwar">Mahabaleshwar</option>
+            <option value="manali">Manali</option>
+            <option value="mcleod-ganj">McLeod Ganj</option>
+            <option value="mohali">Mohali</option>
+            <option value="morbi">Morbi</option>
+            <option value="mumbai">Mumbai</option>
+            <option value="mysore">Mysore</option>
+            <option value="nagpur">Nagpur</option>
+            <option value="nashik">Nashik</option>
+            <option value="nellore">Nellore</option>
+            <option value="noida">Noida</option>
+            <option value="panchkula">Panchkula</option>
+            <option value="phagwara">Phagwara</option>
+            <option value="pune">Pune</option>
+            <option value="puri">Puri</option>
+            <option value="raipur">Raipur</option>
+            <option value="rajkot">Rajkot</option>
+            <option value="ranthambore">Ranthambore</option>
+            <option value="rishikesh">Rishikesh</option>
+            <option value="sakleshpur">Sakleshpur</option>
+            <option value="sambalpur">Sambalpur</option>
+            <option value="shimla">Shimla</option>
+            <option value="shimoga">Shimoga</option>
+            <option value="solapur">Solapur</option>
+            <option value="somnath">Somnath</option>
+            <option value="srinagar">Srinagar</option>
+            <option value="surat">Surat</option>
+            <option value="tirupati">Tirupati</option>
+            <option value="udaipur">Udaipur</option>
+        </select>
+        <i data-lucide="chevron-down" class="w-4 h-4 text-text-muted absolute right-3.5 top-1/2 -translate-y-1/2 pointer-events-none"></i>
+      </div>
+    </div>
+
+    <!-- City Page Heading with Decorative Accent (Exact Screenshot Match) -->
+    <div class="text-center mb-8">
+      <h1 id="city-page-title" class="font-serif text-3xl sm:text-4xl md:text-5xl font-normal text-text-primary tracking-tight">
+        Hotels / Resorts In Ahmedabad
       </h1>
-      <p class="text-white/80 font-light text-sm sm:text-base max-w-2xl mx-auto leading-relaxed">
-        From lush golf sanctuaries and palm-fringed coastal retreats to palatial heritage havens and modern corporate suites across India.
+      <div class="w-20 h-0.5 bg-brand-terracotta mx-auto mt-3"></div>
+      <p id="city-page-subtitle" class="text-xs sm:text-sm text-text-secondary max-w-2xl mx-auto mt-2">
+        Experience genuine Indian hospitality with premier executive amenities, fine dining, and direct booking benefits across Ahmedabad.
       </p>
     </div>
-  </section>
 
-  <!-- Interactive Search & Filtering Bar -->
-  <section class="sticky top-[58px] sm:top-[64px] z-30 bg-white border-b border-border shadow-sm py-4 px-4 sm:px-6">
-    <div class="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4">
-      
-      <!-- Search Input -->
-      <div class="relative w-full md:w-80">
-        <i data-lucide="search" class="w-4 h-4 text-text-muted absolute left-3 top-1/2 -translate-y-1/2"></i>
-        <input id="stays-search-input" type="text" placeholder="Search by hotel or city name..." class="w-full pl-9 pr-4 py-2 text-xs border border-border rounded focus:outline-none focus:border-brand-gold bg-surface-subtle" />
+    <!-- Exclusive Member Benefits Banner (Exact Match: Enjoy Exclusive Member Benefits!) -->
+    <div class="relative overflow-hidden rounded-xl bg-gradient-to-r from-brand-slate via-brand-slate-light to-brand-slate text-white p-5 sm:p-7 mb-10 shadow-lg border border-white/10 flex flex-col md:flex-row items-center justify-between gap-5">
+      <div class="space-y-1.5 text-center md:text-left z-10">
+        <div class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded bg-brand-terracotta/20 text-brand-brass text-[10px] font-bold uppercase tracking-widest border border-brand-brass/25">
+          <i data-lucide="crown" class="w-3 h-3"></i>
+          Direct Member Privilege
+        </div>
+        <h2 class="font-serif text-xl sm:text-2xl md:text-3xl font-medium text-white">
+          Enjoy Exclusive Member Benefits!
+        </h2>
+        <p class="text-xs sm:text-sm text-white/80 max-w-2xl font-normal leading-relaxed">
+          Save up to 25% instantly on your bookings and earn reward points with every stay.
+        </p>
       </div>
 
-      <!-- Filter Dropdowns -->
-      <div class="flex flex-wrap items-center gap-3 w-full md:w-auto">
-        <!-- City Filter -->
-        <select id="filter-city-select" class="text-xs p-2 border border-border rounded bg-white text-text-primary focus:outline-none">
-          <option value="all">All Destinations (50+)</option>
-          <option value="bengaluru">Bengaluru</option>
-          <option value="pune">Pune</option>
-          <option value="vadodara">Vadodara</option>
-          <option value="kota">Kota</option>
-          <option value="chennai">Chennai</option>
-          <option value="baddi">Baddi</option>
-          <option value="bhadohi">Bhadohi</option>
-          <option value="goa">Goa</option>
-          <option value="jaipur">Jaipur</option>
-        </select>
-
-        <!-- Brand Filter -->
-        <select id="filter-brand-select" class="text-xs p-2 border border-border rounded bg-white text-text-primary focus:outline-none">
-          <option value="all">All Brands</option>
-          <option value="royal-orchid">Royal Orchid (5★ Flagship)</option>
-          <option value="regenta-resorts">Regenta Resorts</option>
-          <option value="regenta-central">Regenta Central</option>
-          <option value="regenta-suites">Regenta Suites</option>
-          <option value="regenta-inn">Regenta Inn & Place</option>
-        </select>
-
-        <span id="stays-count-badge" class="text-xs text-text-muted font-medium ml-auto md:ml-2">
-          Showing 9 Hotels
-        </span>
+      <div class="flex items-center gap-3 z-10 shrink-0">
+        <button type="button" onclick="openRewardsModal()" class="px-6 py-2.5 bg-brand-terracotta hover:bg-brand-gold-rich text-white text-xs uppercase tracking-luxury font-bold rounded shadow-lg transition-all transform hover:-translate-y-0.5 flex items-center gap-2">
+          <span>LOGIN / SIGN UP</span>
+          <i data-lucide="arrow-right" class="w-4 h-4"></i>
+        </button>
       </div>
 
+      <div class="absolute -right-8 -bottom-8 opacity-10 pointer-events-none">
+        <i data-lucide="award" class="w-40 h-40 text-brand-brass"></i>
+      </div>
     </div>
-  </section>
 
-  <!-- Hotels & Resorts Directory Grid (Real Extracted Images) -->
-  <main class="py-16 px-4 sm:px-6 max-w-7xl mx-auto">
-    <div id="stays-directory-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-      
-      <!-- 1. Hotel Royal Orchid, Bengaluru -->
-      <article class="hotel-item bg-white border border-border rounded overflow-hidden shadow-sm interactive-card flex flex-col" data-city="bengaluru" data-brand="royal-orchid">
-        <div class="relative h-60 overflow-hidden">
-          <img src="images/hotels/bangalore_10_03_2026_06_03_33hrob-banner-3.jpg" alt="Hotel Royal Orchid Bengaluru" class="w-full h-full object-cover luxury-image-zoom" loading="lazy" />
-          <div class="absolute top-3 left-3 bg-brand-charcoal text-brand-gold px-2.5 py-1 text-[10px] uppercase font-bold rounded">5-Star Flagship</div>
-          <div class="absolute top-3 right-3 bg-white/95 text-text-primary px-2 py-0.5 text-xs font-semibold rounded flex items-center gap-1 shadow">
-            <i data-lucide="star" class="w-3.5 h-3.5 fill-amber-400 text-amber-400"></i>
-            <span>4.8</span>
-          </div>
-        </div>
-        <div class="p-5 flex-1 flex flex-col justify-between space-y-4">
-          <div>
-            <div class="text-[11px] text-brand-gold-rich font-semibold uppercase tracking-wider flex items-center gap-1">
-              <i data-lucide="map-pin" class="w-3 h-3"></i> Old Airport Road, Bengaluru
-            </div>
-            <h3 class="font-serif text-2xl font-normal text-text-primary mt-1">Hotel Royal Orchid</h3>
-            <p class="text-xs text-text-secondary mt-1.5">Direct golf-facing rooms, rooftop temperature-controlled pool, Tiger Trail & Limelight 24/7 dining.</p>
-            <div class="flex flex-wrap gap-1.5 mt-3 text-[10px] text-text-muted">
-              <span class="bg-surface-subtle px-2 py-0.5 rounded">Golf View</span>
-              <span class="bg-surface-subtle px-2 py-0.5 rounded">Rooftop Pool</span>
-              <span class="bg-surface-subtle px-2 py-0.5 rounded">Spa</span>
-              <span class="bg-surface-subtle px-2 py-0.5 rounded">Free Wi-Fi</span>
-            </div>
-          </div>
-          <div class="pt-3 border-t border-border flex items-center justify-between">
-            <div>
-              <span class="text-[10px] text-text-muted line-through block">₹7,500</span>
-              <span class="font-serif text-2xl font-bold text-text-primary">₹6,000</span>
-              <span class="text-[10px] text-emerald-700 font-semibold block">Regenta Rewards Member Rate</span>
-            </div>
-            <a href="index.html#booking-section" class="btn-gold px-4 py-2 text-xs uppercase tracking-wider font-bold rounded">
-              Book Direct
-            </a>
-          </div>
-        </div>
-      </article>
-
-      <!-- 2. Regenta Central Magnus, Pune -->
-      <article class="hotel-item bg-white border border-border rounded overflow-hidden shadow-sm interactive-card flex flex-col" data-city="pune" data-brand="regenta-central">
-        <div class="relative h-60 overflow-hidden">
-          <img src="images/hero/21_28_2026_01_28_41Regenta_Magnus_Pune1366X565.jpg" alt="Regenta Central Magnus Pune" class="w-full h-full object-cover luxury-image-zoom" style="object-position: 85% center;" loading="lazy" />
-          <div class="absolute top-3 left-3 bg-brand-charcoal text-brand-gold px-2.5 py-1 text-[10px] uppercase font-bold rounded">Upscale City & Business</div>
-          <div class="absolute top-3 right-3 bg-white/95 text-text-primary px-2 py-0.5 text-xs font-semibold rounded flex items-center gap-1 shadow">
-            <i data-lucide="star" class="w-3.5 h-3.5 fill-amber-400 text-amber-400"></i>
-            <span>4.7</span>
-          </div>
-        </div>
-        <div class="p-5 flex-1 flex flex-col justify-between space-y-4">
-          <div>
-            <div class="text-[11px] text-brand-gold-rich font-semibold uppercase tracking-wider flex items-center gap-1">
-              <i data-lucide="map-pin" class="w-3 h-3"></i> Koregaon Park / Hadapsar, Pune
-            </div>
-            <h3 class="font-serif text-2xl font-normal text-text-primary mt-1">Regenta Central Magnus</h3>
-            <p class="text-xs text-text-secondary mt-1.5">Contemporary business suites, Pinxx Bistro & Lounge, state-of-the-art conference facilities for corporate delegations.</p>
-            <div class="flex flex-wrap gap-1.5 mt-3 text-[10px] text-text-muted">
-              <span class="bg-surface-subtle px-2 py-0.5 rounded">Business Hub</span>
-              <span class="bg-surface-subtle px-2 py-0.5 rounded">Pinxx Lounge</span>
-              <span class="bg-surface-subtle px-2 py-0.5 rounded">Conference Centre</span>
-            </div>
-          </div>
-          <div class="pt-3 border-t border-border flex items-center justify-between">
-            <div>
-              <span class="text-[10px] text-text-muted line-through block">₹5,500</span>
-              <span class="font-serif text-2xl font-bold text-text-primary">₹4,400</span>
-              <span class="text-[10px] text-emerald-700 font-semibold block">Regenta Rewards Member Rate</span>
-            </div>
-            <a href="index.html#booking-section" class="btn-gold px-4 py-2 text-xs uppercase tracking-wider font-bold rounded">
-              Book Direct
-            </a>
-          </div>
-        </div>
-      </article>
-
-      <!-- 3. Laxmi Narayan Palace Resort, Vadodara -->
-      <article class="hotel-item bg-white border border-border rounded overflow-hidden shadow-sm interactive-card flex flex-col" data-city="vadodara" data-brand="regenta-resorts">
-        <div class="relative h-60 overflow-hidden">
-          <img src="images/hero/23_21_2026_05_21_57LaxminarayanPalaceResortVadodarabanner.jpg" alt="Laxmi Narayan Palace Resort" class="w-full h-full object-cover luxury-image-zoom" style="object-position: 88% center;" loading="lazy" />
-          <div class="absolute top-3 left-3 bg-brand-charcoal text-brand-gold px-2.5 py-1 text-[10px] uppercase font-bold rounded">Palatial Heritage</div>
-          <div class="absolute top-3 right-3 bg-white/95 text-text-primary px-2 py-0.5 text-xs font-semibold rounded flex items-center gap-1 shadow">
-            <i data-lucide="star" class="w-3.5 h-3.5 fill-amber-400 text-amber-400"></i>
-            <span>4.9</span>
-          </div>
-        </div>
-        <div class="p-5 flex-1 flex flex-col justify-between space-y-4">
-          <div>
-            <div class="text-[11px] text-brand-gold-rich font-semibold uppercase tracking-wider flex items-center gap-1">
-              <i data-lucide="map-pin" class="w-3 h-3"></i> Vadodara, Gujarat
-            </div>
-            <h3 class="font-serif text-2xl font-normal text-text-primary mt-1">Laxmi Narayan Palace Resort</h3>
-            <p class="text-xs text-text-secondary mt-1.5">Historic palace grandeur, sprawling celebration lawns, authentic Gujarati and royal frontier cuisine.</p>
-            <div class="flex flex-wrap gap-1.5 mt-3 text-[10px] text-text-muted">
-              <span class="bg-surface-subtle px-2 py-0.5 rounded">Palace Heritage</span>
-              <span class="bg-surface-subtle px-2 py-0.5 rounded">Weddings</span>
-              <span class="bg-surface-subtle px-2 py-0.5 rounded">Fine Dining</span>
-            </div>
-          </div>
-          <div class="pt-3 border-t border-border flex items-center justify-between">
-            <div>
-              <span class="text-[10px] text-text-muted line-through block">₹8,500</span>
-              <span class="font-serif text-2xl font-bold text-text-primary">₹6,800</span>
-              <span class="text-[10px] text-emerald-700 font-semibold block">Regenta Rewards Member Rate</span>
-            </div>
-            <a href="index.html#booking-section" class="btn-gold px-4 py-2 text-xs uppercase tracking-wider font-bold rounded">
-              Book Direct
-            </a>
-          </div>
-        </div>
-      </article>
-
-      <!-- 4. Regenta Resort Chambal, Kota -->
-      <article class="hotel-item bg-white border border-border rounded overflow-hidden shadow-sm interactive-card flex flex-col" data-city="kota" data-brand="regenta-resorts">
-        <div class="relative h-60 overflow-hidden">
-          <img src="images/Regenta_Place_kota.jpg" alt="Regenta Resort Kota" class="w-full h-full object-cover luxury-image-zoom" loading="lazy" />
-          <div class="absolute top-3 left-3 bg-brand-charcoal text-brand-gold px-2.5 py-1 text-[10px] uppercase font-bold rounded">Riverside Resort</div>
-          <div class="absolute top-3 right-3 bg-white/95 text-text-primary px-2 py-0.5 text-xs font-semibold rounded flex items-center gap-1 shadow">
-            <i data-lucide="star" class="w-3.5 h-3.5 fill-amber-400 text-amber-400"></i>
-            <span>4.8</span>
-          </div>
-        </div>
-        <div class="p-5 flex-1 flex flex-col justify-between space-y-4">
-          <div>
-            <div class="text-[11px] text-brand-gold-rich font-semibold uppercase tracking-wider flex items-center gap-1">
-              <i data-lucide="map-pin" class="w-3 h-3"></i> Chambal Waterfront, Kota
-            </div>
-            <h3 class="font-serif text-2xl font-normal text-text-primary mt-1">Regenta Resort Chambal</h3>
-            <p class="text-xs text-text-secondary mt-1.5">Riverfront leisure haven with swimming pool, Tiger Trail restaurant, landscaped lawns, and boat cruises.</p>
-            <div class="flex flex-wrap gap-1.5 mt-3 text-[10px] text-text-muted">
-              <span class="bg-surface-subtle px-2 py-0.5 rounded">Riverfront</span>
-              <span class="bg-surface-subtle px-2 py-0.5 rounded">Tiger Trail</span>
-              <span class="bg-surface-subtle px-2 py-0.5 rounded">Pool</span>
-            </div>
-          </div>
-          <div class="pt-3 border-t border-border flex items-center justify-between">
-            <div>
-              <span class="text-[10px] text-text-muted line-through block">₹6,200</span>
-              <span class="font-serif text-2xl font-bold text-text-primary">₹4,960</span>
-              <span class="text-[10px] text-emerald-700 font-semibold block">Regenta Rewards Member Rate</span>
-            </div>
-            <a href="index.html#booking-section" class="btn-gold px-4 py-2 text-xs uppercase tracking-wider font-bold rounded">
-              Book Direct
-            </a>
-          </div>
-        </div>
-      </article>
-
-      <!-- 5. Regenta Central Deccan, Chennai -->
-      <article class="hotel-item bg-white border border-border rounded overflow-hidden shadow-sm interactive-card flex flex-col" data-city="chennai" data-brand="regenta-central">
-        <div class="relative h-60 overflow-hidden">
-          <img src="images/hero/17_10_2026_03_10_26hubballi.jpg" alt="Regenta Central Deccan" class="w-full h-full object-cover luxury-image-zoom" loading="lazy" />
-          <div class="absolute top-3 left-3 bg-brand-charcoal text-brand-gold px-2.5 py-1 text-[10px] uppercase font-bold rounded">City Centre Hub</div>
-          <div class="absolute top-3 right-3 bg-white/95 text-text-primary px-2 py-0.5 text-xs font-semibold rounded flex items-center gap-1 shadow">
-            <i data-lucide="star" class="w-3.5 h-3.5 fill-amber-400 text-amber-400"></i>
-            <span>4.7</span>
-          </div>
-        </div>
-        <div class="p-5 flex-1 flex flex-col justify-between space-y-4">
-          <div>
-            <div class="text-[11px] text-brand-gold-rich font-semibold uppercase tracking-wider flex items-center gap-1">
-              <i data-lucide="map-pin" class="w-3 h-3"></i> Royapettah, Chennai
-            </div>
-            <h3 class="font-serif text-2xl font-normal text-text-primary mt-1">Regenta Central Deccan</h3>
-            <p class="text-xs text-text-secondary mt-1.5">Centrally situated in Chennai's commercial district. Features multi-cuisine dining, luxury spa, and banquet halls.</p>
-            <div class="flex flex-wrap gap-1.5 mt-3 text-[10px] text-text-muted">
-              <span class="bg-surface-subtle px-2 py-0.5 rounded">City Centre</span>
-              <span class="bg-surface-subtle px-2 py-0.5 rounded">Fitness Centre</span>
-              <span class="bg-surface-subtle px-2 py-0.5 rounded">Banquets</span>
-            </div>
-          </div>
-          <div class="pt-3 border-t border-border flex items-center justify-between">
-            <div>
-              <span class="text-[10px] text-text-muted line-through block">₹5,800</span>
-              <span class="font-serif text-2xl font-bold text-text-primary">₹4,640</span>
-              <span class="text-[10px] text-emerald-700 font-semibold block">Regenta Rewards Member Rate</span>
-            </div>
-            <a href="index.html#booking-section" class="btn-gold px-4 py-2 text-xs uppercase tracking-wider font-bold rounded">
-              Book Direct
-            </a>
-          </div>
-        </div>
-      </article>
-
-      <!-- 6. Regenta Resort Baddi -->
-      <article class="hotel-item bg-white border border-border rounded overflow-hidden shadow-sm interactive-card flex flex-col" data-city="baddi" data-brand="regenta-resorts regenta-suites">
-        <div class="relative h-60 overflow-hidden">
-          <img src="images/face-baddi.webp" alt="Regenta Resort Baddi" class="w-full h-full object-cover luxury-image-zoom" loading="lazy" />
-          <div class="absolute top-3 left-3 bg-brand-charcoal text-brand-gold px-2.5 py-1 text-[10px] uppercase font-bold rounded">Hills Foothills Retreat</div>
-          <div class="absolute top-3 right-3 bg-white/95 text-text-primary px-2 py-0.5 text-xs font-semibold rounded flex items-center gap-1 shadow">
-            <i data-lucide="star" class="w-3.5 h-3.5 fill-amber-400 text-amber-400"></i>
-            <span>4.8</span>
-          </div>
-        </div>
-        <div class="p-5 flex-1 flex flex-col justify-between space-y-4">
-          <div>
-            <div class="text-[11px] text-brand-gold-rich font-semibold uppercase tracking-wider flex items-center gap-1">
-              <i data-lucide="map-pin" class="w-3 h-3"></i> Baddi, Himachal Pradesh
-            </div>
-            <h3 class="font-serif text-2xl font-normal text-text-primary mt-1">Regenta Resort Baddi</h3>
-            <p class="text-xs text-text-secondary mt-1.5">Nestled at Shivalik foothills with resort gardens, poolside barbecues, luxury spa, and grand event lawns.</p>
-            <div class="flex flex-wrap gap-1.5 mt-3 text-[10px] text-text-muted">
-              <span class="bg-surface-subtle px-2 py-0.5 rounded">Hills Views</span>
-              <span class="bg-surface-subtle px-2 py-0.5 rounded">Spa</span>
-              <span class="bg-surface-subtle px-2 py-0.5 rounded">Convention Lawns</span>
-            </div>
-          </div>
-          <div class="pt-3 border-t border-border flex items-center justify-between">
-            <div>
-              <span class="text-[10px] text-text-muted line-through block">₹6,500</span>
-              <span class="font-serif text-2xl font-bold text-text-primary">₹5,200</span>
-              <span class="text-[10px] text-emerald-700 font-semibold block">Regenta Rewards Member Rate</span>
-            </div>
-            <a href="index.html#booking-section" class="btn-gold px-4 py-2 text-xs uppercase tracking-wider font-bold rounded">
-              Book Direct
-            </a>
-          </div>
-        </div>
-      </article>
-
-      <!-- 7. Regenta Central Bhadohi -->
-      <article class="hotel-item bg-white border border-border rounded overflow-hidden shadow-sm interactive-card flex flex-col" data-city="bhadohi" data-brand="regenta-central">
-        <div class="relative h-60 overflow-hidden">
-          <img src="images/hero/30_34_2026_11_34_05bhadohi3.jpg" alt="Regenta Central Bhadohi" class="w-full h-full object-cover luxury-image-zoom" loading="lazy" />
-          <div class="absolute top-3 left-3 bg-brand-charcoal text-brand-gold px-2.5 py-1 text-[10px] uppercase font-bold rounded">Carpet City Landmark</div>
-          <div class="absolute top-3 right-3 bg-white/95 text-text-primary px-2 py-0.5 text-xs font-semibold rounded flex items-center gap-1 shadow">
-            <i data-lucide="star" class="w-3.5 h-3.5 fill-amber-400 text-amber-400"></i>
-            <span>4.7</span>
-          </div>
-        </div>
-        <div class="p-5 flex-1 flex flex-col justify-between space-y-4">
-          <div>
-            <div class="text-[11px] text-brand-gold-rich font-semibold uppercase tracking-wider flex items-center gap-1">
-              <i data-lucide="map-pin" class="w-3 h-3"></i> Bhadohi, Uttar Pradesh
-            </div>
-            <h3 class="font-serif text-2xl font-normal text-text-primary mt-1">Regenta Central Bhadohi</h3>
-            <p class="text-xs text-text-secondary mt-1.5">First luxury hotel in the region with grand ballroom, fine-dining restaurants, and corporate boardrooms.</p>
-            <div class="flex flex-wrap gap-1.5 mt-3 text-[10px] text-text-muted">
-              <span class="bg-surface-subtle px-2 py-0.5 rounded">Grand Ballroom</span>
-              <span class="bg-surface-subtle px-2 py-0.5 rounded">Pool</span>
-              <span class="bg-surface-subtle px-2 py-0.5 rounded">Corporate Desk</span>
-            </div>
-          </div>
-          <div class="pt-3 border-t border-border flex items-center justify-between">
-            <div>
-              <span class="text-[10px] text-text-muted line-through block">₹5,200</span>
-              <span class="font-serif text-2xl font-bold text-text-primary">₹4,160</span>
-              <span class="text-[10px] text-emerald-700 font-semibold block">Regenta Rewards Member Rate</span>
-            </div>
-            <a href="index.html#booking-section" class="btn-gold px-4 py-2 text-xs uppercase tracking-wider font-bold rounded">
-              Book Direct
-            </a>
-          </div>
-        </div>
-      </article>
-
-      <!-- 8. Royal Orchid Resort & Convention Centre, Bengaluru -->
-      <article class="hotel-item bg-white border border-border rounded overflow-hidden shadow-sm interactive-card flex flex-col" data-city="bengaluru" data-brand="royal-orchid regenta-resorts">
-        <div class="relative h-60 overflow-hidden">
-          <img src="images/hotels/bangalore_19_05_2024_04_05_44pool-banner.jpg" alt="Royal Orchid Resort Bengaluru" class="w-full h-full object-cover luxury-image-zoom" loading="lazy" />
-          <div class="absolute top-3 left-3 bg-brand-charcoal text-brand-gold px-2.5 py-1 text-[10px] uppercase font-bold rounded">300,000 Sq Ft Convention</div>
-          <div class="absolute top-3 right-3 bg-white/95 text-text-primary px-2 py-0.5 text-xs font-semibold rounded flex items-center gap-1 shadow">
-            <i data-lucide="star" class="w-3.5 h-3.5 fill-amber-400 text-amber-400"></i>
-            <span>4.8</span>
-          </div>
-        </div>
-        <div class="p-5 flex-1 flex flex-col justify-between space-y-4">
-          <div>
-            <div class="text-[11px] text-brand-gold-rich font-semibold uppercase tracking-wider flex items-center gap-1">
-              <i data-lucide="map-pin" class="w-3 h-3"></i> Yelahanka, Bengaluru
-            </div>
-            <h3 class="font-serif text-2xl font-normal text-text-primary mt-1">Royal Orchid Resort & Convention</h3>
-            <p class="text-xs text-text-secondary mt-1.5">India's leading convention destination with 300,000 sq ft event grounds, resort cottages, and 10,000 guest capacity.</p>
-            <div class="flex flex-wrap gap-1.5 mt-3 text-[10px] text-text-muted">
-              <span class="bg-surface-subtle px-2 py-0.5 rounded">Mega Convention</span>
-              <span class="bg-surface-subtle px-2 py-0.5 rounded">Cottages</span>
-              <span class="bg-surface-subtle px-2 py-0.5 rounded">Tennis & Pool</span>
-            </div>
-          </div>
-          <div class="pt-3 border-t border-border flex items-center justify-between">
-            <div>
-              <span class="text-[10px] text-text-muted line-through block">₹6,800</span>
-              <span class="font-serif text-2xl font-bold text-text-primary">₹5,440</span>
-              <span class="text-[10px] text-emerald-700 font-semibold block">Regenta Rewards Member Rate</span>
-            </div>
-            <a href="index.html#booking-section" class="btn-gold px-4 py-2 text-xs uppercase tracking-wider font-bold rounded">
-              Book Direct
-            </a>
-          </div>
-        </div>
-      </article>
-
-      <!-- 9. Sitara Royal Orchid Landmark -->
-      <article class="hotel-item bg-white border border-border rounded overflow-hidden shadow-sm interactive-card flex flex-col" data-city="hyderabad" data-brand="royal-orchid">
-        <div class="relative h-60 overflow-hidden">
-          <img src="images/hero/22_42_2026_04_42_12Sitara_Banner_1349x565.jpg" alt="Sitara Royal Orchid" class="w-full h-full object-cover luxury-image-zoom" loading="lazy" />
-          <div class="absolute top-3 left-3 bg-brand-charcoal text-brand-gold px-2.5 py-1 text-[10px] uppercase font-bold rounded">Film City Landmark</div>
-          <div class="absolute top-3 right-3 bg-white/95 text-text-primary px-2 py-0.5 text-xs font-semibold rounded flex items-center gap-1 shadow">
-            <i data-lucide="star" class="w-3.5 h-3.5 fill-amber-400 text-amber-400"></i>
-            <span>4.8</span>
-          </div>
-        </div>
-        <div class="p-5 flex-1 flex flex-col justify-between space-y-4">
-          <div>
-            <div class="text-[11px] text-brand-gold-rich font-semibold uppercase tracking-wider flex items-center gap-1">
-              <i data-lucide="map-pin" class="w-3 h-3"></i> Ramoji Film City / Hyderabad
-            </div>
-            <h3 class="font-serif text-2xl font-normal text-text-primary mt-1">Sitara Royal Orchid Hotel</h3>
-            <p class="text-xs text-text-secondary mt-1.5">Iconic movie-themed luxury suites, royal gardens, outdoor pool, and entertainment dining for families.</p>
-            <div class="flex flex-wrap gap-1.5 mt-3 text-[10px] text-text-muted">
-              <span class="bg-surface-subtle px-2 py-0.5 rounded">Theme Suites</span>
-              <span class="bg-surface-subtle px-2 py-0.5 rounded">Luxury Pool</span>
-              <span class="bg-surface-subtle px-2 py-0.5 rounded">Entertainment</span>
-            </div>
-          </div>
-          <div class="pt-3 border-t border-border flex items-center justify-between">
-            <div>
-              <span class="text-[10px] text-text-muted line-through block">₹7,200</span>
-              <span class="font-serif text-2xl font-bold text-text-primary">₹5,760</span>
-              <span class="text-[10px] text-emerald-700 font-semibold block">Regenta Rewards Member Rate</span>
-            </div>
-            <a href="index.html#booking-section" class="btn-gold px-4 py-2 text-xs uppercase tracking-wider font-bold rounded">
-              Book Direct
-            </a>
-          </div>
-        </div>
-      </article>
-
+    <!-- Dynamic Hotel Cards List (Populated by JavaScript matching screenshot) -->
+    <div id="city-hotels-list" class="space-y-6">
+      <!-- Injected by renderCityHotels() -->
     </div>
+
   </main>
 
   <!-- Global Footer -->
-  <footer class="bg-brand-charcoal text-white pt-12 pb-8 border-t border-brand-gold/30">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 flex flex-col md:flex-row items-center justify-between text-xs text-white/60">
-      <div class="flex items-center space-x-3">
-        <img src="images/brands/logo-2.webp" alt="Royal Orchid Hotels" class="h-8 w-auto brightness-0 invert" />
-        <span>© 2026 Royal Orchid Hotels Limited (ROHL). BSE & NSE Listed.</span>
+  <footer class="bg-brand-slate text-white border-t border-border pt-12 pb-8">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6">
+      <div class="grid grid-cols-1 md:grid-cols-4 gap-8 pb-8 border-b border-white/10 text-xs">
+        <div>
+          <img src="images/brands/logo-2.webp" alt="Royal Orchid Hotels" class="h-8 w-auto brightness-0 invert mb-3" />
+          <p class="text-white/70 leading-relaxed text-xs">
+            Crafting authentic Indian hospitality with global standards since 1973. Operating 100+ hotels across 72 destinations.
+          </p>
+        </div>
+        <div>
+          <h4 class="font-bold uppercase tracking-wider text-brand-brass mb-3">Popular Destinations</h4>
+          <ul class="space-y-1.5 text-white/75">
+            <li><a href="stays.html?city=ahmedabad" class="hover:text-brand-brass">Hotels in Ahmedabad</a></li>
+            <li><a href="stays.html?city=bangalore" class="hover:text-brand-brass">Hotels in Bangalore</a></li>
+            <li><a href="stays.html?city=goa" class="hover:text-brand-brass">Resorts in Goa</a></li>
+            <li><a href="stays.html?city=jaipur" class="hover:text-brand-brass">Hotels in Jaipur</a></li>
+            <li><a href="stays.html?city=mumbai" class="hover:text-brand-brass">Hotels in Mumbai</a></li>
+            <li><a href="stays.html?city=pune" class="hover:text-brand-brass">Hotels in Pune</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="font-bold uppercase tracking-wider text-brand-brass mb-3">Brand Portfolio</h4>
+          <ul class="space-y-1.5 text-white/75">
+            <li>Hotel Royal Orchid (5★ Flagship)</li>
+            <li>Royal Orchid Resort & Spa</li>
+            <li>Regenta Central & Regenta Suites</li>
+            <li>Regenta Place & Regenta Inn</li>
+            <li>Z By Regenta</li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="font-bold uppercase tracking-wider text-brand-brass mb-3">Central Reservations</h4>
+          <p class="text-white/75 leading-relaxed">24/7 Toll-Free Guest Care</p>
+          <a href="tel:+918041783000" class="text-brand-brass font-bold text-sm block mt-1">+91 80 4178 3000</a>
+          <p class="text-[11px] text-white/60 mt-2">reservations@royalorchidhotels.com</p>
+        </div>
       </div>
-      <div class="flex items-center space-x-6 mt-4 md:mt-0">
-        <a href="index.html" class="hover:text-brand-gold">Home</a>
-        <a href="rooms.html" class="hover:text-brand-gold">Rooms</a>
-        <a href="dining.html" class="hover:text-brand-gold">Dining</a>
-        <a href="events.html" class="hover:text-brand-gold">Events</a>
-        <a href="loyalty.html" class="hover:text-brand-gold">Regenta Rewards</a>
-        <a href="partner.html" class="hover:text-brand-gold">Partner</a>
+      <div class="pt-6 flex flex-col sm:flex-row items-center justify-between text-xs text-white/60 gap-3">
+        <p>© 2026 Royal Orchid Hotels Limited. All Rights Reserved.</p>
+        <div class="flex gap-4">
+          <a href="stays.html" class="hover:text-white">Directory</a>
+          <a href="offers.html" class="hover:text-white">Direct Offers</a>
+          <a href="loyalty.html" class="hover:text-white">Regenta Rewards</a>
+        </div>
       </div>
     </div>
   </footer>
 
-  <script src="js/main.js?v=3.4"></script>
+  <!-- FLOATING LEFT VERTICAL TAB: Instant Member Discount & Login (Matching Official Legacy Royal Orchid) -->
+  <aside id="floating-discount-tab" class="fixed left-0 top-1/2 -translate-y-1/2 z-40 hidden md:block">
+    <button type="button" onclick="openRewardsModal()" class="flex items-center gap-2 bg-brand-slate hover:bg-brand-terracotta text-white py-4 px-2.5 rounded-r-lg shadow-2xl transition-all duration-300 border-y border-r border-white/20 group hover:pl-3.5 cursor-pointer" title="Member Login - Save Up to 25%">
+      <div class="vertical-tab-text text-[11px] font-bold tracking-widest uppercase text-white group-hover:text-white whitespace-nowrap">
+        MEMBER LOGIN · SAVE UP TO 25%
+      </div>
+      <i data-lucide="sparkles" class="w-4 h-4 text-brand-brass group-hover:scale-110 transition-transform"></i>
+    </button>
+  </aside>
+
+  <!-- Mobile Floating Pill for Member Savings -->
+  <aside class="fixed bottom-4 left-4 z-40 md:hidden">
+    <button type="button" onclick="openRewardsModal()" class="flex items-center gap-2 bg-brand-slate text-white py-2 px-3.5 rounded-full shadow-2xl border border-white/20 text-xs font-bold">
+      <i data-lucide="sparkles" class="w-3.5 h-3.5 text-brand-brass"></i>
+      <span>Save 25% Member Privilege</span>
+    </button>
+  </aside>
+
+  <!-- REWARDS MODAL -->
+  <div id="rewards-modal" class="modal-backdrop fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm">
+    <div class="modal-content w-full max-w-md bg-white text-text-primary rounded-xl shadow-2xl overflow-hidden border border-border">
+      <div class="p-5 bg-brand-slate text-white flex items-center justify-between">
+        <div>
+          <span class="text-[10px] uppercase tracking-widest text-brand-brass font-bold">Loyalty Privileges</span>
+          <h3 class="font-serif text-2xl font-normal text-white">Regenta Rewards VIP</h3>
+          <p class="text-xs text-white/70 mt-0.5">Instant Member Rate: Up to 25% Off + Reward Points</p>
+        </div>
+        <button type="button" class="modal-close-trigger p-1 text-white/70 hover:text-white"><i data-lucide="x" class="w-6 h-6"></i></button>
+      </div>
+      <form id="rewards-login-form" class="p-6 space-y-4 text-xs">
+        <div>
+          <label class="block font-medium text-text-secondary mb-1">Mobile Number or Email</label>
+          <input type="text" required placeholder="+91 98765 43210 or your@email.com" class="w-full p-2.5 border border-border rounded focus:outline-none focus:border-brand-terracotta" />
+        </div>
+        <button type="submit" class="w-full bg-brand-terracotta hover:bg-brand-gold-rich text-white py-3 text-xs uppercase tracking-luxury font-bold rounded">
+          Unlock 25% Member Discount
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <div id="toast-container"></div>
+
+  <!-- City Database & Scripts -->
+  <script src="js/cities_data.js?v=3.5"></script>
+  <script src="js/main.js?v=3.5"></script>
   <script>
+    // City Page Renderer (Matching Screenshot royalorchidhotels.com/ahmedabad-hotels)
     document.addEventListener('DOMContentLoaded', () => {
-      const searchInput = document.getElementById('stays-search-input');
-      const citySelect = document.getElementById('filter-city-select');
-      const brandSelect = document.getElementById('filter-brand-select');
-      const cards = document.querySelectorAll('.hotel-item');
-      const countBadge = document.getElementById('stays-count-badge');
+      const selector = document.getElementById('city-page-selector');
+      const titleEl = document.getElementById('city-page-title');
+      const subtitleEl = document.getElementById('city-page-subtitle');
+      const listContainer = document.getElementById('city-hotels-list');
 
-      function filterDirectory() {
-        const query = (searchInput?.value || '').toLowerCase().trim();
-        const cityFilter = citySelect?.value || 'all';
-        const brandFilter = brandSelect?.value || 'all';
-        let count = 0;
+      function getCitySlugFromUrl() {
+        const params = new URLSearchParams(window.location.search);
+        const cityParam = params.get('city');
+        if (cityParam) return cityParam.toLowerCase().trim();
+        return 'ahmedabad'; // Default to ahmedabad as requested!
+      }
 
-        cards.forEach(card => {
-          const text = card.textContent.toLowerCase();
-          const cardCity = card.getAttribute('data-city') || '';
-          const cardBrand = card.getAttribute('data-brand') || '';
+      function renderCityView(citySlug) {
+        if (!listContainer || typeof ROYAL_CITIES_DB === 'undefined') return;
 
-          const matchesQuery = !query || text.includes(query);
-          const matchesCity = cityFilter === 'all' || cardCity.includes(cityFilter);
-          const matchesBrand = brandFilter === 'all' || cardBrand.includes(brandFilter);
+        if (citySlug === 'all') {
+          titleEl.textContent = 'Our Stays, Resorts & Palaces Across India';
+          subtitleEl.textContent = 'Explore 100+ handpicked properties across 72 business, heritage, and leisure destinations.';
+          
+          let allCards = [];
+          Object.keys(ROYAL_CITIES_DB).forEach(key => {
+            ROYAL_CITIES_DB[key].hotels.forEach(h => {
+              allCards.push({ ...h, cityName: ROYAL_CITIES_DB[key].cityName });
+            });
+          });
 
-          if (matchesQuery && matchesCity && matchesBrand) {
-            card.style.display = 'flex';
-            count++;
-          } else {
-            card.style.display = 'none';
-          }
-        });
-
-        if (countBadge) {
-          countBadge.textContent = `Showing ${count} Hotel${count === 1 ? '' : 's'}`;
+          listContainer.innerHTML = allCards.map(h => createHotelCardHtml(h)).join('');
+          if (window.lucide) window.lucide.createIcons();
+          return;
         }
+
+        const cityObj = ROYAL_CITIES_DB[citySlug] || ROYAL_CITIES_DB['ahmedabad'];
+        const cityName = cityObj ? cityObj.cityName : 'Ahmedabad';
+        const hotels = cityObj ? cityObj.hotels : [];
+
+        // Update Title & Dropdown
+        titleEl.textContent = `Hotels / Resorts In ${cityName}`;
+        subtitleEl.textContent = `Discover ${hotels.length} premier Royal Orchid & Regenta ${hotels.length === 1 ? 'property' : 'properties'} in ${cityName} with guaranteed lowest tariffs and instant member privileges.`;
+        if (selector) selector.value = citySlug;
+
+        // Render Hotel Cards Matching Screenshot
+        listContainer.innerHTML = hotels.map(h => createHotelCardHtml(h)).join('');
+        if (window.lucide) window.lucide.createIcons();
       }
 
-      searchInput?.addEventListener('input', filterDirectory);
-      citySelect?.addEventListener('change', filterDirectory);
-      brandSelect?.addEventListener('change', filterDirectory);
+      function createHotelCardHtml(hotel) {
+        const amenitiesBadges = (hotel.amenities || []).map(a => 
+          `<span class="px-2 py-0.5 rounded bg-surface-subtle text-text-secondary text-[10px] font-semibold border border-border/60">• ${a}</span>`
+        ).join('');
 
-      const urlParams = new URLSearchParams(window.location.search);
-      const urlCity = urlParams.get('city');
-      const urlBrand = urlParams.get('brand');
-      if (urlCity && citySelect) {
-        citySelect.value = urlCity;
-        filterDirectory();
+        return `
+          <article class="bg-white rounded-xl border border-border overflow-hidden shadow-sm hover:shadow-lg transition-all p-4 sm:p-6 flex flex-col lg:flex-row gap-6 items-start">
+            <!-- Left: Photo with Gallery Icon -->
+            <div class="relative w-full lg:w-72 h-52 sm:h-60 lg:h-52 rounded-lg overflow-hidden shrink-0 bg-surface-subtle">
+              <img src="${hotel.image}" alt="${hotel.name}" class="w-full h-full object-cover transition-transform duration-500 hover:scale-105" loading="lazy" />
+              <button type="button" onclick="showToast('Loading high-resolution gallery for ${hotel.name}')" class="absolute bottom-2.5 left-2.5 p-1.5 rounded bg-black/60 hover:bg-black/80 text-white backdrop-blur-sm transition-colors" title="View Hotel Gallery">
+                <i data-lucide="image" class="w-4 h-4"></i>
+              </button>
+              <span class="absolute top-2.5 right-2.5 px-2 py-0.5 rounded bg-brand-slate/85 text-brand-brass text-[10px] font-bold uppercase tracking-wider backdrop-blur-sm">
+                Direct Privilege
+              </span>
+            </div>
+
+            <!-- Middle: Hotel Details -->
+            <div class="flex-1 space-y-2.5">
+              <div class="flex flex-wrap items-baseline justify-between gap-2">
+                <h3 class="font-serif text-2xl font-normal text-text-primary hover:text-brand-terracotta transition-colors">
+                  ${hotel.name}
+                </h3>
+              </div>
+
+              <!-- Full Address -->
+              <p class="text-xs text-text-muted leading-relaxed flex items-start gap-1.5">
+                <i data-lucide="map-pin" class="w-3.5 h-3.5 text-brand-terracotta shrink-0 mt-0.5"></i>
+                <span>${hotel.address}</span>
+              </p>
+
+              <!-- Transit Info -->
+              <p class="text-[11px] font-semibold text-brand-slate/85 bg-surface-subtle px-2.5 py-1 rounded inline-block">
+                ${hotel.transit}
+              </p>
+
+              <!-- Description -->
+              <p class="text-xs text-text-secondary leading-relaxed line-clamp-3">
+                ${hotel.description}
+              </p>
+
+              <!-- Amenities Badges -->
+              <div class="flex flex-wrap gap-1.5 pt-1">
+                ${amenitiesBadges}
+              </div>
+            </div>
+
+            <!-- Right: TripAdvisor & Price & Actions -->
+            <div class="w-full lg:w-60 shrink-0 flex flex-col justify-between items-start lg:items-end border-t lg:border-t-0 lg:border-l border-border pt-4 lg:pt-0 lg:pl-6 space-y-4">
+              <!-- TripAdvisor Box (Matching Screenshot) -->
+              <div class="w-full p-2.5 rounded bg-surface-subtle border border-border text-left lg:text-right">
+                <div class="flex items-center lg:justify-end gap-1.5 text-emerald-800 text-xs font-bold">
+                  <span>TripAdvisor</span>
+                  <span class="px-1.5 py-0.5 rounded bg-emerald-700 text-white text-[10px] font-extrabold">${hotel.rating || '4.5'} ★</span>
+                </div>
+                <p class="text-[10px] text-text-muted mt-0.5">${hotel.reviews || '350'} Verified Reviews</p>
+              </div>
+
+              <!-- Direct Pricing -->
+              <div class="text-left lg:text-right w-full">
+                <div class="text-[10px] uppercase tracking-wider text-text-muted font-semibold">Direct Tariff</div>
+                <div class="text-xl font-extrabold text-brand-slate">₹${hotel.price} <span class="text-xs font-normal text-text-muted">/ night</span></div>
+                <div class="inline-block mt-0.5 px-2 py-0.5 rounded bg-brand-terracotta/10 text-brand-terracotta text-[10px] font-bold">
+                  Member: ₹${hotel.memberPrice} (Save 20%)
+                </div>
+              </div>
+
+              <!-- Action Buttons (Explore Hotel, View Offers, Book Now) -->
+              <div class="w-full space-y-2 pt-1">
+                <div class="grid grid-cols-2 gap-2">
+                  <button type="button" onclick="showToast('Viewing full amenities & virtual brochure for ${hotel.name}')" class="py-2 px-2 text-center text-xs font-semibold text-text-primary hover:text-brand-terracotta bg-white border border-border hover:border-brand-terracotta rounded transition-colors truncate">
+                    Explore Hotel
+                  </button>
+                  <button type="button" onclick="showToast('Promo Code ROYALDIRECT (15% Off) applied for ${hotel.name}', 'success')" class="py-2 px-2 text-center text-xs font-semibold text-text-primary hover:text-brand-terracotta bg-white border border-border hover:border-brand-terracotta rounded transition-colors truncate">
+                    View Offers
+                  </button>
+                </div>
+                <button type="button" onclick="openSearchResultsModal({ destination: '${hotel.name}', checkin: 'Nov 22', checkout: 'Nov 24', adults: 2, rooms: 1 })" class="w-full py-2.5 bg-brand-terracotta hover:bg-brand-gold-rich text-white text-xs uppercase tracking-wider font-bold rounded shadow transition-all flex items-center justify-center gap-1.5">
+                  <span>Book Now</span>
+                  <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i>
+                </button>
+              </div>
+            </div>
+          </article>
+        `;
       }
-      if (urlBrand && brandSelect) {
-        brandSelect.value = urlBrand;
-        filterDirectory();
+
+      // Handle dropdown change
+      if (selector) {
+        selector.addEventListener('change', (e) => {
+          const chosen = e.target.value;
+          const newUrl = chosen === 'all' ? 'stays.html' : `stays.html?city=${chosen}`;
+          history.pushState(null, '', newUrl);
+          renderCityView(chosen);
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
       }
+
+      // Initial view render
+      const initialCity = getCitySlugFromUrl();
+      renderCityView(initialCity);
     });
   </script>
 </body>
