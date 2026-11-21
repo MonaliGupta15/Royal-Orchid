@@ -5,12 +5,12 @@ const ROYAL_CITIES_DB = {
     "state": "Gujarat",
     "hotels": [
       {
-        "id": "z-regenta-ahmedabad",
+        "id": "z-regenta-city-centre-ahmedabad",
         "name": "Z By Regenta, City Centre, Ahmedabad",
         "address": "542, 13, Sunrise Park Rd, Sunrise Park, Vastrapur, Ahmedabad, Gujarat - 380054",
         "transit": "\u2708 Sardar Vallabhbhai Patel Int. Airport - 14 KM | \ud83d\ude86 Ahmedabad Junction - 9 KM",
         "description": "Located in the vibrant neighbourhood of Vastrapur, Regenta Z, City Centre, Ahmedabad, offers a contemporary stay experience designed for both business and leisure travellers. Featuring spacious rooms, modern comforts, and easy access to key commercial hubs and city attractions, the hotel creates a setting that feels convenient, comfortable, and welcoming.",
-        "image": "images/hero/19_49_2026_10_49_13banner1.jpg",
+        "image": "https://www.royalorchidhotels.com/images/hotels/19_May_2026_04_25_19z-by-regenta-city-centre-ahmedabad-hotelcard.jpg",
         "rating": "4.5",
         "reviews": "420",
         "price": "3,800",
@@ -25,11 +25,11 @@ const ROYAL_CITIES_DB = {
       },
       {
         "id": "regenta-central-antarim-ahmedabad",
-        "name": "Regenta Central Antarim, Ahmedabad",
-        "address": "Between Girish Cold Drinks and St. Xavier's College Corner, CG Road, Navrangpura, Ahmedabad, Gujarat - 380009",
+        "name": "Regenta Central, Antarim, Ahmedabad",
+        "address": "Between Girish Coldrink & Xaviers Corner, Chimanlal Girdharlal Road, Vasant Vihar, Navrangpura, Ahmedabad, Gujarat - 380009",
         "transit": "\u2708 Sardar Vallabhbhai Patel Int. Airport - 12 KM | \ud83d\ude86 Ahmedabad Junction - 6 KM",
-        "description": "Situated in Ahmedabad's prime business and shopping district on CG Road, Regenta Central Antarim features contemporary boutique rooms, multi-cuisine dining at Artisan, state-of-the-art conference halls, and premier executive amenities.",
-        "image": "images/hero/02_13_2026_06_13_08Website-banner-3.webp",
+        "description": "Located in one of the fastest-growing cities, Ahmedabad, Regenta Central, Antarim is close to major corporate hubs and historical tourist attractions. Featuring contemporary boutique rooms, multi-cuisine dining at Artisan, state-of-the-art conference halls, and premier executive amenities.",
+        "image": "https://www.royalorchidhotels.com/images/hotels/28_Mar_2024_05_26_56226X220.jpg",
         "rating": "4.6",
         "reviews": "680",
         "price": "4,400",
@@ -43,12 +43,50 @@ const ROYAL_CITIES_DB = {
         ]
       },
       {
+        "id": "regenta-place-cg-road-ahmedabad",
+        "name": "Regenta Place, CG Road, Ahmedabad",
+        "address": "Near Tim Hortons, between Girsh Cold Drink Cross Roads and Xaviers Corner, off CG Road, Ahmedabad, Gujarat - 380009",
+        "transit": "\u2708 Sardar Vallabhbhai Patel International Airport - 11 KM | \ud83d\ude86 Ahmedabad Junction - 6 KM",
+        "description": "Located in the vibrant commercial hub of CG Road, Ahmedabad, Regenta Place CG Road brings together the ease of city living with the comfort of a thoughtfully designed stay. Surrounded by popular shopping destinations, corporate offices, caf\u00e9s, and local dining spots, the hotel places guests right where the city feels most active and connected, making it an ideal choice for both business visits and leisurely getaways.",
+        "image": "https://www.royalorchidhotels.com/images/hotels/22_May_2026_03_27_07regenta-place-cg-road-ahmedabad-hotelcard.jpg",
+        "rating": "4.6",
+        "reviews": "390",
+        "price": "3,600",
+        "memberPrice": "2,880",
+        "amenities": [
+          "Free High-Speed Wi-Fi",
+          "All-Day Dining",
+          "Fitness Center",
+          "Meeting Rooms",
+          "Valet Parking"
+        ]
+      },
+      {
+        "id": "regenta-place-ahmedabad",
+        "name": "Regenta Place, Ahmedabad",
+        "address": "Sindhu Bhavan Marg, Ramdas Rd, Bodakdev, Ahmedabad, Gujarat 380059",
+        "transit": "\u2708 Sardar Vallabhbhai Patel International Airport - 16 KM | \ud83d\ude86 Thaltej Metro Station - 2 KM",
+        "description": "Regenta Place Ahmedabad is a midscale hotel in Bodakdev, near Sindhu Bhavan Road, offering an elegant urban retreat and warm hospitality.",
+        "image": "https://www.royalorchidhotels.com/images/hotels/09_Dec_2025_01_39_331.jpg",
+        "rating": "4.5",
+        "reviews": "310",
+        "price": "3,400",
+        "memberPrice": "2,720",
+        "amenities": [
+          "Free High-Speed Wi-Fi",
+          "Urban Dining",
+          "Business Center",
+          "Conference Hall",
+          "Metro Connectivity"
+        ]
+      },
+      {
         "id": "regenta-inn-ranip-ahmedabad",
         "name": "Regenta Inn, Ranip, Ahmedabad",
-        "address": "Near Subhash Bridge, RTO Circle, Ranip, Ahmedabad, Gujarat - 380027",
-        "transit": "\u2708 Sardar Vallabhbhai Patel Int. Airport - 8 KM | \ud83d\ude86 Sabarmati Junction - 2 KM",
-        "description": "Offering efficient comfort and unbeatable transit connectivity near Sabarmati Riverfront and the airport corridor. Ideal for corporate travelers, pilgrimage stopovers, and transit stays.",
-        "image": "images/hero-resort-poster.jpg",
+        "address": "Arved Transcube Plaza, Opp. Addi Jatti Girls Hostel, 132 Feet Ring Road, BRTS Stand, Ranip, Ahmedabad, Gujarat - 382480",
+        "transit": "\u2708 Sardar Vallabhbhai Patel Int. Airport - 8 KM | \ud83d\ude86 Sabarmati Junction - 2 KM / Ahmedabad Junction - 7 KM",
+        "description": "Located in the vibrant central business district of Ahmedabad and conveniently near the airport and railway station, Regenta Inn, Ranip, is perfectly suited for business and leisure travellers.",
+        "image": "https://www.royalorchidhotels.com/images/hotels/28_Mar_2024_05_31_18RegentaInnRanipAhmedabad226X220.jpg",
         "rating": "4.3",
         "reviews": "290",
         "price": "2,900",
@@ -57,7 +95,7 @@ const ROYAL_CITIES_DB = {
           "24/7 Room Service",
           "Free Wi-Fi",
           "Express Check-in",
-          "Riverfront Access"
+          "Sabarmati Riverfront Access"
         ]
       }
     ]
@@ -1908,3 +1946,5 @@ const ROYAL_CITIES_DB = {
     ]
   }
 };
+
+if (typeof window !== 'undefined') { window.ROYAL_CITIES_DB = ROYAL_CITIES_DB; }
