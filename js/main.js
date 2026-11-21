@@ -125,13 +125,21 @@ function initLenisSmoothScroll() {
    ========================================================================== */
 function initHeaderScroll() {
   const header = document.getElementById('main-header');
+  const announcementBar = document.getElementById('top-announcement-bar');
   if (!header) return;
 
   const handleScroll = () => {
-    if (window.scrollY > 40) {
+    const scrollY = window.scrollY;
+    const barHeight = (announcementBar && announcementBar.getBoundingClientRect().height > 0)
+      ? announcementBar.offsetHeight
+      : 0;
+
+    if (scrollY >= barHeight || scrollY > 20) {
       header.classList.add('scrolled');
+      header.style.top = '0px';
     } else {
       header.classList.remove('scrolled');
+      header.style.top = Math.max(0, barHeight - scrollY) + 'px';
     }
   };
 
