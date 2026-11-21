@@ -1657,3 +1657,21 @@ function closeCorporateModal() {
   const modal = document.getElementById('corporate-info-modal');
   closeModal(modal);
 }
+
+// Auto-open modal if URL hash or search param matches corporate topic
+document.addEventListener('DOMContentLoaded', () => {
+  try {
+    const urlParams = new URLSearchParams(window.location.search);
+    const infoParam = urlParams.get('info');
+    const hash = window.location.hash.replace('#', '').toLowerCase();
+    if (infoParam && typeof CORPORATE_INFO !== 'undefined' && CORPORATE_INFO[infoParam]) {
+      setTimeout(() => openCorporateModal(infoParam), 400);
+    } else if (hash && typeof CORPORATE_INFO !== 'undefined' && CORPORATE_INFO[hash]) {
+      setTimeout(() => openCorporateModal(hash), 400);
+    }
+  } catch (e) {}
+});
+
+window.openCorporateModal = openCorporateModal;
+window.closeCorporateModal = closeCorporateModal;
+
