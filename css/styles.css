@@ -299,7 +299,7 @@ section[id], article[id], div[id] {
   height: 100%;
   opacity: 0;
   pointer-events: none;
-  transition: transform 1s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.8s ease;
+  transition: transform 0.75s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.5s ease;
   z-index: 1;
 }
 

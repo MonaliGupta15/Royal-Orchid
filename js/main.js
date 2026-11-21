@@ -246,7 +246,7 @@ function initHeroCarousel() {
   }
 
   function startTimer() {
-    timer = setInterval(nextSlide, 5000);
+    timer = setInterval(nextSlide, 3500); // Auto-slide every 3.5 seconds
   }
 
   function restartTimer() {
