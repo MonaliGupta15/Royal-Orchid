@@ -193,7 +193,7 @@
 
   <!-- MAIN CITY & STAYS CONTENT CONTAINER -->
     <!-- HERO COMPONENT (Matching Official royalorchidhotels.com City & Hotel Overview Screenshot) -->
-  <section id="city-hero-component" class="relative w-full bg-brand-slate text-white pt-20 sm:pt-24 overflow-hidden">
+  <section id="city-hero-component" onmouseenter="pauseHeroAutoPlay()" onmouseleave="resumeHeroAutoPlay()" class="relative w-full bg-brand-slate text-white pt-20 sm:pt-24 overflow-hidden">
     
     <!-- Hero Slider / Background Image with Luxury Overlay -->
     <div class="relative w-full min-h-[440px] sm:min-h-[500px] md:min-h-[560px] lg:min-h-[600px] flex flex-col justify-between">
@@ -246,6 +246,19 @@
         <p id="hero-tagline" class="text-xs sm:text-sm text-white/90 max-w-2xl mx-auto mt-2 drop-shadow">
           Contemporary Luxury, Heartfelt Indian Warmth &amp; Direct Booking Privileges
         </p>
+
+        <!-- Dynamic Visual Pagination Dots (Showing 4-5 images in every city) -->
+        <div id="hero-slider-dots" class="flex items-center justify-center gap-2 mt-4 z-20">
+          <!-- Injected dynamically by renderHeroDots() -->
+        </div>
+
+        <!-- Live Photo Counter Badge -->
+        <div class="mt-2.5 flex justify-center">
+          <div id="hero-photo-counter" class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-black/60 backdrop-blur-md text-white text-xs font-medium border border-white/20 shadow">
+            <i data-lucide="camera" class="w-3.5 h-3.5 text-brand-brass"></i>
+            <span id="hero-counter-text">1 / 5 Photos</span>
+          </div>
+        </div>
       </div>
 
       <!-- Floating Quick Booking Bar (Matching Screenshot Booking Bar) -->
@@ -852,29 +865,82 @@
     let currentPrimaryHotel = null;
     let currentHeroGallery = [];
     let currentHeroGalleryIdx = 0;
+    let heroAutoPlayTimer = null;
     let fullDescText = '';
     let isDescExpanded = false;
 
+    // Carousel auto-play functions
+    function startHeroAutoPlay() {
+      stopHeroAutoPlay();
+      if (currentHeroGallery && currentHeroGallery.length > 1) {
+        heroAutoPlayTimer = setInterval(() => {
+          nextHeroSlide(false);
+        }, 4500);
+      }
+    }
+
+    function stopHeroAutoPlay() {
+      if (heroAutoPlayTimer) {
+        clearInterval(heroAutoPlayTimer);
+        heroAutoPlayTimer = null;
+      }
+    }
+
+    function pauseHeroAutoPlay() {
+      stopHeroAutoPlay();
+    }
+
+    function resumeHeroAutoPlay() {
+      startHeroAutoPlay();
+    }
+
     // Carousel navigation functions
-    function updateHeroSlide(idx) {
+    function updateHeroSlide(idx, userInitiated = true) {
       if (!currentHeroGallery || currentHeroGallery.length === 0) return;
       currentHeroGalleryIdx = (idx + currentHeroGallery.length) % currentHeroGallery.length;
+      
       const img = document.getElementById('city-hero-image');
       if (img) {
-        img.style.opacity = '0.3';
+        img.style.opacity = '0.35';
         setTimeout(() => {
           img.src = currentHeroGallery[currentHeroGalleryIdx];
           img.style.opacity = '1';
         }, 150);
       }
+
+      // Update pagination dots
+      renderHeroDots();
+
+      // Update photo counter
+      const counterText = document.getElementById('hero-counter-text');
+      if (counterText) {
+        counterText.textContent = `${currentHeroGalleryIdx + 1} / ${currentHeroGallery.length} Photos`;
+      }
+
+      if (userInitiated) {
+        startHeroAutoPlay();
+      }
     }
 
     function prevHeroSlide() {
-      updateHeroSlide(currentHeroGalleryIdx - 1);
+      updateHeroSlide(currentHeroGalleryIdx - 1, true);
     }
 
-    function nextHeroSlide() {
-      updateHeroSlide(currentHeroGalleryIdx + 1);
+    function nextHeroSlide(userInitiated = true) {
+      updateHeroSlide(currentHeroGalleryIdx + 1, userInitiated);
+    }
+
+    function renderHeroDots() {
+      const dotsContainer = document.getElementById('hero-slider-dots');
+      if (!dotsContainer) return;
+      if (!currentHeroGallery || currentHeroGallery.length <= 1) {
+        dotsContainer.innerHTML = '';
+        return;
+      }
+      dotsContainer.innerHTML = currentHeroGallery.map((_, i) => {
+        const isActive = i === currentHeroGalleryIdx;
+        return `<button type="button" onclick="updateHeroSlide(${i}, true)" class="transition-all duration-300 cursor-pointer ${isActive ? 'w-8 h-2 rounded-full bg-brand-terracotta ring-2 ring-white/80 shadow' : 'w-2 h-2 rounded-full bg-white/40 hover:bg-white/80'}" aria-label="Photo ${i+1}"></button>`;
+      }).join('');
     }
 
     function openHeroTab(tabName) {
@@ -935,6 +1001,10 @@
     // Expose all interactive functions to window
     window.prevHeroSlide = prevHeroSlide;
     window.nextHeroSlide = nextHeroSlide;
+    window.updateHeroSlide = updateHeroSlide;
+    window.pauseHeroAutoPlay = pauseHeroAutoPlay;
+    window.resumeHeroAutoPlay = resumeHeroAutoPlay;
+    window.renderHeroDots = renderHeroDots;
     window.openHeroTab = openHeroTab;
     window.scrollToSection = scrollToSection;
     window.toggleDescReadMore = toggleDescReadMore;
@@ -980,6 +1050,7 @@
 
         // Handle "all" destinations
         if (cleanSlug === 'all') {
+          stopHeroAutoPlay();
           if (titleEl) titleEl.textContent = 'Our Stays, Resorts & Palaces Across India & International';
           if (subtitleEl) subtitleEl.textContent = 'Explore 100+ handpicked properties across 74 business, heritage, and leisure destinations.';
           
@@ -1011,6 +1082,11 @@
           const heroBook = document.getElementById('hero-booking-hotel-name');
           if (heroBook) heroBook.textContent = 'All 100+ Hotels & Resorts';
 
+          const dotsContainer = document.getElementById('hero-slider-dots');
+          if (dotsContainer) dotsContainer.innerHTML = '';
+          const counterText = document.getElementById('hero-counter-text');
+          if (counterText) counterText.textContent = '100+ Hotels';
+
           if (window.lucide) window.lucide.createIcons();
           return;
         }
@@ -1027,11 +1103,30 @@
         const primary = hotels[0] || {};
         currentPrimaryHotel = primary;
 
-        // Populate Hero Image Slider
+        // Populate Hero Image Slider (Guaranteeing 4-5+ images in every city)
         currentHeroGallery = (primary.gallery && primary.gallery.length > 0) ? primary.gallery : [primary.image || 'images/hero/19_49_2026_10_49_13banner1.jpg'];
         currentHeroGalleryIdx = 0;
+        
+        // Preload all gallery images in browser cache for instantaneous transitions
+        currentHeroGallery.forEach(src => {
+          const imgPreload = new Image();
+          imgPreload.src = src;
+        });
+
         const heroImg = document.getElementById('city-hero-image');
         if (heroImg) heroImg.src = currentHeroGallery[0];
+
+        // Render Pagination Dots for all 4-5 images
+        renderHeroDots();
+
+        // Update photo counter
+        const counterText = document.getElementById('hero-counter-text');
+        if (counterText) {
+          counterText.textContent = `1 / ${currentHeroGallery.length} Photos`;
+        }
+
+        // Start auto-play rotation
+        startHeroAutoPlay();
 
         // Populate Hero Text
         const heroTitle = document.getElementById('hero-hotel-title');

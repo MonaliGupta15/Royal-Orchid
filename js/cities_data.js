@@ -10,7 +10,7 @@ const ROYAL_CITIES_DB = {
         "address": "542, 13, Sunrise Park Rd, Sunrise Park, Vastrapur, Ahmedabad, Gujarat - 380054",
         "transit": "✈ Sardar Vallabhbhai Patel Int. Airport - 14 KM | 🚆 Ahmedabad Junction - 9 KM",
         "description": "Located in the vibrant neighbourhood of Vastrapur, Regenta Z, City Centre, Ahmedabad, offers a contemporary stay experience designed for both business and leisure travellers. Featuring spacious rooms, modern comforts, and easy access to key commercial hubs and city attractions, the hotel creates a setting that feels convenient, comfortable, and welcoming.",
-        "image": "https://www.royalorchidhotels.com/images/hotels/19_May_2026_04_25_19z-by-regenta-city-centre-ahmedabad-hotelcard.jpg",
+        "image": "https://www.royalorchidhotels.com/Images/slider/19_17_2026_04_17_13z-by-regenta-city-centre-ahmedabad-banner-1.jpg",
         "rating": "4.5",
         "reviews": "420",
         "price": "3,800",
@@ -23,10 +23,16 @@ const ROYAL_CITIES_DB = {
           "Meeting Spaces"
         ],
         "gallery": [
-          "https://www.royalorchidhotels.com/images/hotels/19_May_2026_04_25_19z-by-regenta-city-centre-ahmedabad-hotelcard.jpg",
-          "https://www.royalorchidhotels.com/images/hotels/19_May_2026_04_25_19z-by-regenta-city-centre-ahmedabad-hotelcard.jpg",
-          "https://www.royalorchidhotels.com/images/hotels/28_Mar_2024_05_26_56226X220.jpg",
-          "https://www.royalorchidhotels.com/images/hotels/bangalore_08_09_2020_06_09_461.jpg"
+          "https://www.royalorchidhotels.com/Images/slider/19_17_2026_04_17_13z-by-regenta-city-centre-ahmedabad-banner-1.jpg",
+          "https://www.royalorchidhotels.com/Images/slider/19_17_2026_04_17_13z-by-regenta-city-centre-ahmedabad-banner-2.jpg",
+          "https://www.royalorchidhotels.com/Images/slider/19_17_2026_04_17_13z-by-regenta-city-centre-ahmedabad-banner-3.jpg",
+          "https://www.royalorchidhotels.com/Images/slider/19_17_2026_04_17_13z-by-regenta-city-centre-ahmedabad-banner-4.jpg",
+          "https://www.royalorchidhotels.com/Images/slider/19_17_2026_04_17_13z-by-regenta-city-centre-ahmedabad-banner-5.jpg",
+          "https://www.royalorchidhotels.com/images/OverviewImage/19_May_2026_04_20_50room.jpg",
+          "https://www.royalorchidhotels.com/images/OverviewImage/19_May_2026_04_21_05dine.jpg",
+          "https://www.royalorchidhotels.com/images/OverviewImage/13_May_2026_05_34_01events.jpg",
+          "https://www.royalorchidhotels.com/images/OverviewImage/13_May_2026_05_34_28in-around.jpg",
+          "https://www.royalorchidhotels.com/images/OverviewImage/19_May_2026_04_21_19gallery.jpg"
         ],
         "roomsList": [
           {
@@ -69,7 +75,7 @@ const ROYAL_CITIES_DB = {
         "address": "Between Girish Coldrink & Xaviers Corner, Chimanlal Girdharlal Road, Vasant Vihar, Navrangpura, Ahmedabad, Gujarat - 380009",
         "transit": "✈ Sardar Vallabhbhai Patel Int. Airport - 12 KM | 🚆 Ahmedabad Junction - 6 KM",
         "description": "Located in one of the fastest-growing cities, Ahmedabad, Regenta Central, Antarim is close to major corporate hubs and historical tourist attractions. Featuring contemporary boutique rooms, multi-cuisine dining at Artisan, state-of-the-art conference halls, and premier executive amenities.",
-        "image": "https://www.royalorchidhotels.com/images/hotels/28_Mar_2024_05_26_56226X220.jpg",
+        "image": "https://www.royalorchidhotels.com/Images/slider/30_26_2024_04_26_35banner-ahemdabad.jpg",
         "rating": "4.6",
         "reviews": "680",
         "price": "4,400",
@@ -82,10 +88,17 @@ const ROYAL_CITIES_DB = {
           "Valet Parking"
         ],
         "gallery": [
-          "https://www.royalorchidhotels.com/images/hotels/28_Mar_2024_05_26_56226X220.jpg",
-          "https://www.royalorchidhotels.com/images/hotels/19_May_2026_04_25_19z-by-regenta-city-centre-ahmedabad-hotelcard.jpg",
-          "https://www.royalorchidhotels.com/images/hotels/28_Mar_2024_05_26_56226X220.jpg",
-          "https://www.royalorchidhotels.com/images/hotels/bangalore_08_09_2020_06_09_461.jpg"
+          "https://www.royalorchidhotels.com/Images/slider/30_26_2024_04_26_35banner-ahemdabad.jpg",
+          "https://www.royalorchidhotels.com/Images/slider/24_32_2021_12_32_28f1.jpg",
+          "https://www.royalorchidhotels.com/Images/slider/24_31_2021_12_31_55f1.jpg",
+          "https://www.royalorchidhotels.com/Images/slider/24_32_2021_12_32_13f1.jpg",
+          "https://www.royalorchidhotels.com/Images/slider/03_20_2020_06_20_33Banner2.jpg",
+          "https://www.royalorchidhotels.com/images/OverviewImage/18_Mar_2024_11_09_43room.jpg",
+          "https://www.royalorchidhotels.com/images/OverviewImage/06_Nov_2023_11_15_47din-e.jpg",
+          "https://www.royalorchidhotels.com/images/OverviewImage/06_Nov_2023_11_16_31meet.jpg",
+          "https://www.royalorchidhotels.com/images/OverviewImage/18_Mar_2024_11_19_34gym.jpg",
+          "https://www.royalorchidhotels.com/images/OverviewImage/18_Mar_2024_11_12_17in-arounf.jpg",
+          "https://www.royalorchidhotels.com/images/OverviewImage/30_Mar_2024_04_39_14gallery-over.jpg"
         ],
         "roomsList": [
           {
@@ -128,7 +141,7 @@ const ROYAL_CITIES_DB = {
         "address": "Near Tim Hortons, between Girsh Cold Drink Cross Roads and Xaviers Corner, off CG Road, Ahmedabad, Gujarat - 380009",
         "transit": "✈ Sardar Vallabhbhai Patel International Airport - 11 KM | 🚆 Ahmedabad Junction - 6 KM",
         "description": "Located in the vibrant commercial hub of CG Road, Ahmedabad, Regenta Place CG Road brings together the ease of city living with the comfort of a thoughtfully designed stay. Surrounded by popular shopping destinations, corporate offices, cafés, and local dining spots, the hotel places guests right where the city feels most active and connected, making it an ideal choice for both business visits and leisurely getaways.",
-        "image": "https://www.royalorchidhotels.com/images/hotels/22_May_2026_03_27_07regenta-place-cg-road-ahmedabad-hotelcard.jpg",
+        "image": "https://www.royalorchidhotels.com/Images/slider/25_49_2026_12_49_32regenta-place-cg-road-ahmedabad-banner-1.jpg",
         "rating": "4.6",
         "reviews": "390",
         "price": "3,600",
@@ -141,10 +154,15 @@ const ROYAL_CITIES_DB = {
           "Valet Parking"
         ],
         "gallery": [
-          "https://www.royalorchidhotels.com/images/hotels/22_May_2026_03_27_07regenta-place-cg-road-ahmedabad-hotelcard.jpg",
-          "https://www.royalorchidhotels.com/images/hotels/19_May_2026_04_25_19z-by-regenta-city-centre-ahmedabad-hotelcard.jpg",
-          "https://www.royalorchidhotels.com/images/hotels/28_Mar_2024_05_26_56226X220.jpg",
-          "https://www.royalorchidhotels.com/images/hotels/bangalore_08_09_2020_06_09_461.jpg"
+          "https://www.royalorchidhotels.com/Images/slider/25_49_2026_12_49_32regenta-place-cg-road-ahmedabad-banner-1.jpg",
+          "https://www.royalorchidhotels.com/Images/slider/25_49_2026_12_49_32regenta-place-cg-road-ahmedabad-banner-2.jpg",
+          "https://www.royalorchidhotels.com/Images/slider/25_49_2026_12_49_32regenta-place-cg-road-ahmedabad-banner-3.jpg",
+          "https://www.royalorchidhotels.com/Images/slider/25_49_2026_12_49_32regenta-place-cg-road-ahmedabad-banner-4.jpg",
+          "https://www.royalorchidhotels.com/Images/slider/25_49_2026_12_49_32regenta-place-cg-road-ahmedabad-banner-5.jpg",
+          "https://www.royalorchidhotels.com/images/OverviewImage/25_May_2026_01_29_02room.jpg",
+          "https://www.royalorchidhotels.com/images/OverviewImage/25_May_2026_01_29_25dine.jpg",
+          "https://www.royalorchidhotels.com/images/OverviewImage/25_May_2026_01_30_03in-around.jpg",
+          "https://www.royalorchidhotels.com/images/OverviewImage/25_May_2026_01_30_33gallery.jpg"
         ],
         "roomsList": [
           {
@@ -187,7 +205,7 @@ const ROYAL_CITIES_DB = {
         "address": "Sindhu Bhavan Marg, Ramdas Rd, Bodakdev, Ahmedabad, Gujarat 380059",
         "transit": "✈ Sardar Vallabhbhai Patel International Airport - 16 KM | 🚆 Thaltej Metro Station - 2 KM",
         "description": "Regenta Place Ahmedabad is a midscale hotel in Bodakdev, near Sindhu Bhavan Road, offering an elegant urban retreat and warm hospitality.",
-        "image": "https://www.royalorchidhotels.com/images/hotels/09_Dec_2025_01_39_331.jpg",
+        "image": "https://www.royalorchidhotels.com/Images/slider/22_58_2025_02_58_471.jpg",
         "rating": "4.5",
         "reviews": "310",
         "price": "3,400",
@@ -200,10 +218,16 @@ const ROYAL_CITIES_DB = {
           "Metro Connectivity"
         ],
         "gallery": [
-          "https://www.royalorchidhotels.com/images/hotels/09_Dec_2025_01_39_331.jpg",
-          "https://www.royalorchidhotels.com/images/hotels/19_May_2026_04_25_19z-by-regenta-city-centre-ahmedabad-hotelcard.jpg",
-          "https://www.royalorchidhotels.com/images/hotels/28_Mar_2024_05_26_56226X220.jpg",
-          "https://www.royalorchidhotels.com/images/hotels/bangalore_08_09_2020_06_09_461.jpg"
+          "https://www.royalorchidhotels.com/Images/slider/22_58_2025_02_58_471.jpg",
+          "https://www.royalorchidhotels.com/Images/slider/22_58_2025_02_58_472.jpg",
+          "https://www.royalorchidhotels.com/Images/slider/22_58_2025_02_58_473.jpg",
+          "https://www.royalorchidhotels.com/Images/slider/22_58_2025_02_58_474.jpg",
+          "https://www.royalorchidhotels.com/Images/slider/22_58_2025_02_58_475.jpg",
+          "https://www.royalorchidhotels.com/images/OverviewImage/24_Nov_2025_06_12_15Room__Executive A.jpg",
+          "https://www.royalorchidhotels.com/images/OverviewImage/24_Nov_2025_06_12_49Restaurant 1.jpg",
+          "https://www.royalorchidhotels.com/images/OverviewImage/24_Nov_2025_06_13_16Banquet.jpg",
+          "https://www.royalorchidhotels.com/images/OverviewImage/09_Dec_2025_04_00_39600X500.jpg",
+          "https://www.royalorchidhotels.com/images/OverviewImage/24_Nov_2025_06_13_48Facade.jpg"
         ],
         "roomsList": [
           {
@@ -246,7 +270,7 @@ const ROYAL_CITIES_DB = {
         "address": "Arved Transcube Plaza, Opp. Addi Jatti Girls Hostel, 132 Feet Ring Road, BRTS Stand, Ranip, Ahmedabad, Gujarat - 382480",
         "transit": "✈ Sardar Vallabhbhai Patel Int. Airport - 8 KM | 🚆 Sabarmati Junction - 2 KM / Ahmedabad Junction - 7 KM",
         "description": "Located in the vibrant central business district of Ahmedabad and conveniently near the airport and railway station, Regenta Inn, Ranip, is perfectly suited for business and leisure travellers.",
-        "image": "https://www.royalorchidhotels.com/images/hotels/28_Mar_2024_05_31_18RegentaInnRanipAhmedabad226X220.jpg",
+        "image": "https://www.royalorchidhotels.com/Images/slider/04_05_2020_01_05_44Banner1.jpg",
         "rating": "4.3",
         "reviews": "290",
         "price": "2,900",
@@ -258,10 +282,14 @@ const ROYAL_CITIES_DB = {
           "Sabarmati Riverfront Access"
         ],
         "gallery": [
-          "https://www.royalorchidhotels.com/images/hotels/28_Mar_2024_05_31_18RegentaInnRanipAhmedabad226X220.jpg",
-          "https://www.royalorchidhotels.com/images/hotels/19_May_2026_04_25_19z-by-regenta-city-centre-ahmedabad-hotelcard.jpg",
-          "https://www.royalorchidhotels.com/images/hotels/28_Mar_2024_05_26_56226X220.jpg",
-          "https://www.royalorchidhotels.com/images/hotels/bangalore_08_09_2020_06_09_461.jpg"
+          "https://www.royalorchidhotels.com/Images/slider/04_05_2020_01_05_44Banner1.jpg",
+          "https://www.royalorchidhotels.com/Images/slider/04_07_2020_01_07_56Banner3.jpg",
+          "https://www.royalorchidhotels.com/Images/slider/04_08_2020_01_08_08Banner2.jpg",
+          "https://www.royalorchidhotels.com/images/OverviewImage/81rooms.jpg",
+          "https://www.royalorchidhotels.com/images/OverviewImage/81dine-2.jpg",
+          "https://www.royalorchidhotels.com/images/OverviewImage/08_Nov_2019_01_21_36meeting.jpg",
+          "https://www.royalorchidhotels.com/images/OverviewImage/30_Mar_2024_02_51_55inarond.jpg",
+          "https://www.royalorchidhotels.com/images/OverviewImage/81dine.jpg"
         ],
         "roomsList": [
           {
@@ -3961,7 +3989,8 @@ const ROYAL_CITIES_DB = {
           "https://www.royalorchidhotels.com/Images/slider/30_47_2026_06_47_04Entrance.jpg",
           "https://www.royalorchidhotels.com/Images/slider/30_47_2026_06_47_54Room.jpg",
           "https://www.royalorchidhotels.com/Images/slider/30_48_2026_06_48_22Restaurant6.jpg",
-          "https://www.royalorchidhotels.com/Images/slider/30_48_2026_06_48_43Swimming Pool7.jpg"
+          "https://www.royalorchidhotels.com/Images/slider/30_48_2026_06_48_43Swimming Pool7.jpg",
+          "https://www.royalorchidhotels.com/images/hotels/14_Nov_2023_12_57_57Deluxe-room.jpg"
         ],
         "rating": "4.7",
         "reviews": "538",
@@ -5086,11 +5115,13 @@ const ROYAL_CITIES_DB = {
         "phone": "+91 80 4178 3000",
         "transit": "✈ Rajkot International Airport (Hirasar) - 28 KM | 🚆 Rajkot Junction - 6 KM",
         "description": "Located in the vibrant commercial corridor of Rajkot, Regenta Place offers upscale contemporary accommodations, fine multi-cuisine dining, modern banquet venues, and warm hospitality for both corporate and leisure travellers.",
-        "image": "https://www.royalorchidhotels.com/images/hotels/19_May_2026_04_25_19z-by-regenta-city-centre-ahmedabad-hotelcard.jpg",
+        "image": "https://www.royalorchidhotels.com/Images/slider/19_17_2026_04_17_13z-by-regenta-city-centre-ahmedabad-banner-1.jpg",
         "gallery": [
-          "https://www.royalorchidhotels.com/images/hotels/19_May_2026_04_25_19z-by-regenta-city-centre-ahmedabad-hotelcard.jpg",
-          "https://www.royalorchidhotels.com/images/hotels/28_Mar_2024_05_26_56226X220.jpg",
-          "https://www.royalorchidhotels.com/images/hotels/bangalore_08_09_2020_06_09_461.jpg"
+          "https://www.royalorchidhotels.com/Images/slider/19_17_2026_04_17_13z-by-regenta-city-centre-ahmedabad-banner-1.jpg",
+          "https://www.royalorchidhotels.com/Images/slider/15_18_2025_03_18_192.jpg",
+          "https://www.royalorchidhotels.com/Images/slider/08_23_2020_05_23_50Deluxe Room.jpg",
+          "https://www.royalorchidhotels.com/Images/slider/04_22_2025_03_22_162.jpg",
+          "https://www.royalorchidhotels.com/Images/slider/14_55_2023_12_55_34pool.jpg"
         ],
         "rating": "4.6",
         "reviews": "430",
@@ -6193,7 +6224,3 @@ const ROYAL_CITIES_DB = {
     ]
   }
 };
-
-if (typeof module !== 'undefined' && module.exports) {
-  module.exports = { ROYAL_CITIES_DB };
-}
