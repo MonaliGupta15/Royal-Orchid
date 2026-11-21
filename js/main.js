@@ -1250,3 +1250,410 @@ function initDestinationsModal() {
     }
   }
 }
+
+
+/* ========================================================
+   CORPORATE MODAL SYSTEM (About Us, Investors, Team, Careers, Feedback, Media, Contact)
+   ======================================================== */
+const CORPORATE_INFO = {
+  about: {
+    badge: 'Our Heritage · Since 1973',
+    title: 'About Royal Orchid & Regenta Hotels',
+    subtitle: 'Over 5 Decades of Heartfelt Indian Hospitality & Global Standards',
+    content: `
+      <div class="space-y-4 text-xs sm:text-sm text-text-secondary leading-relaxed">
+        <p>
+          Founded in 1973 by hospitality visionary <strong>Mr. Chander K. Baljee</strong>, Royal Orchid & Regenta Hotels has grown from a single flagship property into one of India’s most respected and rapidly expanding hospitality groups, operating over <strong>100+ hotels across 74 destinations</strong> in India, Nepal, and Sri Lanka.
+        </p>
+        <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 my-4">
+          <div class="p-3 rounded-lg bg-surface-subtle border border-border text-center">
+            <div class="text-xl sm:text-2xl font-serif font-bold text-brand-slate">100+</div>
+            <div class="text-[10px] uppercase font-semibold text-text-muted mt-0.5">Hotels & Resorts</div>
+          </div>
+          <div class="p-3 rounded-lg bg-surface-subtle border border-border text-center">
+            <div class="text-xl sm:text-2xl font-serif font-bold text-brand-slate">74</div>
+            <div class="text-[10px] uppercase font-semibold text-text-muted mt-0.5">Destinations</div>
+          </div>
+          <div class="p-3 rounded-lg bg-surface-subtle border border-border text-center">
+            <div class="text-xl sm:text-2xl font-serif font-bold text-brand-slate">1973</div>
+            <div class="text-[10px] uppercase font-semibold text-text-muted mt-0.5">Established</div>
+          </div>
+          <div class="p-3 rounded-lg bg-surface-subtle border border-border text-center">
+            <div class="text-xl sm:text-2xl font-serif font-bold text-brand-slate">5,000+</div>
+            <div class="text-[10px] uppercase font-semibold text-text-muted mt-0.5">Keys Nationwide</div>
+          </div>
+        </div>
+        <h4 class="font-serif text-base font-bold text-brand-slate pt-2">Our Philosophy: Warmth with Clarity</h4>
+        <p>
+          Rooted in the timeless Indian tradition of <em>'Atithi Devo Bhava'</em> (Guest is God), we balance intuitive warmth and culinary mastery with modern efficiency, state-of-the-art tech corridors, and prime commercial access.
+        </p>
+        <h4 class="font-serif text-base font-bold text-brand-slate pt-2">Brand Portfolio</h4>
+        <p>
+          Our family of brands spans luxury palaces, five-star business flagships, boutique hotels, scenic eco-resorts, and long-stay executive suites: <strong>Hotel Royal Orchid, Royal Orchid Resorts, Crestoria, Iconiqa, Royal Orchid Central, Royal Orchid Suites, Regenta, Regenta Resorts, Regenta Central, Regenta Suites, Regenta Place, and Regenta Inn</strong>.
+        </p>
+      </div>
+    `
+  },
+  investors: {
+    badge: 'Investor Relations · BSE / NSE Listed',
+    title: 'Investor Relations & Financial Disclosures',
+    subtitle: 'Royal Orchid Hotels Limited (ROHLTD · BSE: 532699 · NSE: ROHLTD)',
+    content: `
+      <div class="space-y-4 text-xs sm:text-sm text-text-secondary leading-relaxed">
+        <div class="p-3 bg-brand-slate/5 border border-brand-slate/15 rounded-lg flex flex-wrap items-center justify-between gap-3">
+          <div>
+            <span class="text-[10px] font-bold uppercase tracking-wider text-text-muted">Stock Exchange Tickers</span>
+            <div class="font-serif text-lg font-bold text-brand-slate">BSE: 532699 | NSE: ROHLTD</div>
+          </div>
+          <button type="button" onclick="showToast('Downloading Latest Investor Presentation (Q3 FY26)...', 'success')" class="px-3 py-1.5 rounded bg-brand-terracotta text-white text-xs font-bold hover:bg-brand-gold-rich transition-colors">
+            Download Presentation (PDF)
+          </button>
+        </div>
+        <h4 class="font-serif text-base font-bold text-brand-slate pt-2">Financial Disclosures & Reports</h4>
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+          <div class="p-3 rounded border border-border hover:border-brand-terracotta transition-colors flex items-center justify-between cursor-pointer" onclick="showToast('Opening Q3 FY26 Financial Statement...')">
+            <div>
+              <div class="font-bold text-brand-slate">Q3 FY26 Financial Results</div>
+              <div class="text-[11px] text-text-muted">Unaudited Standalone & Consolidated</div>
+            </div>
+            <i data-lucide="download" class="w-4 h-4 text-brand-terracotta"></i>
+          </div>
+          <div class="p-3 rounded border border-border hover:border-brand-terracotta transition-colors flex items-center justify-between cursor-pointer" onclick="showToast('Opening Annual Report 2024-25...')">
+            <div>
+              <div class="font-bold text-brand-slate">Annual Report 2024–25</div>
+              <div class="text-[11px] text-text-muted">Integrated Governance & ESG Report</div>
+            </div>
+            <i data-lucide="download" class="w-4 h-4 text-brand-terracotta"></i>
+          </div>
+          <div class="p-3 rounded border border-border hover:border-brand-terracotta transition-colors flex items-center justify-between cursor-pointer" onclick="showToast('Opening Shareholding Pattern...')">
+            <div>
+              <div class="font-bold text-brand-slate">Shareholding Pattern</div>
+              <div class="text-[11px] text-text-muted">Quarter ended December 31, 2025</div>
+            </div>
+            <i data-lucide="download" class="w-4 h-4 text-brand-terracotta"></i>
+          </div>
+          <div class="p-3 rounded border border-border hover:border-brand-terracotta transition-colors flex items-center justify-between cursor-pointer" onclick="showToast('Opening Corporate Governance Report...')">
+            <div>
+              <div class="font-bold text-brand-slate">Corporate Governance</div>
+              <div class="text-[11px] text-text-muted">Board Committees & Charters</div>
+            </div>
+            <i data-lucide="download" class="w-4 h-4 text-brand-terracotta"></i>
+          </div>
+        </div>
+        <div class="p-3 bg-surface-subtle border border-border rounded text-xs text-text-muted">
+          <strong>Registrar & Share Transfer Agent:</strong> Link Intime India Pvt. Ltd., C-101, 247 Park, LBS Marg, Vikhroli (West), Mumbai - 400083. Compliance Officer: <a href="mailto:investors@royalorchidhotels.com" class="text-brand-terracotta hover:underline font-bold">investors@royalorchidhotels.com</a>
+        </div>
+      </div>
+    `
+  },
+  team: {
+    badge: 'Executive Leadership · Board of Directors',
+    title: 'Our Leadership Team',
+    subtitle: 'Steering Five Decades of Hospitality Innovation & Growth',
+    content: `
+      <div class="space-y-4 text-xs sm:text-sm text-text-secondary leading-relaxed">
+        <div class="p-4 rounded-xl bg-surface-subtle border border-border flex flex-col sm:flex-row gap-4 items-center sm:items-start">
+          <div class="w-20 h-20 rounded-full bg-brand-slate text-brand-brass flex items-center justify-center font-serif text-2xl font-bold shrink-0">
+            CKB
+          </div>
+          <div>
+            <h4 class="font-serif text-lg font-bold text-brand-slate">Mr. Chander K. Baljee</h4>
+            <div class="text-xs font-semibold text-brand-terracotta">Chairman & Managing Director</div>
+            <p class="text-xs text-text-muted mt-2 leading-relaxed">
+              An alumnus of IIM Ahmedabad, Mr. Baljee founded the Royal Orchid Group in 1973 with a vision to create world-class Indian hospitality. With over 50 years of industry leadership, he spearheads the group’s vision, expansion into 74+ cities, and commitment to sustainable growth.
+            </p>
+          </div>
+        </div>
+        <h4 class="font-serif text-base font-bold text-brand-slate pt-2">Key Management Personnel</h4>
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+          <div class="p-3 rounded border border-border">
+            <div class="font-bold text-brand-slate">Amit Jaiswal</div>
+            <div class="text-xs text-brand-terracotta font-semibold">Chief Financial Officer</div>
+            <div class="text-[11px] text-text-muted mt-1">Directs global capital structure, investor relations, and financial reporting.</div>
+          </div>
+          <div class="p-3 rounded border border-border">
+            <div class="font-bold text-brand-slate">Philip Logan</div>
+            <div class="text-xs text-brand-terracotta font-semibold">Chief Operating Officer</div>
+            <div class="text-[11px] text-text-muted mt-1">Oversees hotel operations, brand standards, guest satisfaction, and digital hospitality.</div>
+          </div>
+          <div class="p-3 rounded border border-border">
+            <div class="font-bold text-brand-slate">Ranabir Sanyal</div>
+            <div class="text-xs text-brand-terracotta font-semibold">Company Secretary & Compliance Officer</div>
+            <div class="text-[11px] text-text-muted mt-1">Leads corporate governance, statutory compliance, and secretarial audits.</div>
+          </div>
+          <div class="p-3 rounded border border-border">
+            <div class="font-bold text-brand-slate">Vikas Passi</div>
+            <div class="text-xs text-brand-terracotta font-semibold">Vice President — Operations & Growth</div>
+            <div class="text-[11px] text-text-muted mt-1">Manages national franchise partnerships, management contracts, and pipeline rollouts.</div>
+          </div>
+        </div>
+      </div>
+    `
+  },
+  careers: {
+    badge: 'Careers & Opportunities · People First',
+    title: 'Careers at Royal Orchid & Regenta',
+    subtitle: 'Build an Inspiring Career with India’s Fastest Growing Hospitality Brand',
+    content: `
+      <div class="space-y-4 text-xs sm:text-sm text-text-secondary leading-relaxed">
+        <p>
+          At Royal Orchid Hotels, we believe that true hospitality begins with the people who create it. With 100+ properties across India, Nepal, and Sri Lanka, we provide dynamic growth pathways, competitive packages, and leadership development.
+        </p>
+        <div class="grid grid-cols-2 sm:grid-cols-3 gap-2.5 my-3">
+          <div class="p-3 rounded bg-surface-subtle border border-border text-center">
+            <i data-lucide="utensils" class="w-5 h-5 mx-auto text-brand-terracotta mb-1"></i>
+            <div class="font-bold text-brand-slate text-xs">Food & Beverage</div>
+            <div class="text-[10px] text-text-muted">Master Chefs & Service</div>
+          </div>
+          <div class="p-3 rounded bg-surface-subtle border border-border text-center">
+            <i data-lucide="concierge-bell" class="w-5 h-5 mx-auto text-brand-terracotta mb-1"></i>
+            <div class="font-bold text-brand-slate text-xs">Front Office</div>
+            <div class="text-[10px] text-text-muted">Guest Relations & Concierge</div>
+          </div>
+          <div class="p-3 rounded bg-surface-subtle border border-border text-center">
+            <i data-lucide="sparkles" class="w-5 h-5 mx-auto text-brand-terracotta mb-1"></i>
+            <div class="font-bold text-brand-slate text-xs">Housekeeping</div>
+            <div class="text-[10px] text-text-muted">Luxury Facility Care</div>
+          </div>
+          <div class="p-3 rounded bg-surface-subtle border border-border text-center">
+            <i data-lucide="briefcase" class="w-5 h-5 mx-auto text-brand-terracotta mb-1"></i>
+            <div class="font-bold text-brand-slate text-xs">Sales & Revenue</div>
+            <div class="text-[10px] text-text-muted">Corporate & MICE Growth</div>
+          </div>
+          <div class="p-3 rounded bg-surface-subtle border border-border text-center">
+            <i data-lucide="settings" class="w-5 h-5 mx-auto text-brand-terracotta mb-1"></i>
+            <div class="font-bold text-brand-slate text-xs">Engineering</div>
+            <div class="text-[10px] text-text-muted">Property Maintenance</div>
+          </div>
+          <div class="p-3 rounded bg-surface-subtle border border-border text-center">
+            <i data-lucide="award" class="w-5 h-5 mx-auto text-brand-terracotta mb-1"></i>
+            <div class="font-bold text-brand-slate text-xs">General Management</div>
+            <div class="text-[10px] text-text-muted">Hotel Leadership Track</div>
+          </div>
+        </div>
+        <div class="p-4 rounded-lg bg-surface border border-border space-y-3">
+          <div class="font-bold text-brand-slate">Submit Your Resume for Open Positions</div>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+            <input type="text" id="career-name" placeholder="Full Name" class="p-2 border border-border rounded text-xs" />
+            <input type="email" id="career-email" placeholder="Email Address" class="p-2 border border-border rounded text-xs" />
+            <input type="tel" id="career-phone" placeholder="Phone Number" class="p-2 border border-border rounded text-xs" />
+            <select id="career-dept" class="p-2 border border-border rounded text-xs">
+              <option value="">Preferred Department</option>
+              <option value="fb">Food & Beverage / Culinary</option>
+              <option value="fo">Front Office / Guest Relations</option>
+              <option value="hk">Housekeeping</option>
+              <option value="sales">Sales & Corporate Travel</option>
+              <option value="mgmt">Hotel General Management</option>
+            </select>
+          </div>
+          <button type="button" onclick="showToast('Application submitted successfully! Our Talent Acquisition team will connect within 48 hours.', 'success'); closeCorporateModal();" class="w-full py-2 bg-brand-terracotta hover:bg-brand-gold-rich text-white font-bold text-xs uppercase tracking-wider rounded transition-colors">
+            Submit Application
+          </button>
+        </div>
+      </div>
+    `
+  },
+  feedback: {
+    badge: 'Guest Experience · We Value Your Voice',
+    title: 'Guest Feedback & Review',
+    subtitle: 'Help Us Perfect Every Detail of Your Stay',
+    content: `
+      <div class="space-y-4 text-xs sm:text-sm text-text-secondary leading-relaxed">
+        <p>Your comfort and satisfaction are our highest priorities. Please take a moment to share your recent experience with our team.</p>
+        <div class="space-y-3 p-4 rounded-xl bg-surface-subtle border border-border">
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+            <div>
+              <label class="block text-[11px] font-bold text-brand-slate mb-1">Hotel Visited</label>
+              <input type="text" id="fb-hotel" placeholder="e.g. Z By Regenta Ahmedabad" class="w-full p-2 border border-border rounded text-xs bg-white" />
+            </div>
+            <div>
+              <label class="block text-[11px] font-bold text-brand-slate mb-1">Date of Stay</label>
+              <input type="date" id="fb-date" class="w-full p-2 border border-border rounded text-xs bg-white" />
+            </div>
+          </div>
+          <div>
+            <label class="block text-[11px] font-bold text-brand-slate mb-1">Rate Your Overall Experience</label>
+            <div class="flex gap-2 text-amber-500 text-lg cursor-pointer select-none">
+              <span onclick="this.parentElement.setAttribute('data-stars', '1'); showToast('Rated 1 Star')">★</span>
+              <span onclick="this.parentElement.setAttribute('data-stars', '2'); showToast('Rated 2 Stars')">★</span>
+              <span onclick="this.parentElement.setAttribute('data-stars', '3'); showToast('Rated 3 Stars')">★</span>
+              <span onclick="this.parentElement.setAttribute('data-stars', '4'); showToast('Rated 4 Stars')">★</span>
+              <span onclick="this.parentElement.setAttribute('data-stars', '5'); showToast('Rated 5 Stars (Exceptional)')">★</span>
+            </div>
+          </div>
+          <div>
+            <label class="block text-[11px] font-bold text-brand-slate mb-1">Your Comments & Suggestions</label>
+            <textarea id="fb-comments" rows="3" placeholder="Tell us about the hospitality, room comfort, dining, or staff assistance..." class="w-full p-2 border border-border rounded text-xs bg-white"></textarea>
+          </div>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+            <input type="text" id="fb-guest-name" placeholder="Your Name" class="p-2 border border-border rounded text-xs bg-white" />
+            <input type="email" id="fb-guest-email" placeholder="Email / Phone" class="p-2 border border-border rounded text-xs bg-white" />
+          </div>
+          <button type="button" onclick="showToast('Thank you for your valuable feedback! We appreciate your care.', 'success'); closeCorporateModal();" class="w-full py-2 bg-brand-terracotta hover:bg-brand-gold-rich text-white font-bold text-xs uppercase tracking-wider rounded transition-colors">
+            Submit Feedback
+          </button>
+        </div>
+      </div>
+    `
+  },
+  media: {
+    badge: 'Press & Media Centre',
+    title: 'Media Releases & Brand Assets',
+    subtitle: 'Official Press Statements, Brand Kits, and Accreditations',
+    content: `
+      <div class="space-y-4 text-xs sm:text-sm text-text-secondary leading-relaxed">
+        <p>For press inquiries, editorial photography, and official management interviews, contact our Corporate Communications Bureau.</p>
+        <div class="p-3 bg-brand-slate/5 border border-brand-slate/15 rounded-lg flex items-center justify-between">
+          <div>
+            <div class="text-[10px] uppercase font-bold text-text-muted">Press Bureau Contact</div>
+            <div class="font-bold text-brand-slate">pr@royalorchidhotels.com</div>
+          </div>
+          <button type="button" onclick="showToast('Downloading Official Media Kit & High-Res Logos...', 'success')" class="px-3 py-1.5 rounded bg-brand-terracotta text-white text-xs font-bold hover:bg-brand-gold-rich">
+            Download Brand Kit
+          </button>
+        </div>
+        <h4 class="font-serif text-base font-bold text-brand-slate pt-2">Recent Announcements</h4>
+        <div class="space-y-2">
+          <div class="p-3 rounded border border-border hover:border-brand-terracotta transition-colors">
+            <span class="text-[10px] text-brand-terracotta font-bold uppercase">November 2026</span>
+            <div class="font-bold text-brand-slate text-xs sm:text-sm">Royal Orchid Group Expands Gujarat Footprint with 5 Premier Properties in Ahmedabad</div>
+          </div>
+          <div class="p-3 rounded border border-border hover:border-brand-terracotta transition-colors">
+            <span class="text-[10px] text-brand-terracotta font-bold uppercase">October 2026</span>
+            <div class="font-bold text-brand-slate text-xs sm:text-sm">International Expansion: Regenta Resort & Spa Opens on Narayani Riverfront, Chitwan, Nepal</div>
+          </div>
+        </div>
+      </div>
+    `
+  },
+  contact: {
+    badge: 'Central Reservations & Corporate Office',
+    title: 'Contact Royal Orchid & Regenta',
+    subtitle: '24/7 Dedicated Guest Care and Regional Offices',
+    content: `
+      <div class="space-y-4 text-xs sm:text-sm text-text-secondary leading-relaxed">
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+          <div class="p-4 rounded-xl bg-surface-subtle border border-border">
+            <div class="flex items-center gap-2 text-brand-terracotta font-bold text-xs uppercase mb-1">
+              <i data-lucide="phone-call" class="w-4 h-4"></i>
+              <span>24/7 Central Reservations</span>
+            </div>
+            <div class="font-serif text-lg font-bold text-brand-slate">+91 80 4178 3000</div>
+            <div class="font-serif text-lg font-bold text-brand-slate">+91 7711000222</div>
+            <div class="text-[11px] text-text-muted mt-2">reservations@royalorchidhotels.com</div>
+          </div>
+          <div class="p-4 rounded-xl bg-surface-subtle border border-border">
+            <div class="flex items-center gap-2 text-brand-terracotta font-bold text-xs uppercase mb-1">
+              <i data-lucide="building-2" class="w-4 h-4"></i>
+              <span>Corporate Headquarters</span>
+            </div>
+            <div class="font-bold text-brand-slate text-xs">Royal Orchid Hotels Limited</div>
+            <div class="text-[11px] text-text-muted mt-1 leading-relaxed">
+              No. 1, Golf Avenue, Adjoining KGA Golf Course, HAL Airport Road, Kodihalli, Bengaluru, Karnataka - 560008, India.
+            </div>
+          </div>
+        </div>
+        <div class="p-3 rounded border border-border">
+          <div class="font-bold text-brand-slate text-xs mb-1">Regional Sales Offices</div>
+          <div class="grid grid-cols-2 sm:grid-cols-4 gap-2 text-[11px] text-text-muted">
+            <div><strong>Mumbai:</strong> +91 22 2673 0000</div>
+            <div><strong>New Delhi:</strong> +91 11 4151 0000</div>
+            <div><strong>Kolkata:</strong> +91 33 2289 0000</div>
+            <div><strong>Ahmedabad:</strong> +91 79 4000 0000</div>
+          </div>
+        </div>
+      </div>
+    `
+  },
+  terms: {
+    badge: 'Legal & Policies',
+    title: 'Terms & Conditions',
+    subtitle: 'Standard Booking, Tariff, and Stay Policies',
+    content: `
+      <div class="space-y-3 text-xs sm:text-sm text-text-secondary leading-relaxed">
+        <p><strong>1. Check-In & Check-Out:</strong> Standard check-in time is 14:00 hrs and check-out is 12:00 hrs noon. Early check-in or late check-out is subject to availability and may incur supplemental charges.</p>
+        <p><strong>2. Identification:</strong> As per Government of India regulations, all guests aged 18 and above must present valid government-approved photo ID with address (Aadhaar Card, Passport, Voter ID, Driving Licence) upon check-in. PAN cards are not accepted.</p>
+        <p><strong>3. Cancellation Policy:</strong> Guaranteed direct bookings on our official portal offer flexible cancellation up to 24-48 hours prior to arrival, subject to specific rate plans.</p>
+        <p><strong>4. Best Rate Guarantee:</strong> If an identical booking is found publicly on an authorized OTA at a lower rate within 24 hours of booking, we match the rate and provide an additional 10% discount.</p>
+      </div>
+    `
+  },
+  privacy: {
+    badge: 'Privacy & Cookie Protection',
+    title: 'Privacy Policy & Data Security',
+    subtitle: 'Commitment to Guest Data Protection & Confidentiality',
+    content: `
+      <div class="space-y-3 text-xs sm:text-sm text-text-secondary leading-relaxed">
+        <p>Royal Orchid Hotels Limited is dedicated to safeguarding guest confidentiality. We employ 256-bit SSL encryption for all booking transactions.</p>
+        <p><strong>Information Collected:</strong> Contact details, passport/ID details for statutory police registration, dietary preferences, and billing information are collected strictly to execute your reservation.</p>
+        <p><strong>Data Sharing:</strong> We do not sell or rent guest personal data to unauthorized third parties. For data inquiries, email <a href="mailto:privacy@royalorchidhotels.com" class="text-brand-terracotta font-bold">privacy@royalorchidhotels.com</a>.</p>
+      </div>
+    `
+  },
+  blog: {
+    badge: 'Royal Orchid Journal · Travel & Hospitality',
+    title: 'The Royal Orchid Journal',
+    subtitle: 'Curated Stories, Culinary Traditions & Destination Guides',
+    content: `
+      <div class="space-y-3 text-xs sm:text-sm text-text-secondary leading-relaxed">
+        <div class="p-3 rounded border border-border hover:border-brand-terracotta transition-colors cursor-pointer" onclick="showToast('Opening article: 48 Hours in Ahmedabad...')">
+          <span class="text-[10px] text-brand-terracotta font-bold uppercase">City Guide</span>
+          <div class="font-bold text-brand-slate text-sm">48 Hours in Ahmedabad: Heritage Walks, Sabarmati Riverfront & Culinary Gems</div>
+          <div class="text-[11px] text-text-muted mt-1">From Vastrapur Lake to the bustling streets of Manek Chowk and boutique stays at Regenta Central.</div>
+        </div>
+        <div class="p-3 rounded border border-border hover:border-brand-terracotta transition-colors cursor-pointer" onclick="showToast('Opening article: The Legacy of Tiger Trail...')">
+          <span class="text-[10px] text-brand-terracotta font-bold uppercase">Culinary Heritage</span>
+          <div class="font-bold text-brand-slate text-sm">The Legacy of Tiger Trail: Five Decades of Authentic Frontier Flavours</div>
+          <div class="text-[11px] text-text-muted mt-1">Discover the slow-cooked charcoal gravies and rustic clay tandoor recipes perfected since 1973.</div>
+        </div>
+      </div>
+    `
+  },
+  sitemap: {
+    badge: 'Directory & Navigation',
+    title: 'Website Sitemap',
+    subtitle: 'Quick Directory of All 74 Destinations & Brand Portals',
+    content: `
+      <div class="space-y-3 text-xs sm:text-sm text-text-secondary leading-relaxed">
+        <div class="grid grid-cols-2 sm:grid-cols-4 gap-2 text-xs">
+          <div><a href="index.html" class="font-bold text-brand-slate hover:text-brand-terracotta">Home Page</a></div>
+          <div><a href="stays.html" class="font-bold text-brand-slate hover:text-brand-terracotta">Stays & Resorts</a></div>
+          <div><a href="stays.html?city=ahmedabad" class="font-bold text-brand-slate hover:text-brand-terracotta">Ahmedabad Hotels</a></div>
+          <div><a href="stays.html?city=bangalore" class="font-bold text-brand-slate hover:text-brand-terracotta">Bangalore Hotels</a></div>
+          <div><a href="stays.html?city=goa" class="font-bold text-brand-slate hover:text-brand-terracotta">Goa Resorts</a></div>
+          <div><a href="stays.html?city=jaipur" class="font-bold text-brand-slate hover:text-brand-terracotta">Jaipur Hotels</a></div>
+          <div><a href="stays.html?city=nepal" class="font-bold text-brand-slate hover:text-brand-terracotta">Nepal Properties</a></div>
+          <div><a href="stays.html?city=sri-lanka" class="font-bold text-brand-slate hover:text-brand-terracotta">Sri Lanka Properties</a></div>
+          <div><a href="dining.html" class="font-bold text-brand-slate hover:text-brand-terracotta">Tiger Trail & Dining</a></div>
+          <div><a href="events.html" class="font-bold text-brand-slate hover:text-brand-terracotta">Weddings & Banquets</a></div>
+          <div><a href="offers.html" class="font-bold text-brand-slate hover:text-brand-terracotta">Exclusive Offers</a></div>
+          <div><a href="partner.html" class="font-bold text-brand-slate hover:text-brand-terracotta">Partner With Us</a></div>
+        </div>
+      </div>
+    `
+  }
+};
+
+function openCorporateModal(topic) {
+  const modal = document.getElementById('corporate-info-modal');
+  if (!modal) return;
+  const data = CORPORATE_INFO[topic] || CORPORATE_INFO['about'];
+  
+  const badgeEl = document.getElementById('corp-modal-badge');
+  const titleEl = document.getElementById('corp-modal-title');
+  const subtitleEl = document.getElementById('corp-modal-subtitle');
+  const contentEl = document.getElementById('corp-modal-content');
+
+  if (badgeEl) badgeEl.textContent = data.badge;
+  if (titleEl) titleEl.textContent = data.title;
+  if (subtitleEl) subtitleEl.textContent = data.subtitle;
+  if (contentEl) contentEl.innerHTML = data.content;
+
+  openModal(modal);
+  if (window.lucide) window.lucide.createIcons();
+}
+
+function closeCorporateModal() {
+  const modal = document.getElementById('corporate-info-modal');
+  closeModal(modal);
+}

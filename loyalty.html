@@ -310,19 +310,123 @@
   </section>
 
   <!-- Global Footer -->
-  <footer class="bg-brand-charcoal text-white pt-12 pb-8 border-t border-brand-gold/30">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 flex flex-col md:flex-row items-center justify-between text-xs text-white/60">
-      <div>© 2026 Royal Orchid Hotels Limited (ROHL). BSE & NSE Listed.</div>
-      <div class="flex items-center space-x-6 mt-4 md:mt-0">
-        <a href="index.html" class="hover:text-brand-gold">Home</a>
-        <a href="stays.html" class="hover:text-brand-gold">Stays</a>
-        <a href="rooms.html" class="hover:text-brand-gold">Rooms</a>
-        <a href="dining.html" class="hover:text-brand-gold">Dining</a>
-        <a href="events.html" class="hover:text-brand-gold">Events</a>
-        <a href="partner.html" class="hover:text-brand-gold">Partner</a>
+      <!-- Royal Orchid Official Purple Footer (Exact Screenshot Match) -->
+    <footer style="background-color: #943C90;" class="text-white pt-10 pb-8 px-4 sm:px-8 border-t border-white/10">
+      <div class="max-w-6xl mx-auto space-y-6">
+        
+        <!-- Row 1: Primary Corporate Links -->
+        <div class="flex flex-wrap items-center justify-center gap-x-3 gap-y-2 text-xs sm:text-sm font-bold uppercase tracking-wider text-center">
+          <button type="button" onclick="openCorporateModal('about')" class="hover:text-amber-200 transition-colors cursor-pointer">ABOUT US</button>
+          <span class="text-white/40">|</span>
+          <button type="button" onclick="openCorporateModal('investors')" class="hover:text-amber-200 transition-colors cursor-pointer">INVESTORS</button>
+          <span class="text-white/40">|</span>
+          <a href="partner.html" class="hover:text-amber-200 transition-colors cursor-pointer">PARTNER WITH US</a>
+          <span class="text-white/40">|</span>
+          <button type="button" onclick="openCorporateModal('team')" class="hover:text-amber-200 transition-colors cursor-pointer">OUR TEAM</button>
+          <span class="text-white/40">|</span>
+          <button type="button" onclick="openCorporateModal('careers')" class="hover:text-amber-200 transition-colors cursor-pointer">CAREERS</button>
+          <span class="text-white/40">|</span>
+          <button type="button" onclick="openCorporateModal('feedback')" class="hover:text-amber-200 transition-colors cursor-pointer">FEEDBACK</button>
+          <span class="text-white/40">|</span>
+          <button type="button" onclick="openCorporateModal('media')" class="hover:text-amber-200 transition-colors cursor-pointer">MEDIA</button>
+          <span class="text-white/40">|</span>
+          <button type="button" onclick="openCorporateModal('contact')" class="hover:text-amber-200 transition-colors cursor-pointer">CONTACT US</button>
+        </div>
+
+        <!-- Row 2: Secondary Institutional & Compliance Links -->
+        <div class="flex flex-wrap items-center justify-center gap-x-3 gap-y-1.5 text-[11px] sm:text-xs font-semibold uppercase tracking-wider text-white/90 text-center pb-2">
+          <a href="https://www.presidencycollege.edu.in/" target="_blank" rel="noopener noreferrer" class="hover:text-amber-200 transition-colors cursor-pointer">PRESIDENCY COLLEGE</a>
+          <span class="text-white/40">|</span>
+          <button type="button" onclick="openCorporateModal('terms')" class="hover:text-amber-200 transition-colors cursor-pointer">TERMS &amp; CONDITIONS</button>
+          <span class="text-white/40">|</span>
+          <button type="button" onclick="openCorporateModal('privacy')" class="hover:text-amber-200 transition-colors cursor-pointer">PRIVACY POLICY</button>
+          <span class="text-white/40">|</span>
+          <button type="button" onclick="openCorporateModal('blog')" class="hover:text-amber-200 transition-colors cursor-pointer">BLOG</button>
+          <span class="text-white/40">|</span>
+          <button type="button" onclick="openCorporateModal('sitemap')" class="hover:text-amber-200 transition-colors cursor-pointer">SITEMAP</button>
+        </div>
+
+        <!-- Brand Portfolio Box (Enclosed in white outline bracket as in screenshot) -->
+        <div class="border border-white/40 rounded-xl p-4 sm:p-6 bg-black/10 backdrop-blur-sm max-w-5xl mx-auto space-y-4">
+          <!-- Row 1: Royal Orchid Family & Flagships -->
+          <div class="grid grid-cols-3 sm:grid-cols-6 gap-4 sm:gap-6 items-center justify-items-center">
+            <a href="stays.html?brand=hotel-royal-orchid" class="transition-transform hover:scale-105" title="Hotel Royal Orchid">
+              <img src="images/brands/1.webp" alt="Hotel Royal Orchid" class="h-6 sm:h-8 w-auto object-contain brightness-0 invert opacity-90 hover:opacity-100" />
+            </a>
+            <a href="stays.html?brand=royal-orchid-resorts" class="transition-transform hover:scale-105" title="Royal Orchid Resorts">
+              <img src="images/brands/3.webp" alt="Royal Orchid Resorts" class="h-6 sm:h-8 w-auto object-contain brightness-0 invert opacity-90 hover:opacity-100" />
+            </a>
+            <a href="stays.html?brand=crestoria" class="transition-transform hover:scale-105" title="Crestoria Hotels & Resorts">
+              <img src="images/brands/crestoria-logo.webp" alt="Crestoria" class="h-5 sm:h-7 w-auto object-contain brightness-0 invert opacity-90 hover:opacity-100" />
+            </a>
+            <a href="stays.html?brand=iconiqa" class="transition-transform hover:scale-105" title="Iconiqa">
+              <img src="images/brands/Iconiqa-Logo-updatedV1.webp" alt="Iconiqa" class="h-5 sm:h-7 w-auto object-contain brightness-0 invert opacity-90 hover:opacity-100" />
+            </a>
+            <a href="stays.html?brand=royal-orchid-central" class="transition-transform hover:scale-105" title="Royal Orchid Central">
+              <img src="images/brands/2.webp" alt="Royal Orchid Central" class="h-6 sm:h-8 w-auto object-contain brightness-0 invert opacity-90 hover:opacity-100" />
+            </a>
+            <a href="stays.html?brand=royal-orchid-suites" class="transition-transform hover:scale-105" title="Royal Orchid Suites">
+              <img src="images/brands/4.webp" alt="Royal Orchid Suites" class="h-6 sm:h-8 w-auto object-contain brightness-0 invert opacity-90 hover:opacity-100" />
+            </a>
+          </div>
+
+          <div class="w-full h-px bg-white/20"></div>
+
+          <!-- Row 2: Regenta Family Brands -->
+          <div class="grid grid-cols-3 sm:grid-cols-6 gap-4 sm:gap-6 items-center justify-items-center">
+            <a href="stays.html?brand=regenta" class="transition-transform hover:scale-105" title="Regenta Hotels">
+              <img src="images/brands/5.png" alt="Regenta" class="h-5 sm:h-7 w-auto object-contain brightness-0 invert opacity-90 hover:opacity-100" />
+            </a>
+            <a href="stays.html?brand=regenta-resorts" class="transition-transform hover:scale-105" title="Regenta Resorts">
+              <img src="images/brands/7.png" alt="Regenta Resorts" class="h-5 sm:h-7 w-auto object-contain brightness-0 invert opacity-90 hover:opacity-100" />
+            </a>
+            <a href="stays.html?brand=regenta-central" class="transition-transform hover:scale-105" title="Regenta Central">
+              <img src="images/brands/6.png" alt="Regenta Central" class="h-5 sm:h-7 w-auto object-contain brightness-0 invert opacity-90 hover:opacity-100" />
+            </a>
+            <a href="stays.html?brand=regenta-suites" class="transition-transform hover:scale-105" title="Regenta Suites">
+              <img src="images/brands/8.png" alt="Regenta Suites" class="h-5 sm:h-7 w-auto object-contain brightness-0 invert opacity-90 hover:opacity-100" />
+            </a>
+            <a href="stays.html?brand=regenta-place" class="transition-transform hover:scale-105" title="Regenta Place">
+              <img src="images/brands/9.png" alt="Regenta Place" class="h-5 sm:h-7 w-auto object-contain brightness-0 invert opacity-90 hover:opacity-100" />
+            </a>
+            <a href="stays.html?brand=regenta-inn" class="transition-transform hover:scale-105" title="Regenta Inn">
+              <img src="images/brands/10.png" alt="Regenta Inn" class="h-5 sm:h-7 w-auto object-contain brightness-0 invert opacity-90 hover:opacity-100" />
+            </a>
+          </div>
+        </div>
+
+        <!-- Row 4: Social Icons & Newsletter Subscription -->
+        <div class="flex flex-col sm:flex-row items-center justify-between gap-4 pt-2">
+          <!-- Social Icons (White round circles) -->
+          <div class="flex items-center gap-3">
+            <a href="https://www.facebook.com/RoyalOrchidHotelsandResorts/" target="_blank" rel="noopener noreferrer" class="w-8 h-8 rounded-full bg-white text-[#943C90] flex items-center justify-center font-bold hover:scale-110 transition-transform shadow" title="Facebook">
+              <span class="text-sm font-extrabold">f</span>
+            </a>
+            <a href="https://www.instagram.com/royalorchidhotelsandresorts/" target="_blank" rel="noopener noreferrer" class="w-8 h-8 rounded-full bg-white text-[#943C90] flex items-center justify-center font-bold hover:scale-110 transition-transform shadow" title="Instagram">
+              <i data-lucide="instagram" class="w-4 h-4"></i>
+            </a>
+            <a href="https://www.linkedin.com/company/royal-orchid-hotels/" target="_blank" rel="noopener noreferrer" class="w-8 h-8 rounded-full bg-white text-[#943C90] flex items-center justify-center font-bold hover:scale-110 transition-transform shadow" title="LinkedIn">
+              <span class="text-xs font-extrabold">in</span>
+            </a>
+          </div>
+
+          <!-- Newsletter Input -->
+          <form onsubmit="event.preventDefault(); showToast('Thank you for subscribing to Royal Orchid updates!', 'success'); this.reset();" class="flex items-center gap-2 w-full sm:w-auto">
+            <input type="email" required placeholder="Subscribe for updates" class="px-3 py-1.5 rounded bg-white text-text-primary text-xs w-full sm:w-64 focus:outline-none focus:ring-2 focus:ring-amber-300 shadow-inner" />
+            <button type="submit" class="px-4 py-1.5 rounded bg-white text-[#943C90] hover:bg-amber-100 font-bold text-xs uppercase tracking-wider transition-colors shrink-0 shadow cursor-pointer">
+              Subscribe
+            </button>
+          </form>
+        </div>
+
+        <!-- Row 5: Copyright Line (Matching Exact Screenshot) -->
+        <div class="border-t border-white/20 pt-4 text-center text-xs text-white/80">
+          Copyright©2026, Royal Orchid &amp; Regenta Hotels. All Rights Reserved. Powered By <span class="underline font-semibold text-white">Internet Moguls</span>
+        </div>
+
       </div>
-    </div>
-  </footer>
+    </footer>
+
 
   <!-- Regenta Rewards Modal -->
   <div id="rewards-modal" class="modal-backdrop fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/75 backdrop-blur-md">
@@ -356,5 +460,36 @@
 
   <div id="toast-container"></div>
   <script src="js/main.js?v=3.4?v=2.4"></script>
+
+
+  
+  <!-- Corporate Info Modal (About Us, Investors, Team, Careers, Feedback, Media, Contact) -->
+  <div id="corporate-info-modal" class="modal-backdrop fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-6 bg-black/75 backdrop-blur-md">
+    <div class="modal-content w-full max-w-3xl bg-white text-text-primary rounded-xl shadow-2xl overflow-hidden border border-border flex flex-col max-h-[90vh]">
+      <!-- Header Bar -->
+      <div class="px-5 py-4 bg-[#943C90] text-white flex items-center justify-between shrink-0">
+        <div>
+          <span id="corp-modal-badge" class="text-[10px] font-bold uppercase tracking-widest text-amber-200">Corporate Information</span>
+          <h3 id="corp-modal-title" class="font-serif text-xl sm:text-2xl font-normal text-white">About Royal Orchid</h3>
+          <p id="corp-modal-subtitle" class="text-xs text-white/80 mt-0.5">Over 5 Decades of Heartfelt Indian Hospitality</p>
+        </div>
+        <button type="button" onclick="closeCorporateModal()" class="p-1.5 text-white/80 hover:text-white hover:bg-white/10 rounded-full transition-colors cursor-pointer" aria-label="Close modal">
+          <i data-lucide="x" class="w-6 h-6"></i>
+        </button>
+      </div>
+      <!-- Scrollable Body -->
+      <div id="corp-modal-content" class="p-5 sm:p-6 overflow-y-auto flex-1 custom-scrollbar space-y-4">
+      </div>
+      <!-- Footer Bar -->
+      <div class="px-5 py-3 bg-surface-subtle border-t border-border flex items-center justify-between text-xs text-text-secondary shrink-0">
+        <span class="text-[11px] text-text-muted">Royal Orchid Hotels Limited · Registered Office, Bengaluru</span>
+        <button type="button" onclick="closeCorporateModal()" class="px-4 py-1.5 rounded bg-brand-slate text-white text-xs font-bold hover:bg-brand-slate/90 transition-colors cursor-pointer">
+          Close
+        </button>
+      </div>
+    </div>
+  </div>
+
+
 </body>
 </html>
