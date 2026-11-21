@@ -648,7 +648,7 @@
             <!-- Left: Photo with Gallery Icon -->
             <div class="relative w-full lg:w-72 h-52 sm:h-60 lg:h-52 rounded-lg overflow-hidden shrink-0 bg-surface-subtle">
               <img src="${safeImg}" alt="${hotel.name}" class="w-full h-full object-cover transition-transform duration-500 hover:scale-105" loading="lazy" onerror="this.src='images/hero/19_49_2026_10_49_13banner1.jpg'" />
-              <button type="button" onclick="showToast('Loading high-resolution gallery for ${hotel.name}')" class="absolute bottom-2.5 left-2.5 p-1.5 rounded bg-black/60 hover:bg-black/80 text-white backdrop-blur-sm transition-colors" title="View Hotel Gallery">
+              <button type="button" onclick="openHotelOverviewModal('${hotel.id}')" class="absolute bottom-2.5 left-2.5 p-1.5 rounded bg-black/60 hover:bg-black/80 text-white backdrop-blur-sm transition-colors" title="View Hotel Gallery">
                 <i data-lucide="image" class="w-4 h-4"></i>
               </button>
               <span class="absolute top-2.5 right-2.5 px-2 py-0.5 rounded bg-brand-slate/85 text-brand-brass text-[10px] font-bold uppercase tracking-wider backdrop-blur-sm">
@@ -659,7 +659,7 @@
             <!-- Middle: Hotel Details -->
             <div class="flex-1 space-y-2.5">
               <div class="flex flex-wrap items-baseline justify-between gap-2">
-                <h3 class="font-serif text-2xl font-normal text-text-primary hover:text-brand-terracotta transition-colors">
+                <h3 onclick="openHotelOverviewModal('${hotel.id}')" class="font-serif text-2xl font-normal text-text-primary hover:text-brand-terracotta transition-colors cursor-pointer">
                   ${hotel.name}
                 </h3>
               </div>
@@ -709,7 +709,7 @@
               <!-- Action Buttons (Explore Hotel, View Offers, Book Now) -->
               <div class="w-full space-y-2 pt-1">
                 <div class="grid grid-cols-2 gap-2">
-                  <button type="button" onclick="showToast('Viewing full amenities & virtual brochure for ${hotel.name}')" class="py-2 px-2 text-center text-xs font-semibold text-text-primary hover:text-brand-terracotta bg-white border border-border hover:border-brand-terracotta rounded transition-colors truncate">
+                  <button type="button" onclick="openHotelOverviewModal('${hotel.id}')" class="py-2 px-2 text-center text-xs font-semibold text-text-primary hover:text-brand-terracotta bg-white border border-border hover:border-brand-terracotta rounded transition-colors truncate">
                     Explore Hotel
                   </button>
                   <button type="button" onclick="showToast('Promo Code ROYALDIRECT (15% Off) applied for ${hotel.name}', 'success')" class="py-2 px-2 text-center text-xs font-semibold text-text-primary hover:text-brand-terracotta bg-white border border-border hover:border-brand-terracotta rounded transition-colors truncate">
@@ -2711,7 +2711,205 @@
 
 
   
-    <!-- Corporate Info Modal (About Us, Investors, Team, Careers, Feedback, Media, Contact) -->
+    
+  <!-- COMPREHENSIVE HOTEL OVERVIEW & DETAILS MODAL (Matching Official royalorchidhotels.com Overview Detailing) -->
+  <div id="hotel-overview-modal" class="modal-backdrop fixed inset-0 z-50 flex items-center justify-center p-2 sm:p-4 md:p-6 bg-black/80 backdrop-blur-md">
+    <div class="modal-content w-full max-w-5xl bg-white text-text-primary rounded-2xl shadow-2xl overflow-hidden border border-border flex flex-col max-h-[94vh]">
+      
+      <!-- Modal Top Bar -->
+      <div class="px-5 py-4 bg-brand-slate text-white border-b border-brand-terracotta/30 flex items-start justify-between shrink-0">
+        <div class="space-y-1 max-w-2xl">
+          <div class="flex items-center gap-2">
+            <span id="hom-brand-badge" class="px-2 py-0.5 rounded bg-brand-terracotta text-white text-[10px] font-bold uppercase tracking-wider">REGENTA CENTRAL</span>
+            <div class="flex items-center gap-1 text-emerald-400 text-xs font-bold">
+              <span>TripAdvisor</span>
+              <span id="hom-rating-badge" class="px-1.5 py-0.2 rounded bg-emerald-600 text-white text-[10px] font-bold">4.6 ★</span>
+              <span id="hom-reviews-count" class="text-[10px] text-white/70 font-normal">(680 Reviews)</span>
+            </div>
+          </div>
+          <h3 id="hom-hotel-name" class="font-serif text-xl sm:text-2xl md:text-3xl font-normal text-white leading-tight">
+            Regenta Central, Cassia, Chandigarh
+          </h3>
+          <p id="hom-address" class="text-xs text-white/80 flex items-center gap-1.5">
+            <i data-lucide="map-pin" class="w-3.5 h-3.5 text-brand-brass shrink-0"></i>
+            <span id="hom-address-text">Zirakpur-Patiala Road, Green Enclave, Chandigarh, Punjab - 140603</span>
+          </p>
+        </div>
+        <div class="flex items-center gap-3">
+          <a id="hom-phone-link" href="tel:+911762288000" class="hidden sm:flex items-center gap-1.5 px-3 py-1.5 rounded bg-white/10 hover:bg-white/20 text-white text-xs font-semibold border border-white/20 transition-colors">
+            <i data-lucide="phone" class="w-3.5 h-3.5 text-brand-brass"></i>
+            <span id="hom-phone-text">+91 1762288000</span>
+          </a>
+          <button type="button" onclick="closeHotelOverviewModal()" class="p-2 text-white/80 hover:text-white hover:bg-white/10 rounded-full transition-colors cursor-pointer" aria-label="Close modal">
+            <i data-lucide="x" class="w-6 h-6"></i>
+          </button>
+        </div>
+      </div>
+
+      <!-- Scrollable Main Container -->
+      <div class="overflow-y-auto flex-1 custom-scrollbar">
+        
+        <!-- Hero Gallery Section with Particular Hotel Images -->
+        <div class="bg-brand-slate/5 p-4 sm:p-6 border-b border-border">
+          <div class="relative w-full h-64 sm:h-80 md:h-96 rounded-xl overflow-hidden shadow-inner bg-black">
+            <img id="hom-hero-image" src="" alt="Hotel Overview" class="w-full h-full object-cover transition-opacity duration-300" />
+            <div class="absolute bottom-3 left-3 px-3 py-1.5 rounded-lg bg-black/70 backdrop-blur-md text-white text-xs flex items-center gap-2">
+              <i data-lucide="camera" class="w-4 h-4 text-brand-brass"></i>
+              <span id="hom-gallery-counter">Photo 1 of 8</span>
+            </div>
+            <div id="hom-transit-badge" class="absolute top-3 left-3 px-3 py-1 rounded bg-black/70 backdrop-blur-md text-white/90 text-[11px] font-medium max-w-[85%] truncate">
+              Shaheed Bhagat Singh Int. Airport - 8 KM | Chandigarh Junction - 9 KM
+            </div>
+          </div>
+
+          <!-- Thumbnails Row -->
+          <div id="hom-thumbnails" class="flex items-center gap-2.5 mt-3 overflow-x-auto py-1 custom-scrollbar">
+            <!-- Injected by JavaScript -->
+          </div>
+        </div>
+
+        <!-- Sticky Sub-Navigation Tabs within Modal -->
+        <div class="sticky top-0 z-20 bg-white border-b border-border px-4 sm:px-6 shadow-sm flex items-center gap-2 sm:gap-6 overflow-x-auto text-xs sm:text-sm font-semibold text-text-muted">
+          <button type="button" onclick="switchHotelTab('overview')" id="tab-btn-overview" class="py-3 px-1 border-b-2 border-brand-terracotta text-brand-terracotta whitespace-nowrap transition-colors cursor-pointer">
+            Overview
+          </button>
+          <button type="button" onclick="switchHotelTab('rooms')" id="tab-btn-rooms" class="py-3 px-1 border-b-2 border-transparent hover:text-text-primary whitespace-nowrap transition-colors cursor-pointer">
+            Accommodation &amp; Rooms
+          </button>
+          <button type="button" onclick="switchHotelTab('dining')" id="tab-btn-dining" class="py-3 px-1 border-b-2 border-transparent hover:text-text-primary whitespace-nowrap transition-colors cursor-pointer">
+            Dine &amp; Drinks
+          </button>
+          <button type="button" onclick="switchHotelTab('banquets')" id="tab-btn-banquets" class="py-3 px-1 border-b-2 border-transparent hover:text-text-primary whitespace-nowrap transition-colors cursor-pointer">
+            Meetings &amp; Banquets
+          </button>
+          <button type="button" onclick="switchHotelTab('attractions')" id="tab-btn-attractions" class="py-3 px-1 border-b-2 border-transparent hover:text-text-primary whitespace-nowrap transition-colors cursor-pointer">
+            In &amp; Around
+          </button>
+          <button type="button" onclick="switchHotelTab('facilities')" id="tab-btn-facilities" class="py-3 px-1 border-b-2 border-transparent hover:text-text-primary whitespace-nowrap transition-colors cursor-pointer">
+            Facilities
+          </button>
+        </div>
+
+        <!-- Tab Content Panes -->
+        <div class="p-5 sm:p-8 space-y-6">
+          
+          <!-- TAB 1: OVERVIEW -->
+          <div id="hotel-tab-overview" class="space-y-6">
+            <div class="space-y-3">
+              <h4 class="font-serif text-xl sm:text-2xl text-brand-slate font-normal">About The Property</h4>
+              <p id="hom-full-description" class="text-xs sm:text-sm text-text-secondary leading-relaxed">
+                <!-- Injected by JS -->
+              </p>
+            </div>
+
+            <!-- Member Privilege Banner -->
+            <div class="p-4 sm:p-5 rounded-xl bg-brand-slate text-white flex flex-col sm:flex-row items-center justify-between gap-4 border border-brand-brass/30">
+              <div class="space-y-1 text-center sm:text-left">
+                <div class="text-[10px] font-bold uppercase tracking-widest text-brand-brass">Regenta Rewards Privilege</div>
+                <h5 class="font-serif text-lg text-white">Save Up To 25% Instantly on Direct Bookings</h5>
+                <p class="text-xs text-white/70">Complimentary Wi-Fi, 24-hr flexible cancellation &amp; earn rewards on every stay.</p>
+              </div>
+              <button type="button" onclick="showToast('Member discount active! Promo code ROYALDIRECT automatically applied.', 'success')" class="px-5 py-2 rounded bg-brand-terracotta hover:bg-brand-gold-rich text-white text-xs font-bold uppercase tracking-wider transition-colors shrink-0 shadow cursor-pointer">
+                Unlock Member Rate
+              </button>
+            </div>
+
+            <!-- Quick Hotel Highlights -->
+            <div class="grid grid-cols-2 sm:grid-cols-4 gap-3">
+              <div class="p-3.5 rounded-xl bg-surface-subtle border border-border text-center">
+                <div class="text-[10px] font-bold uppercase text-text-muted">Check-In / Out</div>
+                <div class="text-sm font-bold text-brand-slate mt-1">14:00 / 12:00</div>
+              </div>
+              <div class="p-3.5 rounded-xl bg-surface-subtle border border-border text-center">
+                <div class="text-[10px] font-bold uppercase text-text-muted">High-Speed Wi-Fi</div>
+                <div class="text-sm font-bold text-emerald-700 mt-1">Complimentary</div>
+              </div>
+              <div class="p-3.5 rounded-xl bg-surface-subtle border border-border text-center">
+                <div class="text-[10px] font-bold uppercase text-text-muted">Parking &amp; Valet</div>
+                <div class="text-sm font-bold text-brand-slate mt-1">Free On-Site</div>
+              </div>
+              <div class="p-3.5 rounded-xl bg-surface-subtle border border-border text-center">
+                <div class="text-[10px] font-bold uppercase text-text-muted">Direct Guarantee</div>
+                <div class="text-sm font-bold text-brand-terracotta mt-1">Best Tariff</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- TAB 2: ROOMS & SUITES -->
+          <div id="hotel-tab-rooms" class="hidden space-y-4">
+            <div class="flex items-center justify-between">
+              <h4 class="font-serif text-xl sm:text-2xl text-brand-slate font-normal">Accommodations &amp; Suites</h4>
+              <span class="text-xs text-text-muted font-medium">All rooms feature premium climate control &amp; luxury bedding</span>
+            </div>
+            <div id="hom-rooms-container" class="space-y-4">
+              <!-- Injected by JS -->
+            </div>
+          </div>
+
+          <!-- TAB 3: DINING -->
+          <div id="hotel-tab-dining" class="hidden space-y-6">
+            <div id="hom-dining-container">
+              <!-- Injected by JS -->
+            </div>
+          </div>
+
+          <!-- TAB 4: BANQUETS & MEETINGS -->
+          <div id="hotel-tab-banquets" class="hidden space-y-6">
+            <div id="hom-banquets-container">
+              <!-- Injected by JS -->
+            </div>
+          </div>
+
+          <!-- TAB 5: IN & AROUND / SIGHTSEEING -->
+          <div id="hotel-tab-attractions" class="hidden space-y-6">
+            <div class="space-y-3">
+              <h4 class="font-serif text-xl sm:text-2xl text-brand-slate font-normal">In &amp; Around the City</h4>
+              <p class="text-xs sm:text-sm text-text-muted">Explore popular landmarks, viewpoints, and cultural attractions located within easy driving distance.</p>
+              <div class="p-5 rounded-xl bg-surface-subtle border border-border space-y-3">
+                <p id="hom-attractions-text" class="text-xs sm:text-sm text-text-secondary leading-relaxed"></p>
+              </div>
+            </div>
+          </div>
+
+          <!-- TAB 6: FACILITIES -->
+          <div id="hotel-tab-facilities" class="hidden space-y-6">
+            <h4 class="font-serif text-xl sm:text-2xl text-brand-slate font-normal">Hotel Services &amp; Facilities</h4>
+            <div id="hom-amenities-grid" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3">
+              <!-- Injected by JS -->
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+
+      <!-- Sticky Bottom Booking Bar -->
+      <div class="px-5 py-3.5 bg-surface-subtle border-t border-border flex flex-col sm:flex-row items-center justify-between gap-3 shrink-0">
+        <div>
+          <div class="flex items-baseline gap-2">
+            <span class="text-[10px] uppercase font-bold text-text-muted">Direct Tariff:</span>
+            <span id="hom-bottom-price" class="text-xl sm:text-2xl font-extrabold text-brand-slate">₹3,800</span>
+            <span class="text-xs text-text-muted">/ night + taxes</span>
+          </div>
+          <div class="text-[11px] text-brand-terracotta font-semibold">
+            Member Rate: <span id="hom-bottom-member-price" class="font-bold">₹3,040</span> · Promo <span class="px-1.5 py-0.5 rounded bg-brand-terracotta/15 font-mono">ROYALDIRECT</span> applied
+          </div>
+        </div>
+        <div class="flex items-center gap-2.5 w-full sm:w-auto">
+          <button type="button" onclick="closeHotelOverviewModal()" class="px-4 py-2 rounded border border-border text-xs font-semibold text-text-secondary hover:bg-white transition-colors cursor-pointer">
+            Back to Hotels
+          </button>
+          <button type="button" id="hom-reserve-btn" class="flex-1 sm:flex-none px-6 py-2.5 rounded bg-brand-terracotta hover:bg-brand-gold-rich text-white text-xs font-bold uppercase tracking-wider transition-colors shadow flex items-center justify-center gap-1.5 cursor-pointer">
+            <span>Book Direct</span>
+            <i data-lucide="arrow-right" class="w-4 h-4"></i>
+          </button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Corporate Info Modal (About Us, Investors, Team, Careers, Feedback, Media, Contact) -->
   <div id="corporate-info-modal" class="modal-backdrop fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-6 bg-black/75 backdrop-blur-md">
     <div class="modal-content w-full max-w-3xl bg-white text-text-primary rounded-xl shadow-2xl overflow-hidden border border-border flex flex-col max-h-[90vh]">
       <!-- Header Bar (Regal Slate with Brass Accent) -->

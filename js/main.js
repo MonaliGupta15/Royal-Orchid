@@ -1675,3 +1675,315 @@ document.addEventListener('DOMContentLoaded', () => {
 window.openCorporateModal = openCorporateModal;
 window.closeCorporateModal = closeCorporateModal;
 
+
+
+// ============================================================================
+// HOTEL OVERVIEW & DETAILED MODAL SYSTEM (Matching royalorchidhotels.com)
+// ============================================================================
+
+let currentHotelData = null;
+
+function findHotelById(hotelId) {
+  if (!hotelId) return null;
+  const cleanId = String(hotelId).toLowerCase().trim();
+  if (typeof ROYAL_CITIES_DB === 'undefined') return null;
+
+  for (const citySlug in ROYAL_CITIES_DB) {
+    const city = ROYAL_CITIES_DB[citySlug];
+    if (city && city.hotels) {
+      for (const h of city.hotels) {
+        if (
+          h.id === cleanId || 
+          h.name.toLowerCase() === cleanId ||
+          cleanId.includes(h.id) ||
+          h.id.includes(cleanId) ||
+          cleanId.replace(/-/g, ' ').includes(h.name.toLowerCase()) ||
+          h.name.toLowerCase().includes(cleanId.replace(/-/g, ' '))
+        ) {
+          return h;
+        }
+      }
+    }
+  }
+  return null;
+}
+
+function openHotelOverviewModal(hotelId) {
+  const hotel = findHotelById(hotelId);
+  if (!hotel) {
+    showToast('Viewing hotel information and live direct privileges.', 'info');
+    return;
+  }
+  currentHotelData = hotel;
+
+  const modal = document.getElementById('hotel-overview-modal');
+  if (!modal) return;
+
+  // Header
+  const nameEl = document.getElementById('hom-hotel-name');
+  if (nameEl) nameEl.textContent = hotel.name;
+  
+  const addrEl = document.getElementById('hom-address-text');
+  if (addrEl) addrEl.textContent = hotel.address;
+
+  const phoneEl = document.getElementById('hom-phone-text');
+  if (phoneEl) phoneEl.textContent = hotel.phone || '+91 80 4178 3000';
+
+  const phoneLink = document.getElementById('hom-phone-link');
+  if (phoneLink) phoneLink.href = 'tel:' + (hotel.phone ? hotel.phone.replace(/[^+\d]/g, '') : '+918041783000');
+
+  const ratingEl = document.getElementById('hom-rating-badge');
+  if (ratingEl) ratingEl.textContent = (hotel.rating || '4.6') + ' ★';
+
+  const reviewsEl = document.getElementById('hom-reviews-count');
+  if (reviewsEl) reviewsEl.textContent = '(' + (hotel.reviews || '450') + ' Verified Reviews)';
+
+  const transitEl = document.getElementById('hom-transit-badge');
+  if (transitEl) transitEl.textContent = hotel.transit;
+
+  // Brand Badge
+  const brandBadge = document.getElementById('hom-brand-badge');
+  if (brandBadge) {
+    const lowerName = hotel.name.toLowerCase();
+    if (lowerName.includes('resort')) brandBadge.textContent = 'REGENTA RESORTS';
+    else if (lowerName.includes('place')) brandBadge.textContent = 'REGENTA PLACE';
+    else if (lowerName.includes('inn')) brandBadge.textContent = 'REGENTA INN';
+    else if (lowerName.includes('royal orchid')) brandBadge.textContent = 'HOTEL ROYAL ORCHID';
+    else if (lowerName.includes('central')) brandBadge.textContent = 'REGENTA CENTRAL';
+    else brandBadge.textContent = 'REGENTA HOTELS';
+  }
+
+  // Hero Image & Thumbnails
+  const gallery = (hotel.gallery && hotel.gallery.length) ? hotel.gallery : [hotel.image || 'images/hero/19_49_2026_10_49_13banner1.jpg'];
+  const heroImg = document.getElementById('hom-hero-image');
+  if (heroImg) heroImg.src = gallery[0];
+
+  const counter = document.getElementById('hom-gallery-counter');
+  if (counter) counter.textContent = `Photo 1 of ${gallery.length}`;
+
+  const thumbsContainer = document.getElementById('hom-thumbnails');
+  if (thumbsContainer) {
+    thumbsContainer.innerHTML = gallery.map((imgUrl, idx) => `
+      <button type="button" onclick="setHeroPhoto('${imgUrl}', ${idx + 1}, ${gallery.length}, this)" class="hom-thumb-btn w-16 h-12 sm:w-20 sm:h-14 rounded-lg overflow-hidden shrink-0 border-2 ${idx === 0 ? 'border-brand-terracotta' : 'border-transparent'} hover:opacity-100 transition-all opacity-80 cursor-pointer">
+        <img src="${imgUrl}" alt="Photo ${idx+1}" class="w-full h-full object-cover" onerror="this.src='images/hero/19_49_2026_10_49_13banner1.jpg'" />
+      </button>
+    `).join('');
+  }
+
+  // Overview Tab text
+  const descEl = document.getElementById('hom-full-description');
+  if (descEl) descEl.textContent = hotel.description;
+
+  // Rooms Tab
+  const roomsContainer = document.getElementById('hom-rooms-container');
+  if (roomsContainer) {
+    const roomsList = hotel.roomsList || [
+      {
+        name: "Deluxe Room",
+        size: "280 sq.ft",
+        bed: "King or Twin Bed",
+        image: gallery[0],
+        description: "Contemporary and thoughtfully designed with plush bedding, high-speed Wi-Fi, 43-inch Smart TV, ergonomic work desk, and luxury bath amenities.",
+        price: hotel.price,
+        memberPrice: hotel.memberPrice
+      }
+    ];
+    roomsContainer.innerHTML = roomsList.map(r => `
+      <div class="p-4 sm:p-5 rounded-xl border border-border bg-white flex flex-col md:flex-row gap-5 items-start">
+        <div class="w-full md:w-56 h-44 rounded-lg overflow-hidden shrink-0 bg-surface-subtle">
+          <img src="${r.image || gallery[0]}" alt="${r.name}" class="w-full h-full object-cover hover:scale-105 transition-transform duration-300" onerror="this.src='images/hero/19_49_2026_10_49_13banner1.jpg'" />
+        </div>
+        <div class="flex-1 space-y-2">
+          <div class="flex items-center gap-2">
+            <span class="px-2 py-0.5 rounded bg-surface-subtle border border-border text-[10px] font-bold text-brand-slate uppercase">${r.size}</span>
+            <span class="px-2 py-0.5 rounded bg-surface-subtle border border-border text-[10px] font-bold text-text-muted">• ${r.bed}</span>
+          </div>
+          <h5 class="font-serif text-lg sm:text-xl font-normal text-text-primary">${r.name}</h5>
+          <p class="text-xs text-text-secondary leading-relaxed">${r.description}</p>
+          <div class="flex flex-wrap gap-1.5 pt-1 text-[11px] text-text-muted">
+            <span>✓ High-Speed Wi-Fi</span>
+            <span>✓ 43" Smart TV</span>
+            <span>✓ Tea/Coffee Maker</span>
+            <span>✓ Rain Shower</span>
+            <span>✓ Electronic Safe</span>
+          </div>
+        </div>
+        <div class="w-full md:w-48 shrink-0 flex flex-col items-start md:items-end justify-between border-t md:border-t-0 md:border-l border-border pt-3 md:pt-0 md:pl-4">
+          <div>
+            <div class="text-[10px] uppercase font-bold text-text-muted">Tariff</div>
+            <div class="text-lg font-bold text-brand-slate">₹${r.price} <span class="text-xs font-normal text-text-muted">/ night</span></div>
+            <div class="text-[11px] text-brand-terracotta font-bold">Member: ₹${r.memberPrice}</div>
+          </div>
+          <button type="button" onclick="closeHotelOverviewModal(); openSearchResultsModal({ destination: '${hotel.name} - ${r.name}', checkin: 'Nov 22', checkout: 'Nov 24', adults: 2, rooms: 1 });" class="mt-3 w-full px-4 py-2 bg-brand-terracotta hover:bg-brand-gold-rich text-white text-xs font-bold uppercase tracking-wider rounded transition-colors shadow cursor-pointer">
+            Reserve Room
+          </button>
+        </div>
+      </div>
+    `).join('');
+  }
+
+  // Dining Tab
+  const diningContainer = document.getElementById('hom-dining-container');
+  if (diningContainer) {
+    const d = hotel.dining || {
+      name: "PINXX Multi-Cuisine Restaurant & Lounge",
+      description: "All-day fine dining venue serving signature North Indian, Continental, and Pan-Asian specialties prepared by master chefs.",
+      timings: "07:00 AM - 11:00 PM",
+      cuisine: "Multi-Cuisine"
+    };
+    diningContainer.innerHTML = `
+      <div class="p-5 sm:p-6 rounded-xl border border-border bg-white flex flex-col md:flex-row gap-6">
+        <div class="w-full md:w-64 h-48 rounded-xl overflow-hidden shrink-0 bg-surface-subtle">
+          <img src="${gallery[Math.min(2, gallery.length - 1)]}" alt="${d.name}" class="w-full h-full object-cover" onerror="this.src='images/hero/19_49_2026_10_49_13banner1.jpg'" />
+        </div>
+        <div class="flex-1 space-y-3">
+          <div class="inline-block px-2.5 py-0.5 rounded bg-brand-terracotta/10 text-brand-terracotta text-[10px] font-bold uppercase tracking-wider">
+            ${d.cuisine || 'Multi-Cuisine Fine Dining'}
+          </div>
+          <h4 class="font-serif text-2xl text-brand-slate font-normal">${d.name}</h4>
+          <p class="text-xs sm:text-sm text-text-secondary leading-relaxed">${d.description}</p>
+          <div class="text-xs text-text-muted">
+            <strong>Operating Hours:</strong> ${d.timings || '07:00 AM - 11:00 PM'} · Buffet &amp; À La Carte
+          </div>
+          <button type="button" onclick="showToast('Table reservation request received for ${hotel.name}! Our restaurant host will confirm shortly.', 'success')" class="px-5 py-2 bg-brand-slate hover:bg-brand-slate/90 text-white text-xs font-bold uppercase tracking-wider rounded transition-colors shadow cursor-pointer">
+            Reserve a Table
+          </button>
+        </div>
+      </div>
+    `;
+  }
+
+  // Banquets Tab
+  const banquetsContainer = document.getElementById('hom-banquets-container');
+  if (banquetsContainer) {
+    const b = hotel.banquets || {
+      name: "Orchid Grand Ballroom & Meeting Suites",
+      description: "State-of-the-art conference and wedding venue with advanced audiovisual projection, high-speed connectivity, and curated catering.",
+      capacity: "50 to 400 Guests",
+      events: "Conferences, Seminars, Weddings & Receptions"
+    };
+    banquetsContainer.innerHTML = `
+      <div class="p-5 sm:p-6 rounded-xl border border-border bg-white flex flex-col md:flex-row gap-6">
+        <div class="w-full md:w-64 h-48 rounded-xl overflow-hidden shrink-0 bg-surface-subtle">
+          <img src="${gallery[Math.min(3, gallery.length - 1)]}" alt="${b.name}" class="w-full h-full object-cover" onerror="this.src='images/hero/19_49_2026_10_49_13banner1.jpg'" />
+        </div>
+        <div class="flex-1 space-y-3">
+          <div class="inline-block px-2.5 py-0.5 rounded bg-brand-slate/10 text-brand-slate text-[10px] font-bold uppercase tracking-wider">
+            ${b.capacity || '50 - 400 Guests'}
+          </div>
+          <h4 class="font-serif text-2xl text-brand-slate font-normal">${b.name}</h4>
+          <p class="text-xs sm:text-sm text-text-secondary leading-relaxed">${b.description}</p>
+          <div class="text-xs text-text-muted">
+            <strong>Suitable For:</strong> ${b.events || 'Corporate Seminars, Executive Conclaves, Weddings &amp; Receptions'}
+          </div>
+          <button type="button" onclick="showToast('Banquet &amp; Event enquiry sent for ${hotel.name}! Our Events Team will connect within 2 hours.', 'success')" class="px-5 py-2 bg-brand-terracotta hover:bg-brand-gold-rich text-white text-xs font-bold uppercase tracking-wider rounded transition-colors shadow cursor-pointer">
+            Request Event Proposal
+          </button>
+        </div>
+      </div>
+    `;
+  }
+
+  // Attractions Tab
+  const attrEl = document.getElementById('hom-attractions-text');
+  if (attrEl) attrEl.textContent = hotel.attractions || 'Centrally located with convenient access to major heritage and commercial destinations.';
+
+  // Facilities Tab
+  const amenitiesGrid = document.getElementById('hom-amenities-grid');
+  if (amenitiesGrid) {
+    const allAmenities = hotel.amenities || [
+      "Free High-Speed Wi-Fi",
+      "24/7 Room Service",
+      "Multi-Cuisine Dining",
+      "Fitness Center",
+      "Meeting Facilities",
+      "Valet Parking",
+      "Airport Transfers"
+    ];
+    amenitiesGrid.innerHTML = allAmenities.map(a => `
+      <div class="p-3 rounded-lg bg-surface-subtle border border-border flex items-center gap-2 text-xs font-medium text-text-secondary">
+        <i data-lucide="check-circle" class="w-4 h-4 text-emerald-700 shrink-0"></i>
+        <span>${a}</span>
+      </div>
+    `).join('');
+  }
+
+  // Bottom Pricing & Reserve CTA
+  const bottomPrice = document.getElementById('hom-bottom-price');
+  if (bottomPrice) bottomPrice.textContent = '₹' + hotel.price;
+
+  const bottomMemberPrice = document.getElementById('hom-bottom-member-price');
+  if (bottomMemberPrice) bottomMemberPrice.textContent = '₹' + hotel.memberPrice;
+
+  const reserveBtn = document.getElementById('hom-reserve-btn');
+  if (reserveBtn) {
+    reserveBtn.onclick = function() {
+      closeHotelOverviewModal();
+      openSearchResultsModal({ destination: hotel.name, checkin: 'Nov 22', checkout: 'Nov 24', adults: 2, rooms: 1 });
+    };
+  }
+
+  switchHotelTab('overview');
+  openModal(modal);
+  if (window.lucide) window.lucide.createIcons();
+}
+
+function setHeroPhoto(url, current, total, btnElem) {
+  const heroImg = document.getElementById('hom-hero-image');
+  if (heroImg) heroImg.src = url;
+  const counter = document.getElementById('hom-gallery-counter');
+  if (counter) counter.textContent = `Photo ${current} of ${total}`;
+
+  // Update active border on thumbnails
+  document.querySelectorAll('.hom-thumb-btn').forEach(btn => {
+    btn.classList.remove('border-brand-terracotta');
+    btn.classList.add('border-transparent');
+  });
+  if (btnElem) {
+    btnElem.classList.remove('border-transparent');
+    btnElem.classList.add('border-brand-terracotta');
+  }
+}
+
+function switchHotelTab(tabName) {
+  const tabs = ['overview', 'rooms', 'dining', 'banquets', 'attractions', 'facilities'];
+  tabs.forEach(t => {
+    const pane = document.getElementById('hotel-tab-' + t);
+    const btn = document.getElementById('tab-btn-' + t);
+    if (pane) {
+      if (t === tabName) pane.classList.remove('hidden');
+      else pane.classList.add('hidden');
+    }
+    if (btn) {
+      if (t === tabName) {
+        btn.classList.add('border-brand-terracotta', 'text-brand-terracotta');
+        btn.classList.remove('border-transparent');
+      } else {
+        btn.classList.remove('border-brand-terracotta', 'text-brand-terracotta');
+        btn.classList.add('border-transparent');
+      }
+    }
+  });
+  if (window.lucide) window.lucide.createIcons();
+}
+
+function closeHotelOverviewModal() {
+  const modal = document.getElementById('hotel-overview-modal');
+  closeModal(modal);
+}
+
+// Auto-open hotel modal if ?hotel=slug is in URL
+document.addEventListener('DOMContentLoaded', () => {
+  try {
+    const urlParams = new URLSearchParams(window.location.search);
+    const hotelParam = urlParams.get('hotel');
+    if (hotelParam) {
+      setTimeout(() => openHotelOverviewModal(hotelParam), 500);
+    }
+  } catch (e) {}
+});
+
+window.openHotelOverviewModal = openHotelOverviewModal;
+window.closeHotelOverviewModal = closeHotelOverviewModal;
+window.setHeroPhoto = setHeroPhoto;
+window.switchHotelTab = switchHotelTab;
