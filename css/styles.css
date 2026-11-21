@@ -382,6 +382,13 @@ header#main-header.light-header {
   letter-spacing: 0.05em;
 }
 
+.vertical-tab-text {
+  writing-mode: vertical-rl;
+  -webkit-writing-mode: vertical-rl;
+  transform: rotate(180deg);
+  letter-spacing: 0.18em;
+}
+
 /* Modals & Popovers */
 .modal-backdrop {
   opacity: 0;

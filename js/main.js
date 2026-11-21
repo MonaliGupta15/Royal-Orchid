@@ -545,6 +545,47 @@ function initBookingWidget() {
       });
     });
   }
+
+  // Hero Booking Form submission handler
+  const heroForm = document.getElementById('hero-booking-form');
+  if (heroForm) {
+    heroForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const destination = document.getElementById('booking-destination')?.value || 'Hotel Royal Orchid, Bengaluru';
+      const checkin = document.getElementById('booking-checkin')?.value || 'Nov 22';
+      const checkout = document.getElementById('booking-checkout')?.value || 'Nov 24';
+      const guests = document.getElementById('booking-guests')?.value || '2';
+      const promo = document.getElementById('booking-promo-code')?.value || '';
+      const isMember = document.getElementById('member-discount-checkbox')?.checked;
+
+      openSearchResultsModal({
+        destination,
+        checkin,
+        checkout,
+        adults: parseInt(guests, 10) || 2,
+        rooms: 1,
+        promo,
+        isMember
+      });
+    });
+  }
+
+  // Promo Code Apply Button
+  const applyPromoBtn = document.getElementById('apply-promo-btn');
+  const promoInput = document.getElementById('booking-promo-code');
+  if (applyPromoBtn && promoInput) {
+    applyPromoBtn.addEventListener('click', (e) => {
+      e.preventDefault();
+      const code = promoInput.value.trim().toUpperCase();
+      if (code) {
+        showToast(`Promo Code "${code}" Applied! Instant discount of up to 25% unlocked.`, 'success');
+        const chk = document.getElementById('member-discount-checkbox');
+        if (chk) chk.checked = true;
+      } else {
+        showToast('Please enter a valid promo code (e.g. ROYALDIRECT or DIRECT15)');
+      }
+    });
+  }
 }
 
 /* ==========================================================================
@@ -764,9 +805,13 @@ function initToastEngine() {
   document.querySelectorAll('.copy-promo-btn').forEach((btn) => {
     btn.addEventListener('click', (e) => {
       e.preventDefault();
-      const code = btn.getAttribute('data-code') || 'ROYAL20';
+      const code = btn.getAttribute('data-code') || 'ROYALDIRECT';
       navigator.clipboard.writeText(code).then(() => {
-        showToast(`Promo Code "${code}" copied to clipboard! Enjoy your exclusive member discount.`);
+        showToast(`Promo Code "${code}" copied to clipboard! Instant discount unlocked.`, 'success');
+        const promoInput = document.getElementById('booking-promo-code');
+        if (promoInput) promoInput.value = code;
+        const chk = document.getElementById('member-discount-checkbox');
+        if (chk) chk.checked = true;
       }).catch(() => {
         showToast(`Promo Code: ${code} - Apply at checkout for extra savings!`);
       });
