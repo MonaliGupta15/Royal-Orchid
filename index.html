@@ -241,15 +241,35 @@
   <main>
     <!-- HERO SECTION: Grounded, Confident & Authentic -->
     <section id="hero-section" class="relative w-full min-h-[92vh] sm:min-h-[85vh] flex items-center justify-center bg-brand-slate text-white pt-24 pb-16 px-4 sm:px-6 overflow-hidden">
-      <!-- Background Video Container with Fallback Image -->
-      <div class="hero-video-container absolute inset-0 z-0 opacity-40">
-        <video id="hero-bg-video" autoplay muted loop playsinline preload="auto" poster="images/hotels/bangalore_12_25_2020_04_25_57thumb1.jpg" class="w-full h-full object-cover">
-          <source src="videos/hero-resort-bangalore.mp4" type="video/mp4" />
-        </video>
+      <!-- Sliding Hero Image Carousel Background -->
+      <div class="absolute inset-0 z-0 overflow-hidden bg-brand-slate">
+        <div class="hero-slide active">
+          <img src="images/hotels/bangalore_10_03_2026_06_03_33hrob-banner-3.jpg" alt="Hotel Royal Orchid Bengaluru - 5 Star Flagship Golf View" class="w-full h-full object-cover" />
+        </div>
+        <div class="hero-slide">
+          <img src="images/hero/23_21_2026_05_21_57LaxminarayanPalaceResortVadodarabanner.jpg" alt="Laxmi Narayan Palace Resort - Heritage Architecture" class="w-full h-full object-cover" />
+        </div>
+        <div class="hero-slide">
+          <img src="images/hero/21_28_2026_01_28_41Regenta_Magnus_Pune1366X565.jpg" alt="Regenta Central - Corporate & Tech Corridors" class="w-full h-full object-cover" />
+        </div>
+        <div class="hero-slide">
+          <img src="images/hotels/bangalore_19_Mar_2024_04_03_19event-over.jpg" alt="Royal Orchid Convention Centre - Sprawling Wedding Lawns" class="w-full h-full object-cover" />
+        </div>
+        <div class="hero-slide">
+          <img src="images/hotels/bangalore_19_05_2024_04_05_44pool-banner.jpg" alt="Royal Orchid Resorts - Leisure & Poolside Retreats" class="w-full h-full object-cover" />
+        </div>
       </div>
 
-      <!-- Subtle Dark Gradient Overlay for Maximum Text Contrast -->
-      <div class="absolute inset-0 bg-gradient-to-t from-brand-slate via-brand-slate/60 to-brand-slate/80 z-10"></div>
+      <!-- Dark Gradient Overlay for High-Contrast Text Readability -->
+      <div class="absolute inset-0 bg-gradient-to-t from-brand-slate via-brand-slate/65 to-brand-slate/75 z-10"></div>
+
+      <!-- Slide Navigation Arrows (Desktop / Tablet) -->
+      <button id="hero-prev-btn" type="button" class="hidden sm:flex absolute left-4 sm:left-6 top-1/2 -translate-y-1/2 z-30 w-11 h-11 rounded-full bg-brand-slate/70 hover:bg-brand-slate text-white border border-white/20 items-center justify-center transition-all shadow-xl hover:scale-105 focus:outline-none" aria-label="Previous Slide">
+        <i data-lucide="chevron-left" class="w-6 h-6"></i>
+      </button>
+      <button id="hero-next-btn" type="button" class="hidden sm:flex absolute right-4 sm:right-6 top-1/2 -translate-y-1/2 z-30 w-11 h-11 rounded-full bg-brand-slate/70 hover:bg-brand-slate text-white border border-white/20 items-center justify-center transition-all shadow-xl hover:scale-105 focus:outline-none" aria-label="Next Slide">
+        <i data-lucide="chevron-right" class="w-6 h-6"></i>
+      </button>
 
       <!-- Hero Content -->
       <div class="relative z-20 max-w-5xl mx-auto text-center flex flex-col items-center">
@@ -358,18 +378,8 @@
           </div>
         </div>
 
-        <!-- Video Controls & Sound Toggle -->
-        <div class="mt-4 flex items-center gap-3 text-xs text-white/70">
-          <button id="hero-video-toggle" type="button" class="hover:text-white flex items-center gap-1 text-[11px]">
-            <i data-lucide="pause" class="w-3.5 h-3.5"></i>
-            <span>Pause Video</span>
-          </button>
-          <span>·</span>
-          <button id="hero-sound-toggle" type="button" class="hover:text-white flex items-center gap-1 text-[11px]">
-            <i data-lucide="volume-x" class="w-3.5 h-3.5"></i>
-            <span>Enable Audio</span>
-          </button>
-        </div>
+        <!-- Hero Carousel Slide Indicators -->
+        <div class="mt-6 flex items-center justify-center gap-2" id="hero-dots-container"></div>
       </div>
     </section>
 
