@@ -179,7 +179,7 @@ function initMobileMenu() {
 }
 
 /* ==========================================================================
-   5. Hero Carousel with Slide Wipe & Auto-advance
+   5. Hero Carousel with Dynamic Multi-Transition (Slide Left, Right & Merge) & Continuous Auto-scroll
    ========================================================================== */
 function initHeroCarousel() {
   const slides = document.querySelectorAll('.hero-slide');
@@ -191,18 +191,27 @@ function initHeroCarousel() {
 
   let currentIndex = 0;
   let timer = null;
+  let isTransitioning = false;
+  const transitionTypes = ['from-right', 'merge', 'from-left', 'merge'];
+  let cycleStep = 0;
+
+  const allTransitionClasses = [
+    'enter-right-prep', 'enter-left-prep', 'enter-merge-prep',
+    'leave-to-left', 'leave-to-right', 'leave-merge'
+  ];
 
   // Render indicator dots
   if (dotsContainer) {
     dotsContainer.innerHTML = '';
     slides.forEach((_, idx) => {
       const dot = document.createElement('button');
-      dot.className = `w-2.5 h-2.5 rounded-full transition-all duration-300 ${
-        idx === 0 ? 'bg-brand-gold w-8' : 'bg-white/40 hover:bg-white'
+      dot.className = `h-2 rounded-full transition-all duration-300 cursor-pointer ${
+        idx === 0 ? 'bg-brand-terracotta w-6 sm:w-7' : 'bg-white/50 hover:bg-white w-2'
       }`;
       dot.setAttribute('aria-label', `Go to slide ${idx + 1}`);
       dot.addEventListener('click', () => {
-        goToSlide(idx);
+        if (idx === currentIndex || isTransitioning) return;
+        goToSlide(idx, idx > currentIndex ? 'from-right' : 'from-left');
         restartTimer();
       });
       dotsContainer.appendChild(dot);
@@ -214,22 +223,80 @@ function initHeroCarousel() {
     const dots = dotsContainer.querySelectorAll('button');
     dots.forEach((dot, idx) => {
       if (idx === currentIndex) {
-        dot.className = 'w-8 h-2.5 rounded-full bg-brand-gold transition-all duration-300';
+        dot.className = 'w-6 sm:w-7 h-2 rounded-full bg-brand-terracotta transition-all duration-300 shadow-sm';
       } else {
-        dot.className = 'w-2.5 h-2.5 rounded-full bg-white/40 hover:bg-white transition-all duration-300';
+        dot.className = 'w-2 h-2 rounded-full bg-white/50 hover:bg-white transition-all duration-300';
       }
     });
   }
 
-  function goToSlide(newIndex) {
-    slides[currentIndex].classList.remove('active');
-    slides[currentIndex].classList.add(newIndex > currentIndex ? 'slide-prev' : 'slide-next');
+  function goToSlide(newIndex, forcedType) {
+    if (isTransitioning) return;
+    const targetIndex = (newIndex + slides.length) % slides.length;
+    if (targetIndex === currentIndex) return;
 
-    currentIndex = (newIndex + slides.length) % slides.length;
-
-    slides[currentIndex].classList.remove('slide-prev', 'slide-next');
-    slides[currentIndex].classList.add('active');
+    isTransitioning = true;
+    const prevIndex = currentIndex;
+    currentIndex = targetIndex;
     updateDots();
+
+    const transitionType = forcedType || transitionTypes[cycleStep % transitionTypes.length];
+    if (!forcedType) cycleStep++;
+
+    const prevSlide = slides[prevIndex];
+    const nextSlide = slides[targetIndex];
+
+    // Clean any lingering animation classes
+    allTransitionClasses.forEach(cls => {
+      prevSlide.classList.remove(cls);
+      nextSlide.classList.remove(cls);
+    });
+
+    // Step 1: Prepare next slide in its starting position without animating
+    if (transitionType === 'from-right') {
+      nextSlide.classList.add('enter-right-prep');
+    } else if (transitionType === 'from-left') {
+      nextSlide.classList.add('enter-left-prep');
+    } else {
+      nextSlide.classList.add('enter-merge-prep');
+    }
+
+    // Force layout reflow
+    void nextSlide.offsetWidth;
+
+    // Step 2: Trigger the transition
+    requestAnimationFrame(() => {
+      if (transitionType === 'from-right') {
+        nextSlide.classList.remove('enter-right-prep');
+        nextSlide.classList.add('active');
+        prevSlide.classList.remove('active');
+        prevSlide.classList.add('leave-to-left');
+      } else if (transitionType === 'from-left') {
+        nextSlide.classList.remove('enter-left-prep');
+        nextSlide.classList.add('active');
+        prevSlide.classList.remove('active');
+        prevSlide.classList.add('leave-to-right');
+      } else {
+        // Merge (cross-fade / dissolve)
+        nextSlide.classList.remove('enter-merge-prep');
+        nextSlide.classList.add('active');
+        prevSlide.classList.remove('active');
+        prevSlide.classList.add('leave-merge');
+      }
+    });
+
+    // Step 3: Cleanup classes after transition completes
+    setTimeout(() => {
+      slides.forEach((s, i) => {
+        allTransitionClasses.forEach(cls => s.classList.remove(cls));
+        if (i !== currentIndex) {
+          s.classList.remove('active');
+        } else {
+          s.classList.add('active');
+        }
+      });
+      isTransitioning = false;
+    }, 1250);
   }
 
   function nextSlide() {
@@ -237,12 +304,12 @@ function initHeroCarousel() {
   }
 
   function prevSlide() {
-    goToSlide(currentIndex - 1);
+    goToSlide(currentIndex - 1, 'from-left');
   }
 
   if (nextBtn) {
     nextBtn.addEventListener('click', () => {
-      nextSlide();
+      goToSlide(currentIndex + 1, 'from-right');
       restartTimer();
     });
   }
@@ -255,7 +322,8 @@ function initHeroCarousel() {
   }
 
   function startTimer() {
-    timer = setInterval(nextSlide, 3500); // Auto-slide every 3.5 seconds
+    if (timer) clearInterval(timer);
+    timer = setInterval(nextSlide, 4500); // 4.5 seconds per slide for majestic pacing
   }
 
   function restartTimer() {
@@ -265,12 +333,12 @@ function initHeroCarousel() {
 
   startTimer();
 
-  // Pause on hover
-  const heroSection = document.getElementById('hero-section');
-  if (heroSection) {
-    heroSection.addEventListener('mouseenter', () => clearInterval(timer));
-    heroSection.addEventListener('mouseleave', startTimer);
-  }
+  // Only pause auto-advance if the guest is actively interacting with booking input fields
+  const bookingInputs = document.querySelectorAll('#hero-booking-form input, #hero-booking-form select');
+  bookingInputs.forEach(input => {
+    input.addEventListener('focus', () => clearInterval(timer));
+    input.addEventListener('blur', restartTimer);
+  });
 }
 
 /* ==========================================================================

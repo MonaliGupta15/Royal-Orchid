@@ -88,7 +88,7 @@
   </script>
 
   <!-- Custom CSS -->
-  <link rel="stylesheet" href="css/styles.css?v=3.5" />
+  <link rel="stylesheet" href="css/styles.css?v=3.6" />
 
   <!-- Lenis Smooth Scroll CDN -->
   <script src="https://unpkg.com/lenis@1.1.18/dist/lenis.min.js"></script>
@@ -250,41 +250,52 @@
   </div>
 
   <main>
-    <!-- HERO SECTION: Real Colors, Grounded & Confident -->
-    <section id="hero-section" class="relative w-full min-h-[92vh] sm:min-h-[85vh] flex items-center justify-center bg-black text-white pt-24 pb-16 px-4 sm:px-6 overflow-hidden">
+    <!-- HERO SECTION: Full Screen with Clean Lower-Anchored Booking Bar -->
+    <section id="hero-section" class="relative w-full h-screen min-h-screen flex flex-col justify-end items-center bg-black text-white pb-8 sm:pb-12 md:pb-14 px-4 sm:px-6 overflow-hidden">
       <!-- Sliding Hero Image Carousel Background (100% Real Image Colors) -->
       <div class="absolute inset-0 z-0 overflow-hidden bg-black">
         <div class="hero-slide active">
-          <img src="images/hotels/bangalore_10_03_2026_06_03_33hrob-banner-3.jpg" alt="Hotel Royal Orchid Bengaluru - 5 Star Flagship Golf View" class="w-full h-full object-cover" />
+          <img src="https://www.royalorchidhotels.com/Images/slider/15_18_2025_03_18_191.jpg" alt="Regenta Waterfront Resort Dapoli - Oceanfront Infinity Pool & Sunset Lounge" class="w-full h-full object-cover" />
         </div>
         <div class="hero-slide">
-          <img src="images/hero/23_21_2026_05_21_57LaxminarayanPalaceResortVadodarabanner.jpg" alt="Laxmi Narayan Palace Resort - Heritage Architecture" class="w-full h-full object-cover" />
+          <img src="images/hotels/bangalore_10_03_2026_06_03_33hrob-banner-3.jpg" alt="Hotel Royal Orchid Bengaluru - 5-Star Flagship Golf View" class="w-full h-full object-cover" />
         </div>
         <div class="hero-slide">
-          <img src="images/hero/21_28_2026_01_28_41Regenta_Magnus_Pune1366X565.jpg" alt="Regenta Central - Corporate & Tech Corridors" class="w-full h-full object-cover" />
+          <img src="https://www.royalorchidhotels.com/Images/slider/21_34_2024_11_34_46jaipur-banner.jpg" alt="Hotel Royal Orchid Jaipur - Grand Heritage Facade & Courtyard" class="w-full h-full object-cover" />
         </div>
         <div class="hero-slide">
-          <img src="images/hotels/bangalore_19_Mar_2024_04_03_19event-over.jpg" alt="Royal Orchid Convention Centre - Sprawling Wedding Lawns" class="w-full h-full object-cover" />
+          <img src="https://www.royalorchidhotels.com/Images/slider/04_22_2025_03_22_161.jpg" alt="Regenta Resort Vindhyachal Ekta Nagar - Mountain Infinity Pool" class="w-full h-full object-cover" />
         </div>
         <div class="hero-slide">
-          <img src="images/hotels/bangalore_19_05_2024_04_05_44pool-banner.jpg" alt="Royal Orchid Resorts - Leisure & Poolside Retreats" class="w-full h-full object-cover" />
+          <img src="images/hotels/bangalore_19_05_2024_04_05_44pool-banner.jpg" alt="Royal Orchid Resorts Yelahanka - Azure Pool & Cabana Sanctuary" class="w-full h-full object-cover" />
+        </div>
+        <div class="hero-slide">
+          <img src="https://www.royalorchidhotels.com/Images/slider/21_23_2024_03_23_45img234.jpg" alt="Regenta Resort Soma Vine Village Nashik - Vineyard Waterfront Retreat" class="w-full h-full object-cover" />
+        </div>
+        <div class="hero-slide">
+          <img src="https://www.royalorchidhotels.com/Images/slider/22_53_2024_07_53_3965fgt6vyg.jpg" alt="Regenta Resort & Spa Shimla Mashobra - Himalayan Forest Vista" class="w-full h-full object-cover" />
+        </div>
+        <div class="hero-slide">
+          <img src="images/hotels/bangalore_19_Mar_2024_04_03_19event-over.jpg" alt="Royal Orchid Convention Centre - Sprawling Celebrations & Wedding Lawns" class="w-full h-full object-cover" />
         </div>
       </div>
 
-      <!-- Subtle Neutral Vignette Overlay: NO Blue Tint, Preserves 100% Real Image Colors -->
-      <div class="absolute inset-0 bg-gradient-to-t from-black/65 via-transparent to-black/45 z-10 pointer-events-none"></div>
+      <!-- Subtle Neutral Vignette Overlay: Preserves 100% Real Image Colors with gentle bottom gradient for card legibility -->
+      <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-black/40 z-10 pointer-events-none"></div>
 
       <!-- Slide Navigation Arrows (Desktop / Tablet) -->
-      <button id="hero-prev-btn" type="button" class="hidden sm:flex absolute left-4 sm:left-6 top-1/2 -translate-y-1/2 z-30 w-11 h-11 rounded-full bg-black/50 hover:bg-black/80 text-white border border-white/30 backdrop-blur-sm items-center justify-center transition-all shadow-xl hover:scale-105 focus:outline-none" aria-label="Previous Slide">
+      <button id="hero-prev-btn" type="button" class="hidden sm:flex absolute left-4 sm:left-6 top-1/2 -translate-y-1/2 z-30 w-11 h-11 rounded-full bg-black/50 hover:bg-black/80 text-white border border-white/30 backdrop-blur-sm items-center justify-center transition-all shadow-xl hover:scale-105 focus:outline-none cursor-pointer" aria-label="Previous Slide">
         <i data-lucide="chevron-left" class="w-6 h-6"></i>
       </button>
-      <button id="hero-next-btn" type="button" class="hidden sm:flex absolute right-4 sm:right-6 top-1/2 -translate-y-1/2 z-30 w-11 h-11 rounded-full bg-black/50 hover:bg-black/80 text-white border border-white/30 backdrop-blur-sm items-center justify-center transition-all shadow-xl hover:scale-105 focus:outline-none" aria-label="Next Slide">
+      <button id="hero-next-btn" type="button" class="hidden sm:flex absolute right-4 sm:right-6 top-1/2 -translate-y-1/2 z-30 w-11 h-11 rounded-full bg-black/50 hover:bg-black/80 text-white border border-white/30 backdrop-blur-sm items-center justify-center transition-all shadow-xl hover:scale-105 focus:outline-none cursor-pointer" aria-label="Next Slide">
         <i data-lucide="chevron-right" class="w-6 h-6"></i>
       </button>
 
-      <!-- Hero Content -->
+      <!-- Hero Content (Anchored neatly a little upper than the bottom) -->
       <div class="relative z-20 max-w-4xl mx-auto text-center flex flex-col items-center w-full">
-        
+        <!-- Hero Carousel Slide Indicators (Subtle Glassmorphic Pill) -->
+        <div class="mb-3 sm:mb-4 flex items-center justify-center gap-1.5 sm:gap-2 px-3 py-1 rounded-full bg-black/40 backdrop-blur-md border border-white/20 shadow-lg" id="hero-dots-container"></div>
+
         <!-- Clean Luxury Booking Box (Without heavy typography or cluttered tabs) -->
         <div id="booking-section" class="w-full bg-white text-text-primary rounded-xl shadow-2xl p-4 sm:p-6 border border-border text-left">
           
@@ -352,9 +363,6 @@
           </div>
 
         </div>
-
-        <!-- Hero Carousel Slide Indicators -->
-        <div class="mt-6 flex items-center justify-center gap-2" id="hero-dots-container"></div>
       </div>
     </section>
 
@@ -3289,7 +3297,7 @@
   
 
   <div id="toast-container"></div>
-  <script src="js/main.js?v=3.5"></script>
+  <script src="js/main.js?v=3.6"></script>
 
 
   
