@@ -392,6 +392,44 @@ section[id], article[id], div[id] {
   opacity: 0;
 }
 
+/* Top Announcement Bar Vertical Flip Ticker (Smallest Typography) */
+#top-bar-ticker {
+  position: relative;
+  height: 1.4rem;
+  overflow: hidden;
+}
+
+.top-bar-slide {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  width: 100%;
+  transition: transform 0.65s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.5s ease;
+  will-change: transform, opacity;
+}
+
+.top-bar-slide.slide-active {
+  transform: translateY(0);
+  opacity: 1;
+  pointer-events: auto;
+  z-index: 2;
+}
+
+.top-bar-slide.slide-up-exit {
+  transform: translateY(-120%);
+  opacity: 0;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.top-bar-slide.slide-down-prep {
+  transform: translateY(120%);
+  opacity: 0;
+  pointer-events: none;
+  transition: none !important;
+}
+
 /* Fullscreen Preloader */
 #preloader {
   transition: transform 0.65s cubic-bezier(0.76, 0, 0.24, 1), opacity 0.4s ease;

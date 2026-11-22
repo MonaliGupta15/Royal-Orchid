@@ -21,6 +21,7 @@ document.addEventListener('DOMContentLoaded', () => {
   initPreloader();
   initLenisSmoothScroll();
   initHeaderScroll();
+  initTopBarTicker();
   initMobileMenu();
   initHeroCarousel();
   initHeroVideoControls();
@@ -145,6 +146,36 @@ function initHeaderScroll() {
 
   window.addEventListener('scroll', handleScroll, { passive: true });
   handleScroll();
+}
+
+/* ==========================================================================
+   3b. Top Announcement Bar Vertical Flip Ticker (Direct Privilege <-> Rewards)
+   ========================================================================== */
+function initTopBarTicker() {
+  const slide1 = document.getElementById('top-slide-privilege');
+  const slide2 = document.getElementById('top-slide-rewards');
+  if (!slide1 || !slide2) return;
+
+  let current = 1;
+  setInterval(() => {
+    if (current === 1) {
+      slide1.className = 'top-bar-slide slide-up-exit';
+      slide2.className = 'top-bar-slide slide-down-prep';
+      void slide2.offsetWidth;
+      requestAnimationFrame(() => {
+        slide2.className = 'top-bar-slide slide-active';
+      });
+      current = 2;
+    } else {
+      slide2.className = 'top-bar-slide slide-up-exit';
+      slide1.className = 'top-bar-slide slide-down-prep';
+      void slide1.offsetWidth;
+      requestAnimationFrame(() => {
+        slide1.className = 'top-bar-slide slide-active';
+      });
+      current = 1;
+    }
+  }, 3800);
 }
 
 /* ==========================================================================
