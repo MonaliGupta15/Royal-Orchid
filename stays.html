@@ -247,18 +247,7 @@
           Contemporary Luxury, Heartfelt Indian Warmth &amp; Direct Booking Privileges
         </p>
 
-        <!-- Dynamic Visual Pagination Dots (Showing 4-5 images in every city) -->
-        <div id="hero-slider-dots" class="flex items-center justify-center gap-2 mt-4 z-20">
-          <!-- Injected dynamically by renderHeroDots() -->
-        </div>
 
-        <!-- Live Photo Counter Badge -->
-        <div class="mt-2.5 flex justify-center">
-          <div id="hero-photo-counter" class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-black/60 backdrop-blur-md text-white text-xs font-medium border border-white/20 shadow">
-            <i data-lucide="camera" class="w-3.5 h-3.5 text-brand-brass"></i>
-            <span id="hero-counter-text">1 / 5 Photos</span>
-          </div>
-        </div>
       </div>
 
       <!-- Floating Quick Booking Bar (Matching Screenshot Booking Bar) -->
@@ -909,7 +898,7 @@
       }
 
       // Update pagination dots
-      renderHeroDots();
+      // dots removed
 
       // Update photo counter
       const counterText = document.getElementById('hero-counter-text');
@@ -1082,8 +1071,7 @@
           const heroBook = document.getElementById('hero-booking-hotel-name');
           if (heroBook) heroBook.textContent = 'All 100+ Hotels & Resorts';
 
-          const dotsContainer = document.getElementById('hero-slider-dots');
-          if (dotsContainer) dotsContainer.innerHTML = '';
+          
           const counterText = document.getElementById('hero-counter-text');
           if (counterText) counterText.textContent = '100+ Hotels';
 
@@ -1117,7 +1105,7 @@
         if (heroImg) heroImg.src = currentHeroGallery[0];
 
         // Render Pagination Dots for all 4-5 images
-        renderHeroDots();
+        // dots removed
 
         // Update photo counter
         const counterText = document.getElementById('hero-counter-text');
